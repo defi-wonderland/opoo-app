@@ -7125,10 +7125,10 @@ opoo-core@0.0.0-88e224d8:
     forge-std "https://github.com/foundry-rs/forge-std.git#e8a047e3f40f13fa37af6fe14e6e06283d9a060e"
     web3-core "1.9.0"
 
-opoo-sdk@0.0.0-0f3f4f0b:
-  version "0.0.0-0f3f4f0b"
-  resolved "https://registry.npmjs.org/opoo-sdk/-/opoo-sdk-0.0.0-0f3f4f0b.tgz#4d7c4b584c1708ae7f0b9b6463f8e8825b945d05"
-  integrity sha512-0SoHKAC1489I5Hyb3Nyl7hPe8C1ALZPPtr1GZzei2Fx2mdSDFiGN1w9ybJrLnikSQoqGY2XoL9leIIZmSeXDGQ==
+opoo-sdk@0.0.0-bb9c74cd:
+  version "0.0.0-bb9c74cd"
+  resolved "https://registry.npmjs.org/opoo-sdk/-/opoo-sdk-0.0.0-bb9c74cd.tgz#5460f5cc64308e1f5d27e1fe9bfedc36ab74b822"
+  integrity sha512-WNDDj2WzipAheJDa8MRTH0o92htwcRt3rh0xFdxP1njk0+TFLYIKPXdBC5UF1MhhrFhjM0ihp6YNrE3tTyri2Q==
   dependencies:
     "@pinata/sdk" "2.1.0"
     cids "1.1.9"
