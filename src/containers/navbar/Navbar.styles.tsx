@@ -5,13 +5,14 @@ import { MOBILE_MAX_WIDTH } from '~/utils';
 
 // ------------------------------- Navbar Container ------------------------------- //
 export const SNavbar = styled.div`
+  position: relative;
   display: flex;
   height: 8rem;
   padding: 0 8rem;
   justify-content: space-between;
   align-items: center;
   align-self: stretch;
-
+  background-color: #ffffff;
   box-shadow: 0px 4px 0px 0px rgba(167, 176, 192, 0.16);
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
