@@ -1,4 +1,5 @@
-import './App.css';
+import '~/assets/fonts/opoo-icons/style.css';
+
 import { Routes, Route } from 'react-router-dom';
 
 import { Landing } from './pages/landing';

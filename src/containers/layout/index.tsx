@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { Footer } from '~/containers/footer';
+// import { Footer } from '~/containers/footer';
 import { Navbar } from '~/containers/navbar';
 
 export const AppLayout = (props: { children: ReactNode }) => {
@@ -9,7 +9,7 @@ export const AppLayout = (props: { children: ReactNode }) => {
     <>
       <Navbar />
       {children}
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };
