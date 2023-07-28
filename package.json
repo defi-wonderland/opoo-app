@@ -1,11 +1,15 @@
 {
   "name": "opoo-app",
-  "description": "Oppo App",
+  "description": "Oppo UI App",
   "private": true,
   "version": "0.0.1",
   "type": "module",
   "license": "AGPL-3.0-only",
   "author": "Wonderland",
+  "contributors": [
+    "0xArdy (https://github.com/0xArdy)",
+    "turtlemoji (https://github.com/turtlemoji)"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -30,6 +34,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-router-dom": "6.14.2",
+    "react-transition-group": "4.4.5",
     "styled-components": "6.0.5"
   },
   "devDependencies": {
