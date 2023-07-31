@@ -2,12 +2,11 @@ import '~/assets/fonts/opoo-icons/style.css';
 
 import { Routes, Route } from 'react-router-dom';
 
-import { Landing } from './pages/landing';
-import { Requests } from './pages/requests';
-import { RequestsDetails } from './pages/requests/RequestsDetails';
-import { About } from './pages/about';
+import { RequestsDetails } from './pages/Requests/RequestsDetails';
+import { About, Landing, Requests } from '~/pages';
 import { AppLayout } from './containers/Layout';
 import { Themable } from './components/Theme';
+import { StateProvider } from './providers/StateProvider';
 
 const AppRouter = () => {
   return (
@@ -25,9 +24,11 @@ const AppRouter = () => {
 
 function App() {
   return (
-    <Themable>
-      <AppRouter />
-    </Themable>
+    <StateProvider>
+      <Themable>
+        <AppRouter />
+      </Themable>
+    </StateProvider>
   );
 }
 

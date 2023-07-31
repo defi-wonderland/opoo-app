@@ -1,4 +1,5 @@
 import { ThemeProvider } from 'styled-components';
+import { useStateContext } from '~/hooks';
 
 import { getTheme } from '~/utils';
 
@@ -7,6 +8,7 @@ interface ThemableProps {
 }
 
 export const Themable = ({ children }: ThemableProps) => {
-  const theme = getTheme();
+  const { theme: themeName } = useStateContext();
+  const theme = getTheme(themeName);
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };

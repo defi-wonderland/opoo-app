@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 import { SLink, StatusIcon as Icon } from '~/components';
-import { CardData } from '~/types';
+import { useStateContext } from '~/hooks';
+import { RequestData } from '~/types';
 
 export const RequestsSection = styled.section`
   display: flex;
@@ -51,14 +52,16 @@ export const StatusIcon = styled(Icon)`
 `;
 
 interface RequestSectionProps {
-  requests: CardData[];
+  requests: RequestData[];
 }
 
 export const RequestSection = ({ requests }: RequestSectionProps) => {
+  const { setSelectedRequest } = useStateContext();
+
   return (
     <RequestsSection>
       {requests.map((card, index) => (
-        <SLink to={`/requests/${card.id}`} key={card.id + index}>
+        <SLink to={`/requests/${card.id}`} key={card.id + index} onClick={() => setSelectedRequest(card)}>
           <Card>
             <StatusIcon name={`status-${card.status}`} color={card.status} size='2.4rem' />
             <DataContainer>

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Box, Text, Title } from '~/components';
+import { useStateContext } from '~/hooks';
 
 const SBox = styled(Box)`
   background-color: ${({ theme }) => theme.backgroundPrimary};
@@ -37,39 +38,7 @@ const Address = styled(Text)`
 `;
 
 export const Modules = () => {
-  // temporary fixed values
-  const modules = [
-    {
-      name: 'Http Request Module',
-      description: 'Short description of the module',
-      address: '0xe94f1fa4f27d9d288ffea234bb62e1fbc086ca0c',
-    },
-    {
-      name: 'Bonded Response Module',
-      description: 'Short description of the module',
-      address: '0xe94f1fa4f27d9d288ffea234bb62e1fbc086ca0c',
-    },
-    {
-      name: 'Bonded Dispute Module',
-      description: 'Short description of the module',
-      address: '0xe94f1fa4f27d9d288ffea234bb62e1fbc086ca0c',
-    },
-    {
-      name: 'Arbitrator Module',
-      description: 'Short description of the module',
-      address: '0xe94f1fa4f27d9d288ffea234bb62e1fbc086ca0c',
-    },
-    {
-      name: 'Callback Module',
-      description: 'Short description of the module',
-      address: '0xe94f1fa4f27d9d288ffea234bb62e1fbc086ca0c',
-    },
-    {
-      name: 'HttpRequestModule',
-      description: 'Short description of the module',
-      address: '0xe94f1fa4f27d9d288ffea234bb62e1fbc086ca0c',
-    },
-  ];
+  const { modules } = useStateContext();
 
   return (
     <SBox>

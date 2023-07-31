@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { Title, Box, Text } from '~/components';
+import { useStateContext } from '~/hooks';
 
 const SBox = styled(Box)`
   background-color: ${({ theme }) => theme.backgroundPrimary};
@@ -36,15 +37,7 @@ interface DetailsProps {
 }
 
 export const Details = ({ id }: DetailsProps) => {
-  // TODO: get selectedItem by using react context
-  const selectedItem = {
-    description: 'Will a fourth US bank fail by June 30?',
-    id: '3d4919c6b9f368ae1ec2',
-    createdAt: 'Mon, 15 May 2023 19:28:47 GMT',
-    requester: 'gigarequester.eth',
-    transaction: '0xaae85b6e43e533069b2615a94127f9ea5fabed195412725fe',
-    status: 'red',
-  };
+  const { selectedRequest } = useStateContext();
 
   return (
     <SBox>
@@ -53,19 +46,22 @@ export const Details = ({ id }: DetailsProps) => {
       <DetailsContainer>
         <SDataContainer>
           <Text>Description:</Text>
-          <Text>{selectedItem.description}</Text>
+          <Text>{selectedRequest?.description}</Text>
         </SDataContainer>
+
         <SDataContainer>
           <Text>Requester: </Text>
-          <Text>{selectedItem.requester}</Text>
+          <Text>{selectedRequest?.requester}</Text>
         </SDataContainer>
+
         <SDataContainer>
           <Text>Created at:</Text>
-          <Text>{selectedItem.createdAt}</Text>
+          <Text>{selectedRequest?.createdAt}</Text>
         </SDataContainer>
+
         <SDataContainer>
           <Text>Transaction:</Text>
-          <Text>{selectedItem.transaction}</Text>
+          <Text>{selectedRequest?.transaction}</Text>
         </SDataContainer>
       </DetailsContainer>
     </SBox>
