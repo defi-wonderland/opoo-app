@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { RequestSection } from './RequestsSection';
 import { FiltersSection } from './FiltersSection';
 import { CardData, Filter } from '~/types';
+import { Title } from '~/components';
 
 const Layout = styled.div`
   background-color: ${({ theme }) => theme.backgroundSecondary};
@@ -16,15 +17,6 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   margin: 0 auto;
-`;
-
-const Title = styled.h1`
-  color: ${({ theme }) => theme.titleColor};
-  font-family: ${({ theme }) => theme.titleFontFamily};
-  font-size: 52px;
-  font-style: italic;
-  font-weight: 600;
-  line-height: 64px;
 `;
 
 // temporary fixed values
