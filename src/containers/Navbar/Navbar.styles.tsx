@@ -23,27 +23,13 @@ export const SNavbar = styled.div`
 
 // ------------------------------- Logo Section ------------------------------- //
 
-export const LogoContainer = styled.div`
-  i {
-    display: none;
-  }
-  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
-    a {
-      display: none;
-    }
-
-    i {
-      display: block;
-    }
-  }
-`;
+export const LogoContainer = styled.div``;
 
 export const Logo = styled(Link)`
   font-family: 'Rubik', sans-serif;
   font-style: italic;
   font-weight: 600;
   color: #ff0420;
-  text-transform: uppercase;
   text-decoration: none;
   font-size: 2rem;
   width: 15rem;
@@ -55,7 +41,7 @@ export const LinkContainer = styled.div`
   flex-direction: row;
   gap: 4.5rem;
 
-  button {
+  i {
     display: none;
   }
 
@@ -64,7 +50,7 @@ export const LinkContainer = styled.div`
       display: none;
     }
 
-    button {
+    i {
       display: block;
     }
   }
@@ -99,9 +85,8 @@ export const MenuButton = styled.button`
 export const Icons = styled.div`
   display: flex;
   flex-direction: row;
-  width: 15rem;
-  padding: 0 2.5rem;
-  justify-content: space-between;
+  width: 35.4rem;
+  justify-content: end;
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     display: none;
   }
@@ -109,4 +94,12 @@ export const Icons = styled.div`
 
 export const IconLink = styled(LinkText)`
   color: unset;
+  background-color: ${({ theme }) => theme.backgroundSecondary};
+  border-radius: ${({ theme }) => theme.borderRadius};
+  width: 4.8rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 2rem;
 `;

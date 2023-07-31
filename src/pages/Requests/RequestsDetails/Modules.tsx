@@ -1,10 +1,16 @@
 import styled from 'styled-components';
 import { Box, Text, Title } from '~/components';
 import { useStateContext } from '~/hooks';
+import { MOBILE_MAX_WIDTH } from '~/utils';
 
 const SBox = styled(Box)`
-  background-color: ${({ theme }) => theme.backgroundPrimary};
+  background-color: ${({ theme: { type, backgroundPrimary, backgroundSecondary } }) =>
+    type !== 'light' ? backgroundSecondary : backgroundPrimary};
   padding: 8rem 8rem;
+
+  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+    padding: 3rem 3rem;
+  }
 `;
 
 const ModulesContainer = styled(Box)`
@@ -13,10 +19,15 @@ const ModulesContainer = styled(Box)`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+
+  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+    margin-top: 3rem;
+  }
 `;
 
 const ModuleCard = styled(Box)`
-  background-color: ${({ theme }) => theme.backgroundSecondary};
+  background-color: ${({ theme: { type, backgroundPrimary, backgroundSecondary } }) =>
+    type === 'light' ? backgroundSecondary : backgroundPrimary};
   border-radius: ${({ theme }) => theme.borderRadius};
   padding: 2rem;
   max-width: 41.3rem;

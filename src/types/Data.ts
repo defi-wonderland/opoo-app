@@ -1,6 +1,6 @@
 import { IconName } from '~/components';
 
-export type StatusName = 'green' | 'red' | 'yellow'; // temporary generic values
+export type StatusName = 'Disputed' | 'Finalized' | 'Unanswered';
 
 export interface RequestData {
   description: string;

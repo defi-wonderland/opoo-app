@@ -1,5 +1,5 @@
 import { Icon } from '~/components';
-import { SNavbar, LogoContainer, Logo, LinkText, MenuButton, LinkContainer, Icons, IconLink } from './Navbar.styles';
+import { SNavbar, LogoContainer, Logo, LinkText, LinkContainer, Icons, IconLink } from './Navbar.styles';
 import { useStateContext } from '~/hooks';
 
 export const Navbar = () => {
@@ -16,8 +16,7 @@ export const Navbar = () => {
   return (
     <SNavbar>
       <LogoContainer>
-        <Logo to='/'>Optimism</Logo>
-        <Icon name='OP' size='4rem' />
+        <Logo to='/'>OpOO</Logo>
       </LogoContainer>
 
       <LinkContainer>
@@ -26,21 +25,24 @@ export const Navbar = () => {
         <LinkText to='/faq'>FAQ</LinkText>
         <LinkText to='/docs'>Docs</LinkText>
 
-        <MenuButton>Menu</MenuButton>
+        <Icon name='menu' size='1.6rem' />
       </LinkContainer>
 
       <Icons>
-        <IconLink to='https://twitter.com'>
-          <Icon name='twitter' size='1.5rem' />
-        </IconLink>
-
-        <IconLink to='https://discord.com/'>
-          <Icon name='discord' size='1.5rem' />
-        </IconLink>
-
         <IconLink to='#' onClick={handleThemeChange}>
-          {/* Temporary icon to change theme color */}
-          <Icon name='status' size='1.5rem' />
+          <Icon name={theme === 'light' ? 'moon' : 'sun'} size='1.6rem' />
+        </IconLink>
+
+        <IconLink to='#'>
+          <Icon name='github' size='1.6rem' color={theme === 'light' ? 'black' : 'white'} />
+        </IconLink>
+
+        <IconLink to='#'>
+          <Icon name='discord' size='1.6rem' color={theme === 'light' ? 'black' : 'white'} />
+        </IconLink>
+
+        <IconLink to='#'>
+          <Icon name='docs' size='1.6rem' color={theme === 'light' ? 'black' : 'white'} />
         </IconLink>
       </Icons>
     </SNavbar>

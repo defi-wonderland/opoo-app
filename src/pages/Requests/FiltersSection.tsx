@@ -50,7 +50,7 @@ export const FiltersSection = ({ filters }: FiltersProps) => {
     <div>
       <FilterSection>
         <MainFilterButton>
-          <Icon name='plus' size='1.5rem' />
+          {/* <Icon name='plus' size='1.5rem' /> */}
           <span>Filter</span>
         </MainFilterButton>
 

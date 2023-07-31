@@ -3,20 +3,17 @@ import styled from 'styled-components';
 import { StatusName } from '~/types';
 
 export type IconName =
-  | 'check'
   | 'close'
-  | 'created-date'
+  | 'copy'
   | 'discord'
-  | 'OP'
-  | 'plus'
-  | 'requester'
-  | 'status'
-  | 'status-green'
-  | 'status-red'
-  | 'status-yellow'
-  | 'tag'
-  | 'twitter'
-  | 'twitch';
+  | 'docs'
+  | 'github'
+  | 'hashtag'
+  | 'menu'
+  | 'message'
+  | 'moon'
+  | 'right-arrow'
+  | 'sun';
 
 export const Icon = styled.i.attrs<{ name: IconName }>((props) => ({
   className: `icon-${props.name}`,
@@ -27,6 +24,7 @@ export const Icon = styled.i.attrs<{ name: IconName }>((props) => ({
   padding?: string;
   rotate?: number;
 }>`
+  color: ${(props) => props.color || 'inherit'};
   display: inline-block;
   font-size: ${(props) => props.size || '1.8rem'};
   transform: rotate(${(props) => props.rotate || 0}deg);

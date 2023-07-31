@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { RequestSection } from './RequestsSection';
-import { FiltersSection } from './FiltersSection';
+// import { FiltersSection } from './FiltersSection';
 import { Title } from '~/components';
 import { useStateContext } from '~/hooks';
 
@@ -20,12 +20,14 @@ const Container = styled.div`
 `;
 
 export const Requests = () => {
-  const { requests, filters } = useStateContext();
+  const { requests /* filters */ } = useStateContext();
   return (
     <Layout>
       <Container>
         <Title>Requests</Title>
-        <FiltersSection filters={filters} />
+
+        {/* <FiltersSection filters={filters} /> */}
+
         <RequestSection requests={requests} />
       </Container>
     </Layout>

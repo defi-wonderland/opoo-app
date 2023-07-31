@@ -5,10 +5,17 @@ import { MOBILE_MAX_WIDTH } from '~/utils';
 
 const ResponsesContainer = styled(Box)`
   padding: 8rem 8rem;
+  background-color: ${({ theme: { type, backgroundPrimary, backgroundSecondary } }) =>
+    type === 'light' ? backgroundSecondary : backgroundPrimary};
+
+  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+    padding: 3rem 3rem;
+  }
 `;
 
 const Row = styled(Box)`
-  background-color: ${({ theme }) => theme.backgroundPrimary};
+  background-color: ${({ theme: { type, backgroundPrimary, backgroundSecondary } }) =>
+    type !== 'light' ? backgroundSecondary : backgroundPrimary};
   flex-direction: row;
   height: 7rem;
   padding: 2rem 0;
@@ -47,6 +54,10 @@ const SBox = styled(Box)`
 
 const TableContainer = styled(Box)`
   margin-top: 5rem;
+
+  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+    margin-top: 2rem;
+  }
 `;
 
 const TableTitle = styled(Text)`
@@ -58,6 +69,7 @@ const TableTitle = styled(Text)`
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     text-align: start;
     width: 20rem;
+    font-size: 1rem;
   }
 `;
 
@@ -68,6 +80,7 @@ const SText = styled(Text)`
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     text-align: start;
+    font-size: 1rem;
   }
 `;
 

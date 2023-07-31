@@ -37,47 +37,66 @@ export const StateProvider = ({ children }: StateProps) => {
 
   // temporary effect and fixed values
   useEffect(() => {
-    const cardData: RequestData[] = [
+    const requests: RequestData[] = [
       {
-        description: 'Will a fourth US bank fail by June 30?',
-        id: '3d4919c6b9f368ae1ec2',
+        description:
+          'What are the key principles and strategies employed by the Optimism Protocol to foster optimism and positivity within individuals and communities?',
+        id: '3d4919c6b9f368ae1ec1',
         createdAt: 'Mon, 15 May 2023 19:28:47 GMT',
         requester: '0x388c818cccb192971',
-        status: 'yellow',
+        status: 'Unanswered',
         transaction: '0xaae85b6e43e533069b2615a94127f9ea5fabed195412725fe',
       },
       {
-        description: 'Will a fourth US bank fail by June 30?',
+        description:
+          'What are the key principles and strategies employed by the Optimism Protocol to foster optimism and positivity within individuals and communities?',
         id: '3d4919c6b9f368ae1ec2',
         createdAt: 'Mon, 15 May 2023 19:28:47 GMT',
         requester: '0x388c818cccb192972',
-        status: 'green',
+        status: 'Finalized',
         transaction: '0xaae85b6e43e533069b2615a94127f9ea5fabed195412725fe',
       },
       {
-        description: 'Will a fourth US bank fail by June 30?',
-        id: '3d4919c6b9f368ae1ec2',
+        description:
+          'What are the key principles and strategies employed by the Optimism Protocol to foster optimism and positivity within individuals and communities?',
+        id: '3d4919c6b9f368ae1ec3',
         createdAt: 'Mon, 15 May 2023 19:28:47 GMT',
         requester: '0x388c818cccb192973',
-        status: 'red',
+        status: 'Disputed',
+        transaction: '0xaae85b6e43e533069b2615a94127f9ea5fabed195412725fe',
+      },
+      {
+        description:
+          'What are the key principles and strategies employed by the Optimism Protocol to foster optimism and positivity within individuals and communities?',
+        id: '3d4919c6b9f368ae1ec4',
+        createdAt: 'Mon, 15 May 2023 19:28:47 GMT',
+        requester: '0x388c818cccb192973',
+        status: 'Finalized',
+        transaction: '0xaae85b6e43e533069b2615a94127f9ea5fabed195412725fe',
+      },
+      {
+        description:
+          'What are the key principles and strategies employed by the Optimism Protocol to foster optimism and positivity within individuals and communities?',
+        id: '3d4919c6b9f368ae1ec5',
+        createdAt: 'Mon, 15 May 2023 19:28:47 GMT',
+        requester: '0x388c818cccb192973',
+        status: 'Disputed',
         transaction: '0xaae85b6e43e533069b2615a94127f9ea5fabed195412725fe',
       },
     ];
 
-    const requests: RequestData[] = [...cardData, ...cardData, ...cardData, ...cardData];
-
-    const filters: Filter[] = [
-      { text: 'Satus', icon: 'status' },
-      { text: 'All' },
-      { text: 'Created date', icon: 'created-date' },
-      { text: 'less than' },
-      { text: '3 days ago' },
-      { text: 'Requester', icon: 'requester' },
-      { text: 'search result' },
-      { text: 'ID', icon: 'tag' },
-      { text: 'search result' },
-      { icon: 'close' },
-    ];
+    // const filters: Filter[] = [
+    //   { text: 'Satus', icon: 'status' },
+    //   { text: 'All' },
+    //   { text: 'Created date', icon: 'created-date' },
+    //   { text: 'less than' },
+    //   { text: '3 days ago' },
+    //   { text: 'Requester', icon: 'requester' },
+    //   { text: 'search result' },
+    //   { text: 'ID', icon: 'tag' },
+    //   { text: 'search result' },
+    //   { icon: 'close' },
+    // ];
 
     const modules = [
       {
