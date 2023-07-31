@@ -5,22 +5,22 @@ import { FiltersSection } from './FiltersSection';
 import { CardData, Filter } from '~/types';
 
 const Layout = styled.div`
+  background-color: ${({ theme }) => theme.backgroundSecondary};
   width: 100%;
-  background-color: #f1f1f1;
   padding: 12rem 8rem;
 `;
 
 const Container = styled.div`
+  background-color: ${({ theme }) => theme.backgroundSecondary};
   max-width: 128rem;
   width: 100%;
   height: 100%;
-  background-color: #f1f1f1;
   margin: 0 auto;
 `;
 
 const Title = styled.h1`
-  color: #ff0420;
-  font-family: Rubik;
+  color: ${({ theme }) => theme.titleColor};
+  font-family: ${({ theme }) => theme.titleFontFamily};
   font-size: 52px;
   font-style: italic;
   font-weight: 600;
@@ -28,26 +28,31 @@ const Title = styled.h1`
 `;
 
 // temporary fixed values
-const cardData: CardData = {
-  description: 'Will a fourth US bank fail by June 30?',
-  id: '3d4919c6b9...f368ae1ec2',
-  createdAt: 'Mon, 15 May 2023 19:28:47 GMT',
-  requester: '0x388c818c...ccb19297',
-};
-
-const requests: CardData[] = [
-  cardData,
-  cardData,
-  cardData,
-  cardData,
-  cardData,
-  cardData,
-  cardData,
-  cardData,
-  cardData,
-  cardData,
-  cardData,
+const cardData: CardData[] = [
+  {
+    description: 'Will a fourth US bank fail by June 30?',
+    id: '3d4919c6b9f368ae1ec2',
+    createdAt: 'Mon, 15 May 2023 19:28:47 GMT',
+    requester: '0x388c818cccb19297',
+    status: 'yellow',
+  },
+  {
+    description: 'Will a fourth US bank fail by June 30?',
+    id: '3d4919c6b9f368ae1ec2',
+    createdAt: 'Mon, 15 May 2023 19:28:47 GMT',
+    requester: '0x388c818cccb19297',
+    status: 'green',
+  },
+  {
+    description: 'Will a fourth US bank fail by June 30?',
+    id: '3d4919c6b9f368ae1ec2',
+    createdAt: 'Mon, 15 May 2023 19:28:47 GMT',
+    requester: '0x388c818cccb19297',
+    status: 'red',
+  },
 ];
+
+const requests: CardData[] = [...cardData, ...cardData, ...cardData, ...cardData];
 
 const filters: Filter[] = [
   { text: 'Satus', icon: 'status' },

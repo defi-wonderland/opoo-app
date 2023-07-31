@@ -12,8 +12,8 @@ const FilterSection = styled.section`
 
 const FilterButton = styled.button`
   border: none;
-  background-color: #ffffff;
-  border-radius: 0.4rem;
+  background-color: ${({ theme }) => theme.filterBackground};
+  border-radius: ${({ theme }) => theme.secondaryBorderRadius};
   cursor: pointer;
 
   display: flex;
@@ -23,8 +23,8 @@ const FilterButton = styled.button`
 
   min-width: max-content;
 
-  color: #0d0e12;
-  font-family: Rubik;
+  color: ${({ theme }) => theme.textPrimary};
+  font-family: ${({ theme }) => theme.titleFontFamily};
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -32,14 +32,14 @@ const FilterButton = styled.button`
   padding: 0.45rem 0.8rem;
 
   &:hover {
-    color: rgba(0, 0, 0, 0.8);
+    opacity: 0.87;
     transition: all 0.2s ease-in-out;
   }
 `;
 
 const MainFilterButton = styled(FilterButton)`
   background-color: transparent;
-  border: 1px dashed #0d0e12;
+  border: 1px dashed ${({ theme }) => theme.textPrimary};
 `;
 
 interface FiltersProps {

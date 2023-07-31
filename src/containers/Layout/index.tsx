@@ -1,14 +1,13 @@
-import { ReactNode } from 'react';
+import { Outlet } from 'react-router-dom';
 
 // import { Footer } from '~/containers/footer';
 import { Navbar } from '~/containers/navbar';
 
-export const AppLayout = (props: { children: ReactNode }) => {
-  const { children } = props;
+export const AppLayout = () => {
   return (
     <>
       <Navbar />
-      {children}
+      <Outlet />
       {/* <Footer /> */}
     </>
   );

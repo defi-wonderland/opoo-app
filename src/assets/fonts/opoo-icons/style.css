@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'OpooFont';
-  src: url('fonts/opooFont.eot?w4ydgj');
+  src: url('fonts/OpooFont.eot?23b8hk');
   src:
-    url('fonts/opooFont.eot?w4ydgj#iefix') format('embedded-opentype'),
-    url('fonts/opooFont.ttf?w4ydgj') format('truetype'),
-    url('fonts/opooFont.woff?w4ydgj') format('woff'),
-    url('fonts/opooFont.svg?w4ydgj#opooFont') format('svg');
+    url('fonts/OpooFont.eot?23b8hk#iefix') format('embedded-opentype'),
+    url('fonts/OpooFont.ttf?23b8hk') format('truetype'),
+    url('fonts/OpooFont.woff?23b8hk') format('woff'),
+    url('fonts/OpooFont.svg?23b8hk#OpooFont') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -32,42 +32,42 @@
   color: #ff0420;
 }
 .icon-close:before {
-  content: '\e901';
+  content: '\e914';
 }
 .icon-created-date:before {
-  content: '\e902';
+  content: '\e901';
 }
 .icon-discord:before {
-  content: '\e903';
+  content: '\e902';
 }
 .icon-OP:before {
-  content: '\e904';
+  content: '\e903';
   color: #ff0420;
 }
 .icon-plus:before {
-  content: '\e907';
+  content: '\e906';
 }
 .icon-requester:before {
-  content: '\e908';
+  content: '\e907';
 }
 .icon-status:before {
-  content: '\e909';
+  content: '\e908';
 }
 .icon-status-green:before {
-  content: '\e90a';
+  content: '\e909';
 }
 .icon-status-red:before {
-  content: '\e90d';
+  content: '\e90c';
 }
 .icon-status-yellow:before {
-  content: '\e910';
+  content: '\e90f';
 }
 .icon-tag:before {
-  content: '\e912';
+  content: '\e911';
 }
 .icon-twitch:before {
-  content: '\e913';
+  content: '\e912';
 }
 .icon-twitter:before {
-  content: '\e914';
+  content: '\e913';
 }
