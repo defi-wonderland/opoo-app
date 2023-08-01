@@ -6,13 +6,13 @@ import { Title } from '~/components';
 import { useStateContext } from '~/hooks';
 
 const Layout = styled.div`
-  background-color: ${({ theme }) => theme.backgroundSecondary};
+  background-color: ${({ theme: { iconBackground } }) => iconBackground};
   width: 100%;
   padding: 12rem 8rem;
 `;
 
 const Container = styled.div`
-  background-color: ${({ theme }) => theme.backgroundSecondary};
+  background-color: ${({ theme: { iconBackground } }) => iconBackground};
   max-width: 128rem;
   width: 100%;
   height: 100%;

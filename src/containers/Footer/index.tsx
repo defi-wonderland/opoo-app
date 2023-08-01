@@ -6,12 +6,13 @@ import { Icon, Text } from '~/components';
 
 const FooterContainer = styled.div`
   width: 100%;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.headerBackground};
   padding: 4.4rem 8rem;
   justify-content: space-between;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  border-top: ${({ theme }) => theme.border};
 `;
 
 const TopSection = styled.div`
@@ -32,21 +33,21 @@ export const Footer = () => {
     <FooterContainer>
       <TopSection>
         <LogoContainer>
-          <Logo to='/'>OpOO</Logo>
+          <Logo to='#'>OpOO</Logo>
         </LogoContainer>
 
         <SLinkContainer>
-          <LinkText to='/requests'>Requests</LinkText>
-          <LinkText to='/about'>About</LinkText>
-          <LinkText to='/faq'>FAQ</LinkText>
+          <LinkText to='#'>Requests</LinkText>
+          <LinkText to='#'>About</LinkText>
+          <LinkText to='#'>FAQ</LinkText>
         </SLinkContainer>
 
         <Icons>
-          <IconLink to='https://twitter.com'>
+          <IconLink to='#'>
             <Icon name='github' size='1.6rem' color={theme === 'light' ? 'black' : 'white'} />
           </IconLink>
 
-          <IconLink to='https://twitter.com'>
+          <IconLink to='#'>
             <Icon name='discord' size='1.6rem' color={theme === 'light' ? 'black' : 'white'} />
           </IconLink>
         </Icons>

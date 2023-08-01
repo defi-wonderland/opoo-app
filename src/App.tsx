@@ -1,6 +1,6 @@
 import '~/assets/fonts/opoo-icons/style.css';
 
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 import { RequestsDetails } from './pages/Requests/RequestsDetails';
 import { About, Landing, Requests } from '~/pages';
@@ -12,6 +12,8 @@ const AppRouter = () => {
   return (
     <Routes>
       <Route path={`/`} element={<AppLayout />}>
+        {/* temporary until we have a landing page */}
+        <Route path='/' element={<Navigate to='/requests' />} />
         <Route path={`/requests/`} element={<Requests />} />
         <Route path={`/requests/:id`} element={<RequestsDetails />} />
         <Route path={`/FAQ`} element={<Landing />} />

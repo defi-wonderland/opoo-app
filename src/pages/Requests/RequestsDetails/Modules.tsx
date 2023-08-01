@@ -1,52 +1,8 @@
 import styled from 'styled-components';
-import { Box, Text, Title } from '~/components';
+
+import { Box, Pill, Text, Title } from '~/components';
 import { useStateContext } from '~/hooks';
 import { MOBILE_MAX_WIDTH } from '~/utils';
-
-const SBox = styled(Box)`
-  background-color: ${({ theme: { type, backgroundPrimary, backgroundSecondary } }) =>
-    type !== 'light' ? backgroundSecondary : backgroundPrimary};
-  padding: 8rem 8rem;
-
-  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
-    padding: 3rem 3rem;
-  }
-`;
-
-const ModulesContainer = styled(Box)`
-  margin-top: 5rem;
-  gap: 2rem;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-
-  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
-    margin-top: 3rem;
-  }
-`;
-
-const ModuleCard = styled(Box)`
-  background-color: ${({ theme: { type, backgroundPrimary, backgroundSecondary } }) =>
-    type === 'light' ? backgroundSecondary : backgroundPrimary};
-  border-radius: ${({ theme }) => theme.borderRadius};
-  padding: 2rem;
-  max-width: 41.3rem;
-  height: 11rem;
-  justify-content: space-between;
-`;
-
-const MTitle = styled(Text)`
-  font-size: 1.8rem;
-`;
-
-const Description = styled(Text)`
-  color: ${({ theme }) => theme.textSecondary};
-  font-size: 1rem;
-`;
-
-const Address = styled(Text)`
-  font-size: 1.2rem;
-`;
 
 export const Modules = () => {
   const { modules } = useStateContext();
@@ -57,12 +13,55 @@ export const Modules = () => {
       <ModulesContainer>
         {modules.map((module, index) => (
           <ModuleCard key={'module-' + index}>
+            <Pill iconName='hashtag' text='3d4919c6b9...f368ae1ec2rth' size='1.6rem' copy />
             <MTitle>{module.name}</MTitle>
             <Description>{module.description}</Description>
-            <Address>{module.address}</Address>
           </ModuleCard>
         ))}
       </ModulesContainer>
     </SBox>
   );
 };
+
+const SBox = styled(Box)`
+  background-color: ${({ theme }) => theme.backgroundPrimary};
+  padding: 8rem 8rem;
+
+  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+    padding: 3rem 3rem;
+  }
+`;
+
+const ModulesContainer = styled(Box)`
+  margin-top: 5rem;
+  gap: 4rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+    margin-top: 3rem;
+  }
+`;
+
+const ModuleCard = styled(Box)`
+  background-color: ${({ theme }) => theme.backgroundSecondary};
+  border-radius: ${({ theme }) => theme.borderRadius};
+  padding: 2rem;
+  max-width: 40rem;
+  height: 16rem;
+  justify-content: space-between;
+`;
+
+const MTitle = styled(Text)`
+  font-size: 1.8rem;
+  padding: 1rem 0;
+`;
+
+const Description = styled(Text)`
+  color: #99a4b8;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px; /* 128.571% */
+`;

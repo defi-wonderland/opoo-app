@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Icon, SLink } from '~/components';
+import { Icon, SLink, Pill } from '~/components';
 import { useStateContext } from '~/hooks';
 import { RequestData } from '~/types';
 
@@ -17,15 +17,8 @@ export const RequestSection = ({ requests }: RequestSectionProps) => {
         <Card key={card.id + index}>
           {/* Header section */}
           <PillsContainer>
-            <Pill>
-              <Icon name='hashtag' size='1.6rem' />
-              <SecondaryText>{card.id}</SecondaryText>
-              <Icon name='copy' size='1.2rem' />
-            </Pill>
-            <Pill>
-              <Icon name='message' />
-              <SecondaryText>{card.status}</SecondaryText>
-            </Pill>
+            <Pill iconName='hashtag' size='1.6rem' text={card.id} copy />
+            <Pill iconName='message' text={card.status} />
           </PillsContainer>
 
           {/* Request number */}
@@ -50,7 +43,7 @@ export const RequestSection = ({ requests }: RequestSectionProps) => {
             <SLink to={`/requests/${card.id}`}>
               <DetailsButton onClick={() => setSelectedRequest(card)}>
                 <p>See details</p>
-                <Icon name='right-arrow' size='1rem' />
+                <Icon name='right-arrow' size='0.9rem' />
               </DetailsButton>
             </SLink>
           </CardFooter>
@@ -66,14 +59,15 @@ const RequestsSection = styled.section`
   flex-direction: row;
   flex-wrap: wrap;
   gap: 3rem;
-  justify-content: center;
-  align-items: center;
+  justify-content: start;
+  align-items: start;
 `;
 
 const Card = styled.div`
   position: relative;
-  background-color: ${({ theme }) => theme.backgroundPrimary};
+  background-color: ${({ theme }) => theme.cardBackground};
   border-radius: ${({ theme }) => theme.borderRadius};
+  border: ${({ theme }) => theme.border};
   width: 40.6rem;
   height: 21.2rem;
   gap: 1rem;
@@ -99,7 +93,7 @@ const DescriptionContainer = styled(DataContainer)`
 `;
 
 const PrimaryText = styled.p`
-  color: #000;
+  color: ${({ theme }) => theme.textPrimary};
   text-align: right;
   font-family: 'Open Sans';
   font-size: 10px;
@@ -108,7 +102,7 @@ const PrimaryText = styled.p`
   line-height: 14px; /* 140% */
 `;
 
-const SecondaryText = styled.p`
+export const SecondaryText = styled.p`
   display: inline-block;
   color: #99a4b8;
   font-family: 'Open Sans';
@@ -125,21 +119,9 @@ const PillsContainer = styled.div`
   gap: 0.8rem;
 `;
 
-const Pill = styled.div`
-  border: 1px solid rgba(153, 164, 184, 0.1);
-  border-radius: 100px;
-  width: fit-content;
-  padding: 0.4rem 0.8rem;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-`;
-
 // ------------------------------- Mid Section ------------------------------- //
 const RequestTitle = styled.h1`
-  color: #000;
+  color: ${({ theme }) => theme.textPrimary};
   font-family: 'Open Sans';
   font-size: 16px;
   font-style: normal;
@@ -150,13 +132,14 @@ const RequestTitle = styled.h1`
 
 // ------------------------------- Footer Section ------------------------------- //
 const DetailsButton = styled.button`
+  background-color: ${({ theme: { detailsBackground } }) => detailsBackground};
+  color: ${({ theme }) => theme.textPrimary};
   display: flex;
   height: 24px;
   padding: 4px 8px;
   align-items: center;
   gap: 8px;
   border-radius: 100px;
-  background: #f4f4f5;
   border: none;
   cursor: pointer;
   font-size: 1rem;

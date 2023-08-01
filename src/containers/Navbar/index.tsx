@@ -16,14 +16,14 @@ export const Navbar = () => {
   return (
     <SNavbar>
       <LogoContainer>
-        <Logo to='/'>OpOO</Logo>
+        <Logo to='/requests'>OpOO</Logo>
       </LogoContainer>
 
       <LinkContainer>
         <LinkText to='/requests'>Requests</LinkText>
-        <LinkText to='/about'>About</LinkText>
-        <LinkText to='/faq'>FAQ</LinkText>
-        <LinkText to='/docs'>Docs</LinkText>
+        <LinkText to='#'>About</LinkText>
+        <LinkText to='#'>FAQ</LinkText>
+        <LinkText to='#'>Docs</LinkText>
 
         <Icon name='menu' size='1.6rem' />
       </LinkContainer>

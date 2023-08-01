@@ -12,8 +12,8 @@ export const SNavbar = styled.div`
   justify-content: space-between;
   align-items: center;
   align-self: stretch;
-  background-color: #ffffff;
-  box-shadow: 0px 4px 0px 0px rgba(167, 176, 192, 0.16);
+  background-color: ${({ theme }) => theme.headerBackground};
+  border-bottom: ${({ theme }) => theme.border};
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     padding: 0 3rem;
@@ -94,7 +94,7 @@ export const Icons = styled.div`
 
 export const IconLink = styled(LinkText)`
   color: unset;
-  background-color: ${({ theme }) => theme.backgroundSecondary};
+  background-color: ${({ theme: { iconBackground } }) => iconBackground};
   border-radius: ${({ theme }) => theme.borderRadius};
   width: 4.8rem;
   height: 4rem;
