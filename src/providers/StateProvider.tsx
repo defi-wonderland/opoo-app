@@ -11,8 +11,8 @@ type ContextType = {
   requests: RequestData[];
   setRequests: (val: RequestData[]) => void;
 
-  selectedRequest: RequestData | null;
-  setSelectedRequest: (val: RequestData | null) => void;
+  selectedRequest: RequestData;
+  setSelectedRequest: (val: RequestData) => void;
 
   theme: ThemeName;
   setTheme: (val: ThemeName) => void;
@@ -30,7 +30,7 @@ export const StateContext = createContext({} as ContextType);
 export const StateProvider = ({ children }: StateProps) => {
   const [type, setType] = useState<string | null>(null);
   const [theme, setTheme] = useState<ThemeName>('light');
-  const [selectedRequest, setSelectedRequest] = useState<RequestData | null>(null);
+  const [selectedRequest, setSelectedRequest] = useState<RequestData>({} as RequestData);
   const [requests, setRequests] = useState<RequestData[]>([]);
   const [filters, setFilters] = useState<Filter[]>([]);
   const [modules, setModules] = useState<Modules[]>([]);
@@ -44,7 +44,7 @@ export const StateProvider = ({ children }: StateProps) => {
         id: '3d4919c6b9f368ae1ec1',
         createdAt: 'Mon, 15 May 2023 19:28:47 GMT',
         requester: '0x388c818cccb192971',
-        status: 'Unanswered',
+        status: 'disputed',
         transaction: '0xaae85b6e43e533069b2615a94127f9ea5fabed195412725fe',
       },
       {
@@ -53,7 +53,7 @@ export const StateProvider = ({ children }: StateProps) => {
         id: '3d4919c6b9f368ae1ec2',
         createdAt: 'Mon, 15 May 2023 19:28:47 GMT',
         requester: '0x388c818cccb192972',
-        status: 'Finalized',
+        status: 'message',
         transaction: '0xaae85b6e43e533069b2615a94127f9ea5fabed195412725fe',
       },
       {
@@ -62,7 +62,7 @@ export const StateProvider = ({ children }: StateProps) => {
         id: '3d4919c6b9f368ae1ec3',
         createdAt: 'Mon, 15 May 2023 19:28:47 GMT',
         requester: '0x388c818cccb192973',
-        status: 'Disputed',
+        status: 'finalized',
         transaction: '0xaae85b6e43e533069b2615a94127f9ea5fabed195412725fe',
       },
       {
@@ -71,7 +71,7 @@ export const StateProvider = ({ children }: StateProps) => {
         id: '3d4919c6b9f368ae1ec4',
         createdAt: 'Mon, 15 May 2023 19:28:47 GMT',
         requester: '0x388c818cccb192973',
-        status: 'Finalized',
+        status: 'unanswered',
         transaction: '0xaae85b6e43e533069b2615a94127f9ea5fabed195412725fe',
       },
       {
@@ -80,7 +80,7 @@ export const StateProvider = ({ children }: StateProps) => {
         id: '3d4919c6b9f368ae1ec5',
         createdAt: 'Mon, 15 May 2023 19:28:47 GMT',
         requester: '0x388c818cccb192973',
-        status: 'Disputed',
+        status: 'unanswered',
         transaction: '0xaae85b6e43e533069b2615a94127f9ea5fabed195412725fe',
       },
     ];

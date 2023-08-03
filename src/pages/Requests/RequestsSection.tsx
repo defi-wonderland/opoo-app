@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Icon, SLink, Pill } from '~/components';
 import { useStateContext } from '~/hooks';
 import { RequestData } from '~/types';
+import { statusMsg } from '~/utils';
 
 interface RequestSectionProps {
   requests: RequestData[];
@@ -17,8 +18,8 @@ export const RequestSection = ({ requests }: RequestSectionProps) => {
         <Card key={card.id + index}>
           {/* Header section */}
           <PillsContainer>
-            <Pill iconName='hashtag' size='1.6rem' text={card.id} copy />
-            <Pill iconName='message' text={card.status} />
+            <Pill iconName='hashtag' size='1.2rem' text={card.id} copy />
+            <Pill iconName={card.status} text={statusMsg(card.status)} size='1.3rem' />
           </PillsContainer>
 
           {/* Request number */}

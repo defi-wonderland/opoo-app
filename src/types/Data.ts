@@ -1,6 +1,6 @@
 import { IconName } from '~/components';
 
-export type StatusName = 'Disputed' | 'Finalized' | 'Unanswered';
+export type StatusName = 'disputed' | 'message' | 'unanswered' | 'finalized';
 
 export interface RequestData {
   description: string;

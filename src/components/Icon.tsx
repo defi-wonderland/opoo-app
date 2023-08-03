@@ -10,10 +10,10 @@ export type IconName =
   | 'github'
   | 'hashtag'
   | 'menu'
-  | 'message'
   | 'moon'
   | 'right-arrow'
-  | 'sun';
+  | 'sun'
+  | StatusName;
 
 export const Icon = styled.i.attrs<{ name: IconName }>((props) => ({
   className: `icon-${props.name}`,

@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 import { Title, Box, Text, Pill, Icon } from '~/components';
+import { MOBILE_MAX_WIDTH, statusMsg } from '~/utils';
 import { useStateContext } from '~/hooks';
-import { MOBILE_MAX_WIDTH } from '~/utils';
 
 interface DetailsProps {
   id?: string;
@@ -24,7 +24,7 @@ export const Details = ({ id }: DetailsProps) => {
         <SDataContainer>
           <Text>ID: </Text>
           <Text>{selectedRequest?.id}</Text>
-          <Icon name='copy' />
+          <Icon name='copy' size='1.2rem' />
         </SDataContainer>
 
         <SDataContainer>
@@ -34,7 +34,7 @@ export const Details = ({ id }: DetailsProps) => {
 
         <SDataContainer>
           <Text>Status:</Text>
-          <Pill iconName='message' text={selectedRequest?.status} fontSize='1.4rem' />
+          <Pill iconName={selectedRequest.status} text={statusMsg(selectedRequest.status)} fontSize='1.3rem' />
         </SDataContainer>
       </DetailsContainer>
     </SBox>

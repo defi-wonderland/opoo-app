@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'OpooFont';
-  src: url('fonts/OpooFont.eot?xgh7yl');
+  src: url('fonts/OpooFont.eot?rhsjoq');
   src:
-    url('fonts/OpooFont.eot?xgh7yl#iefix') format('embedded-opentype'),
-    url('fonts/OpooFont.ttf?xgh7yl') format('truetype'),
-    url('fonts/OpooFont.woff?xgh7yl') format('woff'),
-    url('fonts/OpooFont.svg?xgh7yl#OpooFont') format('svg');
+    url('fonts/OpooFont.eot?rhsjoq#iefix') format('embedded-opentype'),
+    url('fonts/OpooFont.ttf?rhsjoq') format('truetype'),
+    url('fonts/OpooFont.woff?rhsjoq') format('woff'),
+    url('fonts/OpooFont.svg?rhsjoq#OpooFont') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -48,21 +48,33 @@
   content: '\e905';
   color: #ff0420;
 }
-.icon-menu:before {
+.icon-disputed:before {
   content: '\e906';
+  color: #ff0420;
+}
+.icon-menu:before {
+  content: '\e907';
 }
 .icon-message:before {
-  content: '\e907';
+  content: '\e908';
   color: #ff0420;
 }
 .icon-moon:before {
-  content: '\e908';
+  content: '\e909';
   color: #f2c94c;
+}
+.icon-unanswered:before {
+  content: '\e90a';
+  color: #ff0420;
 }
 .icon-right-arrow:before {
-  content: '\e909';
+  content: '\e90b';
 }
 .icon-sun:before {
-  content: '\e90a';
+  content: '\e90c';
   color: #f2c94c;
+}
+.icon-finalized:before {
+  content: '\e90d';
+  color: #ff0420;
 }
