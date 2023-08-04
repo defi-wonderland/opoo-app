@@ -52,7 +52,7 @@ export const Footer = () => {
           </IconLink>
         </Icons>
       </TopSection>
-      <Text>© 2023 OPoo</Text>
+      <Text>© 2023 OpOO</Text>
     </FooterContainer>
   );
 };

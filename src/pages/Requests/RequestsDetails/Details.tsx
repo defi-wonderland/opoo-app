@@ -17,18 +17,18 @@ export const Details = ({ id }: DetailsProps) => {
 
       <DetailsContainer>
         <SDataContainer>
-          <Text>Description:</Text>
+          <Text>Description</Text>
           <Text>{selectedRequest?.description}</Text>
         </SDataContainer>
 
         <SDataContainer>
-          <Text>ID: </Text>
+          <Text>ID</Text>
           <Text>{selectedRequest?.id}</Text>
           <Icon name='copy' size='1.2rem' />
         </SDataContainer>
 
         <SDataContainer>
-          <Text>Created at:</Text>
+          <Text>Created at</Text>
           <Text>{selectedRequest?.createdAt}</Text>
         </SDataContainer>
 
@@ -78,7 +78,7 @@ const SDataContainer = styled.div`
   p:nth-child(1) {
     width: 14rem;
     min-width: 14rem;
-    color: #99a4b8;
+    color: ${({ theme }) => theme.textSecondary};
   }
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {

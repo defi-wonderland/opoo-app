@@ -1,18 +1,21 @@
 import styled from 'styled-components';
 
 import { Box, Pill, Text, Title } from '~/components';
-import { useStateContext } from '~/hooks';
+import { useModal, useStateContext } from '~/hooks';
 import { MOBILE_MAX_WIDTH } from '~/utils';
 
 export const Modules = () => {
   const { modules } = useStateContext();
+  const { setOpen } = useModal();
+
+  const handleModal = () => setOpen(true);
 
   return (
     <SBox>
       <Title>Modules</Title>
       <ModulesContainer>
         {modules.map((module, index) => (
-          <ModuleCard key={'module-' + index}>
+          <ModuleCard key={'module-' + index} onClick={handleModal}>
             <Pill iconName='hashtag' text='3d4919c6b9...f368ae1ec2rth' size='1.6rem' copy />
             <MTitle>{module.name}</MTitle>
             <Description>{module.description}</Description>
@@ -51,6 +54,7 @@ const ModuleCard = styled(Box)`
   max-width: 40rem;
   height: 16rem;
   justify-content: space-between;
+  cursor: pointer;
 `;
 
 const MTitle = styled(Text)`
@@ -59,7 +63,7 @@ const MTitle = styled(Text)`
 `;
 
 const Description = styled(Text)`
-  color: #99a4b8;
+  color: ${({ theme }) => theme.textSecondary};
   font-size: 14px;
   font-style: normal;
   font-weight: 400;

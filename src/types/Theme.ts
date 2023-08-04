@@ -15,6 +15,7 @@ export interface Theme {
   cardBackground: string;
   headerBackground: string;
   iconBackground: string;
+  close: string;
   tableHeaderBackground: string;
   border: string;
   green: string;

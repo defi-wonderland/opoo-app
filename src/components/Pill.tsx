@@ -16,7 +16,7 @@ export const SPill = styled.div`
 
 const TextPill = styled.p<{ fontSize?: string }>`
   display: inline-block;
-  color: #99a4b8;
+  color: ${({ theme }) => theme.textSecondary};
   font-family: 'Open Sans';
   font-size: ${({ fontSize }) => fontSize || '1rem'};
   font-style: normal;

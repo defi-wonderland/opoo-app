@@ -4,7 +4,7 @@ export const darkTheme: Theme = {
   type: 'dark',
   titleColor: '#ff0420',
   textPrimary: '#ffffff',
-  textSecondary: '#AEAEAE',
+  textSecondary: '#99A4B8',
   backgroundPrimary: '#000000',
   backgroundSecondary: '#1A191F',
   pillBackground: 'transparent',
@@ -21,6 +21,7 @@ export const darkTheme: Theme = {
   green: '#00cb6a',
   red: '#ff0420',
   yellow: '#efbe24',
+  close: '#26262E',
 };
 
 export const lightTheme: Theme = {
@@ -44,4 +45,5 @@ export const lightTheme: Theme = {
   green: '#00cb6a',
   red: '#ff0420',
   yellow: '#efbe24',
+  close: '#ffffff',
 };

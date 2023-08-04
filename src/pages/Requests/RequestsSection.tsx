@@ -105,7 +105,7 @@ const PrimaryText = styled.p`
 
 export const SecondaryText = styled.p`
   display: inline-block;
-  color: #99a4b8;
+  color: ${({ theme }) => theme.textSecondary};
   font-family: 'Open Sans';
   font-size: 10px;
   font-style: normal;

@@ -7,6 +7,8 @@ import { About, Landing, Requests } from '~/pages';
 import { AppLayout } from './containers/Layout';
 import { Themable } from './components/Theme';
 import { StateProvider } from './providers/StateProvider';
+import { ModalProvider } from './providers';
+import { Modals } from './containers/Modal/Modal';
 
 const AppRouter = () => {
   return (
@@ -26,11 +28,14 @@ const AppRouter = () => {
 
 function App() {
   return (
-    <StateProvider>
-      <Themable>
-        <AppRouter />
-      </Themable>
-    </StateProvider>
+    <ModalProvider>
+      <StateProvider>
+        <Themable>
+          <Modals />
+          <AppRouter />
+        </Themable>
+      </StateProvider>
+    </ModalProvider>
   );
 }
 
