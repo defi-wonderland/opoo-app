@@ -1,27 +1,46 @@
-# React + TypeScript + Vite
+# Optimistic Oracle App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+OpOO App is the official explorer for OpOO, a versatile and fully adaptable optimistic oracle solution that transcends the boundaries of conventional dispute resolution modules. With its emphasis on complete control and modularity across all aspects of the system, OpOO serves as an open-source public good for the Optimism community.
 
-Currently, two official plugins are available:
+## Development
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+To set up the development environment, follow these steps:
 
-## Expanding the ESLint configuration
+1. Clone the repository:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+```bash
+git clone [this repo link] && cd [opoo-app]
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+2. Install dependencies:
+
+```bash
+yarn
+```
+
+3. Start the app:
+
+```bash
+yarn dev
+```
+
+The app should be live at [http://localhost:5173/](http://localhost:5173/)
+
+## Production
+
+To build the production version of the app and preview it, use the following commands:
+
+```bash
+yarn build
+yarn preview
+```
+
+The app should be live at [http://localhost:4173/](http://localhost:4173/)
+
+## Contributors
+
+Optimistic Oracle SDK was built with ❤️ by [Wonderland](https://defi.sucks).
+
+Wonderland is a team of top Web3 researchers, developers, and operators who believe that the future needs to be open-source, permissionless, and decentralized.
+
+[DeFi sucks](https://defi.sucks), but Wonderland is here to make it better.
