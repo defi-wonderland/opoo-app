@@ -16,7 +16,8 @@ export const Modules = () => {
       <ModulesContainer>
         {modules.map((module, index) => (
           <ModuleCard key={'module-' + index} onClick={handleModal}>
-            <Pill iconName='hashtag' text='3d4919c6b9...f368ae1ec2rth' size='1.6rem' copy />
+            {/* temporary text */}
+            <Pill iconName='hashtag' text='3d4919c6b9...f368ae1ec2rth' size='1.3rem' copy />
             <MTitle>{module.name}</MTitle>
             <Description>{module.description}</Description>
           </ModuleCard>
@@ -44,6 +45,7 @@ const ModulesContainer = styled(Box)`
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     margin-top: 3rem;
+    gap: 1rem;
   }
 `;
 
@@ -55,6 +57,11 @@ const ModuleCard = styled(Box)`
   height: 16rem;
   justify-content: space-between;
   cursor: pointer;
+
+  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+    border: ${({ theme }) => theme.border};
+    height: auto;
+  }
 `;
 
 const MTitle = styled(Text)`

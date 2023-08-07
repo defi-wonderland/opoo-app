@@ -11,7 +11,7 @@ export const SPill = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
+  gap: 0.6rem;
 `;
 
 const TextPill = styled.p<{ fontSize?: string }>`

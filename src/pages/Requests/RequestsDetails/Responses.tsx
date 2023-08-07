@@ -49,10 +49,11 @@ export const Responses = () => {
 };
 
 const ResponsesContainer = styled(Box)`
-  padding: 8rem 8rem;
   background-color: ${({ theme: { backgroundSecondary } }) => backgroundSecondary};
+  padding: 8rem 8rem;
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+    background-color: ${({ theme: { backgroundPrimary } }) => backgroundPrimary};
     padding: 3rem 3rem;
   }
 `;
@@ -60,20 +61,24 @@ const ResponsesContainer = styled(Box)`
 const Row = styled(Box)`
   background-color: ${({ theme: { backgroundPrimary } }) => backgroundPrimary};
   flex-direction: row;
+  gap: 0.6rem;
   padding: 1.2rem 0;
-  /* margin-bottom: 0.5rem; */
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+    background-color: ${({ theme: { backgroundSecondary } }) => backgroundSecondary};
+    border: ${({ theme }) => theme.border};
     flex-wrap: wrap;
     height: auto;
     padding: 2rem;
+    margin-bottom: 1rem;
+    border-radius: 1.2rem;
   }
 `;
 
 const ColumnTitles = styled(Row)`
-  border-radius: 8px 8px 0px 0px;
-  border: ${({ theme }) => theme.border};
   background: ${({ theme }) => theme.tableHeaderBackground};
+  border: ${({ theme }) => theme.border};
+  border-radius: 8px 8px 0px 0px;
   padding-left: 3rem;
 
   div {
@@ -87,9 +92,14 @@ const ColumnTitles = styled(Row)`
 `;
 
 const Rows = styled(Box)`
-  border-radius: 0px 0px 4px 4px;
   border: ${({ theme }) => theme.border};
+  border-radius: 0px 0px 4px 4px;
   overflow: hidden;
+
+  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+    background-color: ${({ theme: { backgroundPrimary } }) => backgroundPrimary};
+    border: none;
+  }
 `;
 
 const SBox = styled(Box)`
@@ -114,6 +124,10 @@ const SBox = styled(Box)`
     p:nth-child(1) {
       display: block;
     }
+
+    p:nth-child(2) {
+      color: ${({ theme }) => theme.textPrimary};
+    }
   }
 `;
 
@@ -121,6 +135,7 @@ const TableContainer = styled(Box)`
   margin-top: 5rem;
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+    background-color: ${({ theme: { backgroundSecondary } }) => backgroundSecondary};
     margin-top: 2rem;
   }
 `;
@@ -144,10 +159,10 @@ const TableTitle = styled(Text)`
 `;
 
 const SText = styled(Text)`
+  color: ${({ theme }) => theme.textSecondary};
   width: 100%;
   text-align: start;
   font-size: 1.8rem;
-  color: ${({ theme }) => theme.textSecondary};
   font-family: Open Sans;
   font-size: 1.2rem;
   font-style: normal;

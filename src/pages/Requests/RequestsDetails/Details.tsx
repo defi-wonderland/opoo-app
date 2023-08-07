@@ -23,8 +23,10 @@ export const Details = ({ id }: DetailsProps) => {
 
         <SDataContainer>
           <Text>ID</Text>
-          <Text>{selectedRequest?.id}</Text>
-          <Icon name='copy' size='1.2rem' />
+          <IdData>
+            <Text>{selectedRequest?.id}</Text>
+            <Icon name='copy' size='1.2rem' />
+          </IdData>
         </SDataContainer>
 
         <SDataContainer>
@@ -43,7 +45,6 @@ export const Details = ({ id }: DetailsProps) => {
 
 const SBox = styled(Box)`
   background-color: ${({ theme }) => theme.backgroundPrimary};
-
   padding: 4rem 8rem 8rem;
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
@@ -53,7 +54,6 @@ const SBox = styled(Box)`
 
 const DetailsContainer = styled.div`
   background-color: ${({ theme }) => theme.backgroundSecondary};
-
   margin-top: 3rem;
   width: 100%;
   border-radius: 20px;
@@ -64,7 +64,9 @@ const DetailsContainer = styled.div`
   }
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+    border: ${({ theme }) => theme.border};
     margin-top: 2rem;
+    padding: 2rem;
   }
 `;
 
@@ -72,13 +74,13 @@ const SDataContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: 2rem;
-  align-items: center;
+  align-items: start;
   padding: 0.5rem 0;
 
   p:nth-child(1) {
+    color: ${({ theme }) => theme.textSecondary};
     width: 14rem;
     min-width: 14rem;
-    color: ${({ theme }) => theme.textSecondary};
   }
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
@@ -91,5 +93,18 @@ const SDataContainer = styled.div`
       /* inline-size: 23rem; */
       overflow-wrap: break-word;
     }
+  }
+`;
+
+const IdData = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+
+  p:nth-child(1) {
+    display: inline-block;
+    width: unset;
   }
 `;
