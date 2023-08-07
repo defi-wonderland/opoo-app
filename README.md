@@ -39,7 +39,7 @@ The app should be live at [http://localhost:4173/](http://localhost:4173/)
 
 ## Contributors
 
-Optimistic Oracle SDK was built with ❤️ by [Wonderland](https://defi.sucks).
+Optimistic Oracle App was built with ❤️ by [Wonderland](https://defi.sucks).
 
 Wonderland is a team of top Web3 researchers, developers, and operators who believe that the future needs to be open-source, permissionless, and decentralized.
 

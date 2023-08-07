@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
-import { IconLink, Icons, LinkContainer, LinkText, Logo, LogoContainer } from '../Navbar/Navbar.styles';
+import { IconLink, Icons, LinkText, Logo, LogoContainer } from '../Navbar/Navbar.styles';
 import { useStateContext } from '~/hooks';
 import { Icon, Text } from '~/components';
+import { MOBILE_MAX_WIDTH } from '~/utils';
 
 const FooterContainer = styled.div`
   width: 100%;
@@ -13,6 +14,10 @@ const FooterContainer = styled.div`
   flex-direction: column;
   gap: 1rem;
   border-top: ${({ theme }) => theme.border};
+
+  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+    padding: 3rem 2.4rem;
+  }
 `;
 
 const TopSection = styled.div`
@@ -20,11 +25,23 @@ const TopSection = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
-const SLinkContainer = styled(LinkContainer)`
+const SLinkContainer = styled.div`
   gap: 15rem;
   padding: 0 3rem;
+
+  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+    display: flex;
+    flex-direction: row;
+    gap: 6rem;
+    padding: 2rem 0;
+  }
 `;
 
 export const Footer = () => {

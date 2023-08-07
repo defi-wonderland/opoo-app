@@ -47,7 +47,7 @@ const SBox = styled(Box)`
   padding: 4rem 8rem 8rem;
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
-    padding: 8rem 3rem 3rem;
+    padding: 12rem 3rem 3rem;
   }
 `;
 

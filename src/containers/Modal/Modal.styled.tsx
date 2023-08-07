@@ -18,7 +18,7 @@ export const StyledModals = styled(TransitionGroup)`
   .slideBottom-enter {
     opacity: 0;
     transform: translate3d(0, 100vh, 0);
-    transition:/*  opacity 200ms ease, */ transform 200ms ease;
+    transition: all 200ms ease;
   }
   .slideBottom-enter-active {
     opacity: 1;
@@ -27,7 +27,7 @@ export const StyledModals = styled(TransitionGroup)`
   .slideBottom-exit-active {
     opacity: 0;
     transform: translate3d(0, 100vh, 0);
-    transition: /* opacity 200ms ease, */ transform 200ms cubic-bezier(1, 0.5, 0.8, 1);
+    transition: all 200ms cubic-bezier(1, 0.5, 0.8, 1);
   }
 
   .opacity-enter {

@@ -4,11 +4,16 @@ import { RequestSection } from './RequestsSection';
 // import { FiltersSection } from './FiltersSection';
 import { Title } from '~/components';
 import { useStateContext } from '~/hooks';
+import { MOBILE_MAX_WIDTH } from '~/utils';
 
 const Layout = styled.div`
   background-color: ${({ theme: { iconBackground } }) => iconBackground};
   width: 100%;
   padding: 12rem 8rem;
+
+  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+    padding: 12rem 1.6rem 0;
+  }
 `;
 
 const Container = styled.div`
