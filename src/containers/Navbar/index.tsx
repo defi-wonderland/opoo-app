@@ -18,8 +18,8 @@ export const Navbar = () => {
     }
   };
 
-  const handleOpenMenu = () => {
-    setMenuOpen(!menuOpen);
+  const handleCloseMenu = () => {
+    setMenuOpen(false);
   };
 
   return (
@@ -32,23 +32,23 @@ export const Navbar = () => {
       {/* Navbar Links */}
       <CSSTransition in={menuOpen} timeout={animationDuration} classNames='slide'>
         <LinkContainer className={menuOpen ? 'show-links' : 'hidden'}>
-          <LinkText onClick={handleOpenMenu} to='/requests'>
+          <LinkText onClick={handleCloseMenu} to='/requests'>
             Requests
           </LinkText>
-          <LinkText onClick={handleOpenMenu} to='#'>
+          <LinkText onClick={handleCloseMenu} to='#'>
             About
           </LinkText>
-          <LinkText onClick={handleOpenMenu} to='#'>
+          <LinkText onClick={handleCloseMenu} to='#'>
             FAQ
           </LinkText>
-          <LinkText onClick={handleOpenMenu} to='#'>
+          <LinkText onClick={handleCloseMenu} to='#'>
             Docs
           </LinkText>
         </LinkContainer>
       </CSSTransition>
 
       {/* Menu Button (Mobile) */}
-      <MenuButton onClick={handleOpenMenu}>
+      <MenuButton onClick={() => setMenuOpen(!menuOpen)}>
         <Icon name='menu' size='2rem' />
       </MenuButton>
 
