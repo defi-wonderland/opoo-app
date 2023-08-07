@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
 import { useModal } from '~/hooks';
-import { StyledBackdrop, StyledModals } from './Modal.styled';
+import { StyledBackdrop, StyledModals, ModalContainer } from './Modal.styled';
 import { Box } from '~/components/Box';
 import { BaseModal } from '~/components';
 
@@ -24,8 +24,8 @@ export const Modals = () => {
     <StyledModals>
       {/* //////////////////////////// BACKDROP ///////////////////////////// */}
       {open && (
-        <CSSTransition nodeRef={modalRef} timeout={modalTimeout} classNames='opacity'>
-          <StyledBackdrop ref={modalRef}>
+        <CSSTransition nodeRef={backdropRef} timeout={modalTimeout} classNames='opacity'>
+          <StyledBackdrop ref={backdropRef}>
             <Backdrop setOpen={setOpen} />
           </StyledBackdrop>
         </CSSTransition>
@@ -33,8 +33,10 @@ export const Modals = () => {
 
       {/* //////////////////////////// MODALS ///////////////////////////// */}
       {open && (
-        <CSSTransition nodeRef={backdropRef} in={open} timeout={modalTimeout} classNames='slideBottom'>
-          <BaseModal />
+        <CSSTransition nodeRef={modalRef} in={open} timeout={modalTimeout} classNames='slideBottom'>
+          <ModalContainer ref={modalRef}>
+            <BaseModal setOpen={setOpen} />
+          </ModalContainer>
         </CSSTransition>
       )}
     </StyledModals>

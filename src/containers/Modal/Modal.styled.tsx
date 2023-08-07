@@ -2,6 +2,7 @@ import { TransitionGroup } from 'react-transition-group';
 import styled from 'styled-components';
 
 import { Box } from '~/components';
+import { MOBILE_MAX_WIDTH } from '~/utils';
 
 export const StyledModals = styled(TransitionGroup)`
   position: fixed;
@@ -41,6 +42,24 @@ export const StyledModals = styled(TransitionGroup)`
     opacity: 0;
     transition: opacity 200ms ease-in-out;
   }
+
+  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+    .slideBottom-enter {
+      opacity: 0;
+      transform: unset;
+      transition: unset;
+    }
+    .slideBottom-enter-active {
+      opacity: 1;
+      transform: unset;
+      transition: unset;
+    }
+    .slideBottom-exit-active {
+      opacity: 0;
+      transform: unset;
+      transition: unset;
+    }
+  }
 `;
 
 export const StyledBackdrop = styled(Box)`
@@ -52,4 +71,8 @@ export const StyledBackdrop = styled(Box)`
   pointer-events: all;
   background-color: rgba(0, 0, 0, 0.699);
   cursor: pointer;
+`;
+
+export const ModalContainer = styled.div`
+  z-index: 10;
 `;

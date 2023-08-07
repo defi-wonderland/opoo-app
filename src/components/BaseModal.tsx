@@ -3,7 +3,10 @@ import styled from 'styled-components';
 import { Icon, Pill, Box, Text } from '~/components';
 import { MOBILE_MAX_WIDTH } from '~/utils';
 
-export const BaseModal = () => {
+interface BaseModalProps {
+  setOpen: (val: boolean) => void;
+}
+export const BaseModal = ({ setOpen }: BaseModalProps) => {
   return (
     <SModal>
       <MHeader>
@@ -11,7 +14,7 @@ export const BaseModal = () => {
           <h1>Http Request Module</h1>
           <Pill iconName='hashtag' text='3d4919c6b9...f368ae1ec2rth' copy />
         </div>
-        <CloseIcon name='close' size='1.2rem' />
+        <CloseIcon name='close' size='1.2rem' onClick={() => setOpen(false)} />
       </MHeader>
 
       <MBody>
@@ -64,10 +67,17 @@ export const SModal = styled(Box)`
   border: ${({ theme }) => theme.border};
   background-color: ${({ theme }) => theme.backgroundSecondary};
   width: 88.8rem;
-  z-index: 10;
   height: fit-content;
   pointer-events: all;
   overflow: hidden;
+
+  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+    width: 100%;
+    position: absolute;
+    border-radius: 3.6rem 3.6rem 0 0;
+    bottom: 0;
+    left: 0;
+  }
 `;
 
 const MHeader = styled(Box)`
@@ -94,6 +104,14 @@ const MHeader = styled(Box)`
     font-weight: 600;
     line-height: 3rem; /* 125% */
   }
+
+  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+    padding: 2.4rem 1.6rem;
+    align-items: start;
+    h1 {
+      color: ${({ theme }) => theme.red};
+    }
+  }
 `;
 
 const MBody = styled.div`
@@ -101,6 +119,13 @@ const MBody = styled.div`
   background-color: ${({ theme }) => theme.backgroundPrimary};
   padding: 2.4rem 3rem;
   border-radius: 1.2rem;
+
+  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+    background-color: ${({ theme }) => theme.backgroundPrimary};
+    padding: 0;
+    overflow-y: scroll;
+    max-height: 70vh;
+  }
 `;
 
 const Content = styled.div`
@@ -114,6 +139,12 @@ const Content = styled.div`
   border-radius: 1.2rem;
   max-width: 100%;
   width: 100%;
+
+  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+    gap: 1rem;
+    padding: 2rem 2rem;
+    background-color: ${({ theme }) => theme.backgroundPrimary};
+  }
 `;
 
 const SDataContainer = styled.div`
@@ -125,18 +156,22 @@ const SDataContainer = styled.div`
   align-items: start;
 
   p:first-child {
+    word-break: unset;
     width: 24rem;
     color: ${({ theme }) => theme.textSecondary};
   }
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     p:nth-child(1) {
-      width: 6.5rem;
-      min-width: 6.5rem;
+      width: 12rem;
+      min-width: 12rem;
+    }
+    p:nth-child(2) {
+      word-break: break-all;
     }
 
     p {
-      /* inline-size: 23rem; */
+      font-size: 1.4rem;
       overflow-wrap: break-word;
     }
   }
@@ -146,6 +181,12 @@ const CloseIcon = styled(Icon)`
   border-radius: 100%;
   background-color: ${({ theme }) => theme.close};
   padding: 1.2rem;
+  cursor: pointer;
+
+  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+    padding: 0.8rem;
+    margin-top: 0.2rem;
+  }
 `;
 
 const SText = styled(Text)`

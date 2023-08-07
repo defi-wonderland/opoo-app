@@ -21,3 +21,22 @@ body {
   font-family: 'Open Sans', sans-serif;
   background-color: #f4f4f5;
 }
+
+body::-webkit-scrollbar {
+  width: 0.6rem;
+  background: inherit;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 0.4rem;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 0.2rem 0.1rem rgba(0, 0, 0, 0.2);
+}
+
+body::-webkit-scrollbar-thumb:active {
+  background-color: rgba(0, 0, 0, 0.2);
+}
