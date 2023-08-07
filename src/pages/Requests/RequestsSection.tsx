@@ -56,6 +56,7 @@ export const RequestSection = ({ requests }: RequestSectionProps) => {
 
 const RequestsSection = styled.section`
   margin-top: 4rem;
+  padding-bottom: 4rem;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
