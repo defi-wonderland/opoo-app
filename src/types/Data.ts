@@ -5,10 +5,11 @@ export type StatusName = 'disputed' | 'message' | 'unanswered' | 'finalized';
 export interface RequestData {
   description: string;
   id: string;
+  nonce: string;
   createdAt: string;
   requester: string;
   status: StatusName;
-  transaction: string;
+  responses: string[][];
 }
 
 export interface Filter {

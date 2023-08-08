@@ -1,10 +1,9 @@
-import { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { RequestSection } from './RequestsSection';
 // import { FiltersSection } from './FiltersSection';
 import { Title } from '~/components';
-import { useOpooSdk, useStateContext } from '~/hooks';
+import { useStateContext } from '~/hooks';
 import { MOBILE_MAX_WIDTH } from '~/utils';
 
 const Layout = styled.div`
@@ -27,13 +26,6 @@ const Container = styled.div`
 
 export const Requests = () => {
   const { requests /* filters */ } = useStateContext();
-
-  const { opooSdk } = useOpooSdk();
-
-  // temporary log
-  useEffect(() => {
-    console.log(opooSdk);
-  }, []);
 
   return (
     <Layout>

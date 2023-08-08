@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Icon, SLink, Pill } from '~/components';
 import { useStateContext } from '~/hooks';
 import { RequestData } from '~/types';
-import { statusMsg } from '~/utils';
+import { statusMsg, truncateString } from '~/utils';
 
 interface RequestSectionProps {
   requests: RequestData[];
@@ -18,17 +18,17 @@ export const RequestSection = ({ requests }: RequestSectionProps) => {
         <Card key={card.id + index}>
           {/* Header section */}
           <PillsContainer>
-            <Pill iconName='hashtag' size='1.2rem' text={card.id} copy />
+            <Pill iconName='hashtag' size='1.2rem' text={truncateString(card.id, 9)} copy />
             <Pill iconName={card.status} text={statusMsg(card.status)} size='1.3rem' />
           </PillsContainer>
 
           {/* Request number */}
-          <RequestTitle>Request #{index}</RequestTitle>
+          <RequestTitle>Request #{card.nonce}</RequestTitle>
 
           {/* Requester section */}
           <DataContainer>
             <SecondaryText>By</SecondaryText>
-            <PrimaryText>{card.requester}</PrimaryText>
+            <PrimaryText>{truncateString(card.requester, 4)}</PrimaryText>
           </DataContainer>
 
           {/* Description */}
@@ -39,7 +39,7 @@ export const RequestSection = ({ requests }: RequestSectionProps) => {
           {/* Footer section */}
           <CardFooter>
             <DataContainer>
-              <PrimaryText>By {card.createdAt}</PrimaryText>
+              <PrimaryText>{card.createdAt}</PrimaryText>
             </DataContainer>
             <SLink to={`/requests/${card.id}`}>
               <DetailsButton onClick={() => setSelectedRequest(card)}>

@@ -1,5 +1,9 @@
 import { createContext, useEffect, useState } from 'react';
+import { AbiCoder, toUtf8String } from 'ethers';
+
 import { Filter, Modules, RequestData, ThemeName } from '~/types';
+import { getDate, getStatus, truncateString } from '~/utils';
+import { useOpooSdk } from '~/hooks';
 
 type ContextType = {
   modules: Modules[];
@@ -19,6 +23,9 @@ type ContextType = {
 
   type: string | null;
   setType: (val: string | null) => void;
+
+  loading: boolean;
+  setLoading: (val: boolean) => void;
 };
 
 interface StateProps {
@@ -34,56 +41,59 @@ export const StateProvider = ({ children }: StateProps) => {
   const [requests, setRequests] = useState<RequestData[]>([]);
   const [filters, setFilters] = useState<Filter[]>([]);
   const [modules, setModules] = useState<Modules[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const { opooSdk } = useOpooSdk();
+
+  const getRequests = async () => {
+    setLoading(true);
+    // temporary logs
+    console.log('loading requests...');
+    try {
+      console.log('opooSdk', opooSdk);
+      const rawRequests = await opooSdk.batching.getFullRequestData(128, 9);
+      console.log('rawFulRequests', rawRequests);
+
+      const requestsData = rawRequests.map(async (fulRequest) => {
+        const returnTypes = await opooSdk.modules.getNamedDecodeRequestReturnTypes(fulRequest.request.requestModule);
+        const decoded = AbiCoder.defaultAbiCoder().decode(
+          returnTypes[0].components,
+          fulRequest.request.requestModuleData,
+        );
+        return decoded[2];
+      });
+      const requestsDataResults = await Promise.all(requestsData);
+
+      const requests: RequestData[] = rawRequests.map((fulRequest, index) => ({
+        id: fulRequest.requestId,
+        description: requestsDataResults[index],
+        createdAt: getDate(fulRequest.request.createdAt),
+        requester: fulRequest.request.requester,
+        nonce: fulRequest.request.nonce.toString(),
+        status: getStatus(fulRequest),
+
+        // Responses section
+        responses: fulRequest.responses.map((response) => [
+          /* response  */ toUtf8String(response.response), // decoded response
+          /* proposer  */ truncateString(response.proposer, 4),
+          /* requestId */ truncateString(response.requestId, 9),
+          /* createdAt */ getDate(response.createdAt),
+        ]),
+      }));
+
+      setLoading(false);
+
+      return requests.reverse();
+    } catch (error) {
+      console.error('Error loading requests:', error);
+      setLoading(false);
+      return [];
+    }
+  };
 
   // temporary effect and fixed values
   useEffect(() => {
-    const requests: RequestData[] = [
-      {
-        description:
-          'What are the key principles and strategies employed by the Optimism Protocol to foster optimism and positivity within individuals and communities?',
-        id: '3d4919c6b9f368ae1ec1',
-        createdAt: 'Mon, 15 May 2023 19:28:47 GMT',
-        requester: '0x388c818cccb192971',
-        status: 'disputed',
-        transaction: '0xaae85b6e43e533069b2615a94127f9ea5fabed195412725fe',
-      },
-      {
-        description:
-          'What are the key principles and strategies employed by the Optimism Protocol to foster optimism and positivity within individuals and communities?',
-        id: '3d4919c6b9f368ae1ec2',
-        createdAt: 'Mon, 15 May 2023 19:28:47 GMT',
-        requester: '0x388c818cccb192972',
-        status: 'message',
-        transaction: '0xaae85b6e43e533069b2615a94127f9ea5fabed195412725fe',
-      },
-      {
-        description:
-          'What are the key principles and strategies employed by the Optimism Protocol to foster optimism and positivity within individuals and communities?',
-        id: '3d4919c6b9f368ae1ec3',
-        createdAt: 'Mon, 15 May 2023 19:28:47 GMT',
-        requester: '0x388c818cccb192973',
-        status: 'finalized',
-        transaction: '0xaae85b6e43e533069b2615a94127f9ea5fabed195412725fe',
-      },
-      {
-        description:
-          'What are the key principles and strategies employed by the Optimism Protocol to foster optimism and positivity within individuals and communities?',
-        id: '3d4919c6b9f368ae1ec4',
-        createdAt: 'Mon, 15 May 2023 19:28:47 GMT',
-        requester: '0x388c818cccb192973',
-        status: 'unanswered',
-        transaction: '0xaae85b6e43e533069b2615a94127f9ea5fabed195412725fe',
-      },
-      {
-        description:
-          'What are the key principles and strategies employed by the Optimism Protocol to foster optimism and positivity within individuals and communities?',
-        id: '3d4919c6b9f368ae1ec5',
-        createdAt: 'Mon, 15 May 2023 19:28:47 GMT',
-        requester: '0x388c818cccb192973',
-        status: 'unanswered',
-        transaction: '0xaae85b6e43e533069b2615a94127f9ea5fabed195412725fe',
-      },
-    ];
+    getRequests().then((requests) => setRequests(requests));
 
     // const filters: Filter[] = [
     //   { text: 'Satus', icon: 'status' },
@@ -151,6 +161,8 @@ export const StateProvider = ({ children }: StateProps) => {
         setTheme,
         type,
         setType,
+        loading,
+        setLoading,
       }}
     >
       {children}

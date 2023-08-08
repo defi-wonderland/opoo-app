@@ -1,30 +1,28 @@
 import styled from 'styled-components';
 
 import { Title, Box, Text, Pill, Icon } from '~/components';
-import { MOBILE_MAX_WIDTH, statusMsg } from '~/utils';
-import { useStateContext } from '~/hooks';
+import { MOBILE_MAX_WIDTH, statusMsg, truncateString } from '~/utils';
+import { RequestData } from '~/types';
 
 interface DetailsProps {
-  id?: string;
+  selectedRequest: RequestData;
 }
 
-export const Details = ({ id }: DetailsProps) => {
-  const { selectedRequest } = useStateContext();
-
+export const Details = ({ selectedRequest }: DetailsProps) => {
   return (
     <SBox>
-      <Title>Request #{id}</Title>
+      <Title>Request #{selectedRequest.nonce}</Title>
 
       <DetailsContainer>
         <SDataContainer>
           <Text>Description</Text>
-          <Text>{selectedRequest?.description}</Text>
+          <Text>{selectedRequest?.description || 'N/A'}</Text>
         </SDataContainer>
 
         <SDataContainer>
           <Text>ID</Text>
           <IdData>
-            <Text>{selectedRequest?.id}</Text>
+            <Text>{truncateString(selectedRequest?.id, 9)}</Text>
             <Icon name='copy' size='1.2rem' />
           </IdData>
         </SDataContainer>

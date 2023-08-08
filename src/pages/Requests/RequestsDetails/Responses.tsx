@@ -3,18 +3,13 @@ import styled from 'styled-components';
 import { Title, Box, Text } from '~/components';
 import { MOBILE_MAX_WIDTH } from '~/utils';
 
-export const Responses = () => {
-  // temporary fixed values
-  const responses = {
+interface ResponsesProps {
+  responses: string[][];
+}
+export const Responses = ({ responses }: ResponsesProps) => {
+  const tableData = {
     columns: ['Response', 'Proposer', 'ID', 'Dispute'],
-    rows: [
-      ['Yes', 'proposer.wonderland.eth', 'a94fcc042254...2d67d4b5815a', 'Active since May 15, 14:55'],
-      ['Yes', 'proposer.wonderland.eth', 'a94fcc042254...2d67d4b5815a', 'Active since May 15, 14:55'],
-      ['Yes', 'proposer.wonderland.eth', 'a94fcc042254...2d67d4b5815a', 'Active since May 15, 14:55'],
-      ['Yes', 'proposer.wonderland.eth', 'a94fcc042254...2d67d4b5815a', 'Active since May 15, 14:55'],
-      ['Yes', 'proposer.wonderland.eth', 'a94fcc042254...2d67d4b5815a', 'Active since May 15, 14:55'],
-      ['Yes', 'proposer.wonderland.eth', 'a94fcc042254...2d67d4b5815a', 'Active since May 15, 14:55'],
-    ],
+    rows: responses,
   };
 
   return (
@@ -23,7 +18,7 @@ export const Responses = () => {
       <TableContainer>
         {/* Column Titles */}
         <ColumnTitles>
-          {responses.columns.map((column, index) => (
+          {tableData.columns.map((column, index) => (
             <Box key={column + index}>
               <TableTitle>{column}</TableTitle>
             </Box>
@@ -32,16 +27,23 @@ export const Responses = () => {
 
         <Rows>
           {/* Row Values */}
-          {responses.rows.map((rows, index) => (
-            <Row key={'row-' + index}>
-              {rows.map((value, index) => (
-                <SBox key={value + index}>
-                  <TableTitle>{responses.columns[index]}</TableTitle>
-                  <SText>{value}</SText>
-                </SBox>
-              ))}
+          {!!tableData.rows.length &&
+            tableData.rows.map((rows, index) => (
+              <Row key={'row-' + index}>
+                {rows.map((value, index) => (
+                  <SBox key={value + index}>
+                    <TableTitle>{tableData.columns[index]}</TableTitle>
+                    <SText>{value}</SText>
+                  </SBox>
+                ))}
+              </Row>
+            ))}
+
+          {!tableData.rows.length && (
+            <Row>
+              <MessageText>There are no responses yet</MessageText>
             </Row>
-          ))}
+          )}
         </Rows>
       </TableContainer>
     </ResponsesContainer>
@@ -62,7 +64,7 @@ const Row = styled(Box)`
   background-color: ${({ theme: { backgroundPrimary } }) => backgroundPrimary};
   flex-direction: row;
   gap: 0.6rem;
-  padding: 1.2rem 0;
+  padding: 1.2rem 3rem;
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     background-color: ${({ theme: { backgroundSecondary } }) => backgroundSecondary};
@@ -103,10 +105,6 @@ const Rows = styled(Box)`
 `;
 
 const SBox = styled(Box)`
-  &:nth-child(1) {
-    padding-left: 3rem;
-  }
-
   p:nth-child(1) {
     display: none;
   }
@@ -162,16 +160,21 @@ const SText = styled(Text)`
   color: ${({ theme }) => theme.textSecondary};
   width: 100%;
   text-align: start;
-  font-size: 1.8rem;
   font-family: Open Sans;
   font-size: 1.2rem;
   font-style: normal;
   font-weight: 400;
   line-height: 1.6rem; /* 133.333% */
   letter-spacing: -0.24px;
+  text-overflow: ellipsis;
+  overflow-wrap: break-word;
+  word-break: break-all;
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     text-align: start;
     font-size: 1rem;
   }
+`;
+const MessageText = styled(SText)`
+  text-align: center;
 `;

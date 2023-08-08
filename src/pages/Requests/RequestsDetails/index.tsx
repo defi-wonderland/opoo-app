@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Details } from './Details';
@@ -12,25 +11,25 @@ const Container = styled.div`
 `;
 
 export const RequestsDetails = () => {
-  const { id } = useParams();
+  const { selectedRequest } = useStateContext();
 
-  const { requests, setSelectedRequest } = useStateContext();
-
-  useEffect(() => {
-    const selectedRequests = requests.filter((request) => request.id === id);
-    setSelectedRequest(selectedRequests[0]);
-  }, [id, requests, setSelectedRequest]);
+  // TODO: fix error when refreshing page
+  // const { id } = useParams();
+  // useEffect(() => {
+  //   const selectedRequests = requests.filter((request) => request.id === id);
+  //   setSelectedRequest(selectedRequests[0]);
+  // }, [id, requests, setSelectedRequest]);
 
   return (
     <Container>
       {/* Request details section */}
-      <Details id={id} />
+      <Details selectedRequest={selectedRequest} />
 
       {/* Proposed responses section */}
-      <Responses />
+      <Responses responses={selectedRequest.responses} />
 
       {/* Modules section */}
-      <Modules />
+      <Modules /* modules={selectedRequest.modules} */ />
     </Container>
   );
 };
