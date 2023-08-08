@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { Icon, Pill, Box, Text } from '~/components';
-import { MOBILE_MAX_WIDTH } from '~/utils';
+import { MOBILE_MAX_WIDTH, fontSize } from '~/utils';
 
 interface BaseModalProps {
   setOpen: (val: boolean) => void;
@@ -99,7 +99,7 @@ const MHeader = styled(Box)`
     color: ${({ theme }) => theme.textPrimary};
     text-align: center;
     font-family: Rubik;
-    font-size: 2.4rem;
+    font-size: ${fontSize.SECTION_TITLE};
     font-style: normal;
     font-weight: 600;
     line-height: 3rem; /* 125% */
@@ -171,7 +171,7 @@ const SDataContainer = styled.div`
     }
 
     p {
-      font-size: 1.4rem;
+      font-size: ${fontSize.SMALL};
       overflow-wrap: break-word;
     }
   }
@@ -189,9 +189,6 @@ const CloseIcon = styled(Icon)`
   }
 `;
 
-const SText = styled(Text)`
-  text-overflow: ellipsis;
-  overflow-wrap: break-word;
-  word-break: break-all;
+const SText = styled(Text).attrs({ className: 'ellipsis' })`
   width: 100%;
 `;

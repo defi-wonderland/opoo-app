@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { MOBILE_MAX_WIDTH } from '~/utils';
+import { MOBILE_MAX_WIDTH, fontSize } from '~/utils';
 
 // ------------------------------- Navbar Container ------------------------------- //
 export const SNavbar = styled.div`
@@ -67,7 +67,7 @@ export const SNavbar = styled.div`
       color: ${({ theme }) => theme.textPrimary};
       text-align: center;
       font-family: Open Sans;
-      font-size: 20px;
+      font-size: ${fontSize.XL};
       font-style: normal;
       font-weight: 400;
       line-height: 100%; /* 20px */
@@ -121,7 +121,7 @@ export const LinkText = styled(Link)`
   color: #68778d;
   text-align: center;
   font-family: Open Sans;
-  font-size: 14px;
+  font-size: ${fontSize.LARGE};
   font-style: normal;
   font-weight: 600;
   line-height: 20px;

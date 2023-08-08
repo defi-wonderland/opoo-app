@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Icon, IconName } from './Icon';
+import { fontSize as font } from '~/utils';
 
 export const SPill = styled.div`
   border: ${({ theme }) => theme.border};
@@ -18,7 +19,7 @@ const TextPill = styled.p<{ fontSize?: string }>`
   display: inline-block;
   color: ${({ theme }) => theme.textSecondary};
   font-family: 'Open Sans';
-  font-size: ${({ fontSize }) => fontSize || '1rem'};
+  font-size: ${({ fontSize }) => fontSize || font.SMALL};
   font-style: normal;
   font-weight: 400;
   line-height: 1.4rem; /* 140% */

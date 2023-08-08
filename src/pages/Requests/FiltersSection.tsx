@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import { Icon } from '~/components';
 import { Filter } from '~/types';
+import { fontSize } from '~/utils';
 
 const FilterSection = styled.section`
   display: flex;
@@ -25,7 +26,7 @@ const FilterButton = styled.button`
 
   color: ${({ theme }) => theme.textPrimary};
   font-family: ${({ theme }) => theme.titleFontFamily};
-  font-size: 12px;
+  font-size: ${fontSize.MEDIUM};
   font-style: normal;
   font-weight: 400;
   line-height: normal;

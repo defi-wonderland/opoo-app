@@ -1,9 +1,10 @@
 import styled from 'styled-components';
+import Skeleton from 'react-loading-skeleton';
 
 import { Icon, SLink, Pill } from '~/components';
 import { useStateContext } from '~/hooks';
 import { RequestData } from '~/types';
-import { statusMsg, truncateString } from '~/utils';
+import { fontSize, statusMsg, truncateString } from '~/utils';
 
 interface RequestSectionProps {
   requests: RequestData[];
@@ -14,42 +15,61 @@ export const RequestSection = ({ requests }: RequestSectionProps) => {
 
   return (
     <RequestsSection>
-      {requests.map((card, index) => (
-        <Card key={card.id + index}>
-          {/* Header section */}
-          <PillsContainer>
-            <Pill iconName='hashtag' size='1.2rem' text={truncateString(card.id, 9)} copy />
-            <Pill iconName={card.status} text={statusMsg(card.status)} size='1.3rem' />
-          </PillsContainer>
+      {!!requests.length &&
+        requests.map((card, index) => (
+          <Card key={card.id + index}>
+            {/* Header section */}
+            <PillsContainer>
+              <Pill iconName='hashtag' size='1.2rem' text={truncateString(card.id, 9)} copy />
+              <Pill iconName={card.status} text={statusMsg(card.status)} size='1.3rem' />
+            </PillsContainer>
 
-          {/* Request number */}
-          <RequestTitle>Request #{card.nonce}</RequestTitle>
+            {/* Request number */}
+            <RequestTitle>Request #{card.nonce}</RequestTitle>
 
-          {/* Requester section */}
-          <DataContainer>
-            <SecondaryText>By</SecondaryText>
-            <PrimaryText>{truncateString(card.requester, 4)}</PrimaryText>
-          </DataContainer>
-
-          {/* Description */}
-          <DescriptionContainer>
-            <SecondaryText>{card.description}</SecondaryText>
-          </DescriptionContainer>
-
-          {/* Footer section */}
-          <CardFooter>
+            {/* Requester section */}
             <DataContainer>
-              <PrimaryText>{card.createdAt}</PrimaryText>
+              <SecondaryText>By</SecondaryText>
+              <PrimaryText>{truncateString(card.requester, 4)}</PrimaryText>
             </DataContainer>
-            <SLink to={`/requests/${card.id}`}>
-              <DetailsButton onClick={() => setSelectedRequest(card)}>
-                <p>See details</p>
-                <Icon name='right-arrow' size='0.9rem' />
-              </DetailsButton>
-            </SLink>
-          </CardFooter>
-        </Card>
-      ))}
+
+            {/* Description */}
+            <DescriptionContainer>
+              <SecondaryText>{card.description}</SecondaryText>
+            </DescriptionContainer>
+
+            {/* Footer section */}
+            <CardFooter>
+              <DataContainer>
+                <PrimaryText>{card.createdAt}</PrimaryText>
+              </DataContainer>
+              <SLink to={`/requests/${card.id}`}>
+                <DetailsButton onClick={() => setSelectedRequest(card)}>
+                  <p>See details</p>
+                  <Icon name='right-arrow' size='0.9rem' />
+                </DetailsButton>
+              </SLink>
+            </CardFooter>
+          </Card>
+        ))}
+
+      {!requests.length && (
+        <>
+          <CardSkeleton>
+            <div>
+              <Skeleton count={1} />
+            </div>
+            <div>
+              <Skeleton count={1} width='70%' />
+              <Skeleton count={1} width='50%' />
+            </div>
+            <div>
+              <Skeleton count={1} height={60} />
+              <Skeleton count={1} />
+            </div>
+          </CardSkeleton>
+        </>
+      )}
     </RequestsSection>
   );
 };
@@ -76,6 +96,12 @@ const Card = styled.div`
   padding: 2rem;
 `;
 
+const CardSkeleton = styled(Card)`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
 const DataContainer = styled.div`
   display: flex;
   gap: 0.4rem;
@@ -90,7 +116,7 @@ const DescriptionContainer = styled(DataContainer)`
   margin: 1rem 0;
 
   p {
-    font-size: 1.2rem;
+    font-size: ${fontSize.MEDIUM};
   }
 `;
 
@@ -98,7 +124,7 @@ const PrimaryText = styled.p`
   color: ${({ theme }) => theme.textPrimary};
   text-align: right;
   font-family: 'Open Sans';
-  font-size: 10px;
+  font-size: ${fontSize.SMALL};
   font-style: normal;
   font-weight: 400;
   line-height: 14px; /* 140% */
@@ -108,7 +134,7 @@ export const SecondaryText = styled.p`
   display: inline-block;
   color: ${({ theme }) => theme.textSecondary};
   font-family: 'Open Sans';
-  font-size: 10px;
+  font-size: ${fontSize.SMALL};
   font-style: normal;
   font-weight: 400;
   line-height: 14px; /* 140% */
@@ -125,7 +151,7 @@ const PillsContainer = styled.div`
 const RequestTitle = styled.h1`
   color: ${({ theme }) => theme.textPrimary};
   font-family: 'Open Sans';
-  font-size: 16px;
+  font-size: ${fontSize.LARGE};
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -144,7 +170,7 @@ const DetailsButton = styled.button`
   border-radius: 100px;
   border: none;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: ${fontSize.SMALL};
 `;
 
 const CardFooter = styled.div`

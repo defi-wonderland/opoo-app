@@ -11,8 +11,6 @@ export const useOpooSdk = () => {
   const { RPC_URL, ORACLE, REQUEST_MODULE, RESPONSE_MODULE, DISPUTE_MODULE } = getConfig();
   const provider = new ethers.JsonRpcProvider(RPC_URL);
 
-  const opooSdk = new OpooSDK(provider, ORACLE);
-
   // request module
   const requestIface = new ethers.Interface(IHttpRequestModule.abi);
   const requestModule = new Module(REQUEST_MODULE, requestIface, provider);
@@ -31,7 +29,7 @@ export const useOpooSdk = () => {
     [DISPUTE_MODULE]: disputeModule,
   };
 
-  opooSdk.setKnownModules(knownModules);
+  const opooSdk = new OpooSDK(provider, ORACLE, knownModules);
 
   return { opooSdk };
 };

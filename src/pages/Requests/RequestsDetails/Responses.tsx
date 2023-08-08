@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { Title, Box, Text } from '~/components';
-import { MOBILE_MAX_WIDTH } from '~/utils';
+import { MOBILE_MAX_WIDTH, fontSize } from '~/utils';
 
 interface ResponsesProps {
   responses: string[][];
@@ -140,7 +140,7 @@ const TableContainer = styled(Box)`
 
 const TableTitle = styled(Text)`
   color: ${({ theme }) => theme.textSecondary};
-  font-size: 1.4rem;
+  font-size: ${fontSize.MEDIUM};
   font-style: normal;
   font-weight: 400;
   line-height: 2rem; /* 142.857% */
@@ -152,16 +152,16 @@ const TableTitle = styled(Text)`
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     text-align: start;
     width: 20rem;
-    font-size: 1rem;
+    font-size: ${fontSize.SMALL};
   }
 `;
 
-const SText = styled(Text)`
+const SText = styled(Text).attrs({ className: 'ellipsis' })`
   color: ${({ theme }) => theme.textSecondary};
   width: 100%;
   text-align: start;
   font-family: Open Sans;
-  font-size: 1.2rem;
+  font-size: ${fontSize.MEDIUM};
   font-style: normal;
   font-weight: 400;
   line-height: 1.6rem; /* 133.333% */
@@ -172,7 +172,7 @@ const SText = styled(Text)`
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     text-align: start;
-    font-size: 1rem;
+    font-size: ${fontSize.SMALL};
   }
 `;
 const MessageText = styled(SText)`

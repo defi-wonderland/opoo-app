@@ -33,14 +33,20 @@ const TopSection = styled.div`
 `;
 
 const SLinkContainer = styled.div`
+  display: flex;
   gap: 15rem;
   padding: 0 3rem;
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
-    display: flex;
     flex-direction: row;
     gap: 6rem;
     padding: 2rem 0;
+  }
+`;
+
+const SIcons = styled(Icons)`
+  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+    display: none;
   }
 `;
 
@@ -59,7 +65,7 @@ export const Footer = () => {
           <LinkText to='#'>FAQ</LinkText>
         </SLinkContainer>
 
-        <Icons>
+        <SIcons>
           <IconLink to='#'>
             <Icon name='github' size='1.6rem' color={theme === 'light' ? 'black' : 'white'} />
           </IconLink>
@@ -67,7 +73,7 @@ export const Footer = () => {
           <IconLink to='#'>
             <Icon name='discord' size='1.6rem' color={theme === 'light' ? 'black' : 'white'} />
           </IconLink>
-        </Icons>
+        </SIcons>
       </TopSection>
       <Text>© 2023 OpOO</Text>
     </FooterContainer>

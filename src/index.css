@@ -59,3 +59,9 @@ body::-webkit-scrollbar-thumb:hover {
 body::-webkit-scrollbar-thumb:active {
   background-color: rgba(0, 0, 0, 0.2);
 }
+
+.ellipsis {
+  text-overflow: ellipsis;
+  overflow-wrap: break-word;
+  word-break: break-all;
+}

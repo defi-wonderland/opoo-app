@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { Box, Pill, Text, Title } from '~/components';
 import { useModal, useStateContext } from '~/hooks';
-import { MOBILE_MAX_WIDTH } from '~/utils';
+import { MOBILE_MAX_WIDTH, fontSize } from '~/utils';
 
 export const Modules = () => {
   const { modules } = useStateContext();
@@ -41,7 +41,7 @@ const ModulesContainer = styled(Box)`
   gap: 4rem;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: left;
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     margin-top: 3rem;
@@ -65,13 +65,13 @@ const ModuleCard = styled(Box)`
 `;
 
 const MTitle = styled(Text)`
-  font-size: 1.8rem;
+  font-size: ${fontSize.LARGE};
   padding: 1rem 0;
 `;
 
 const Description = styled(Text)`
   color: ${({ theme }) => theme.textSecondary};
-  font-size: 14px;
+  font-size: ${fontSize.MEDIUM};
   font-style: normal;
   font-weight: 400;
   line-height: 18px; /* 128.571% */
