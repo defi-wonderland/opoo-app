@@ -32,10 +32,12 @@ interface PillProps {
   size?: string;
   iconColor?: string;
   fontSize?: string;
+  clickable?: boolean;
 }
-export const Pill = ({ iconName, text, copy, size, iconColor, fontSize }: PillProps) => {
+
+export const Pill = ({ iconName, text, copy, size, iconColor, fontSize, clickable }: PillProps) => {
   return (
-    <SPill>
+    <SPill className={clickable ? 'clickable' : ''}>
       <Icon name={iconName} size={size} color={iconColor} />
       <TextPill fontSize={fontSize}>{text}</TextPill>
       {copy && <Icon name='copy' size='1.2rem' />}

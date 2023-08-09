@@ -34,7 +34,12 @@ export const Details = ({ selectedRequest }: DetailsProps) => {
 
         <SDataContainer>
           <Text>Status:</Text>
-          <Pill iconName={selectedRequest.status} text={statusMsg(selectedRequest.status)} fontSize='1.3rem' />
+          <Pill
+            iconName={selectedRequest.status}
+            text={statusMsg(selectedRequest.status)}
+            fontSize='1.3rem'
+            clickable
+          />
         </SDataContainer>
       </DetailsContainer>
     </SBox>
@@ -100,6 +105,7 @@ const IdData = styled.div`
   flex-direction: row;
   align-items: center;
   gap: 1rem;
+  cursor: pointer;
 
   p:nth-child(1) {
     display: inline-block;

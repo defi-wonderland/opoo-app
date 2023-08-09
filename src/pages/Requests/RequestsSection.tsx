@@ -20,7 +20,7 @@ export const RequestSection = ({ requests }: RequestSectionProps) => {
           <Card key={card.id + index}>
             {/* Header section */}
             <PillsContainer>
-              <Pill iconName='hashtag' size='1.2rem' text={truncateString(card.id, 9)} copy />
+              <Pill iconName='hashtag' size='1.2rem' text={truncateString(card.id, 9)} copy clickable />
               <Pill iconName={card.status} text={statusMsg(card.status)} size='1.3rem' />
             </PillsContainer>
 

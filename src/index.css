@@ -65,3 +65,7 @@ body::-webkit-scrollbar-thumb:active {
   overflow-wrap: break-word;
   word-break: break-all;
 }
+
+.clickable {
+  cursor: pointer;
+}

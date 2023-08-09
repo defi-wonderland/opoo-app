@@ -1,8 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
-import { AbiCoder, toUtf8String } from 'ethers';
 
 import { Filter, Modules, RequestData, ThemeName } from '~/types';
-import { getDate, getStatus, truncateString } from '~/utils';
+import { THEME_KEY, formatRequestsData } from '~/utils';
 import { useOpooSdk } from '~/hooks';
 
 type ContextType = {
@@ -50,40 +49,14 @@ export const StateProvider = ({ children }: StateProps) => {
     // temporary logs
     console.log('loading requests...');
     try {
-      console.log('opooSdk', opooSdk);
       const rawRequests = await opooSdk.batching.getFullRequestData(128, 9);
+      const formattedRequests = await formatRequestsData(rawRequests, opooSdk);
+
+      console.log('opooSdk', opooSdk);
       console.log('rawFulRequests', rawRequests);
 
-      const requestsData = rawRequests.map(async (fulRequest) => {
-        const returnTypes = await opooSdk.modules.getNamedDecodeRequestReturnTypes(fulRequest.request.requestModule);
-        const decoded = AbiCoder.defaultAbiCoder().decode(
-          returnTypes[0].components,
-          fulRequest.request.requestModuleData,
-        );
-        return decoded[2];
-      });
-      const requestsDataResults = await Promise.all(requestsData);
-
-      const requests: RequestData[] = rawRequests.map((fulRequest, index) => ({
-        id: fulRequest.requestId,
-        description: requestsDataResults[index],
-        createdAt: getDate(fulRequest.request.createdAt),
-        requester: fulRequest.request.requester,
-        nonce: fulRequest.request.nonce.toString(),
-        status: getStatus(fulRequest),
-
-        // Responses section
-        responses: fulRequest.responses.map((response) => [
-          /* response  */ toUtf8String(response.response), // decoded response
-          /* proposer  */ truncateString(response.proposer, 4),
-          /* requestId */ truncateString(response.requestId, 9),
-          /* createdAt */ getDate(response.createdAt),
-        ]),
-      }));
-
       setLoading(false);
-
-      return requests.reverse();
+      return formattedRequests;
     } catch (error) {
       console.error('Error loading requests:', error);
       setLoading(false);
@@ -144,6 +117,16 @@ export const StateProvider = ({ children }: StateProps) => {
     setRequests(requests);
     setFilters(filters);
     setModules(modules);
+  }, []);
+
+  // Load theme from local storage
+  useEffect(() => {
+    const storedTheme = localStorage.getItem(THEME_KEY) as ThemeName;
+    if (!storedTheme) {
+      localStorage.setItem(THEME_KEY, theme);
+    } else {
+      setTheme(storedTheme);
+    }
   }, []);
 
   return (

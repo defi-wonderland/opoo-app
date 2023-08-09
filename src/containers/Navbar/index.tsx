@@ -4,6 +4,7 @@ import { CSSTransition } from 'react-transition-group';
 import { Icon } from '~/components';
 import { SNavbar, LogoContainer, Logo, LinkText, LinkContainer, Icons, IconLink, MenuButton } from './Navbar.styles';
 import { useStateContext } from '~/hooks';
+import { THEME_KEY } from '~/utils';
 
 export const Navbar = () => {
   const { setTheme, theme } = useStateContext();
@@ -12,8 +13,10 @@ export const Navbar = () => {
 
   const handleThemeChange = () => {
     if (theme === 'light') {
+      localStorage.setItem(THEME_KEY, 'dark');
       setTheme('dark');
     } else {
+      localStorage.setItem(THEME_KEY, 'light');
       setTheme('light');
     }
   };
