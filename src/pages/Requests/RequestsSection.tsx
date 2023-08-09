@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import Skeleton from 'react-loading-skeleton';
 
-import { Icon, SLink, Pill } from '~/components';
+import { Icon, SLink, Pill, RequestSkeleton } from '~/components';
 import { useStateContext } from '~/hooks';
 import { RequestData } from '~/types';
 import { fontSize, statusMsg, truncateString } from '~/utils';
@@ -17,59 +16,52 @@ export const RequestSection = ({ requests }: RequestSectionProps) => {
     <RequestsSection>
       {!!requests.length &&
         requests.map((card, index) => (
-          <Card key={card.id + index}>
-            {/* Header section */}
-            <PillsContainer>
-              <Pill iconName='hashtag' size='1.2rem' text={truncateString(card.id, 9)} copy clickable />
-              <Pill iconName={card.status} text={statusMsg(card.status)} size='1.3rem' />
-            </PillsContainer>
+          <SLink to={`/requests/${card.id}`} key={card.id + index}>
+            <Card onClick={() => setSelectedRequest(card)}>
+              {/* Header section */}
+              <PillsContainer>
+                <Pill
+                  onClick={(e) => {
+                    e.preventDefault();
+                    console.log('copy to clipboard');
+                  }}
+                  iconName='hashtag'
+                  size='1.2rem'
+                  text={truncateString(card.id, 9)}
+                  copy
+                  clickable
+                />
+                <Pill iconName={card.status} text={statusMsg(card.status)} size='1.3rem' />
+              </PillsContainer>
+              {/* Request number */}
+              <RequestTitle>Request #{card.nonce}</RequestTitle>
 
-            {/* Request number */}
-            <RequestTitle>Request #{card.nonce}</RequestTitle>
-
-            {/* Requester section */}
-            <DataContainer>
-              <SecondaryText>By</SecondaryText>
-              <PrimaryText>{truncateString(card.requester, 4)}</PrimaryText>
-            </DataContainer>
-
-            {/* Description */}
-            <DescriptionContainer>
-              <SecondaryText>{card.description}</SecondaryText>
-            </DescriptionContainer>
-
-            {/* Footer section */}
-            <CardFooter>
+              {/* Requester section */}
               <DataContainer>
-                <PrimaryText>{card.createdAt}</PrimaryText>
+                <SecondaryText>By</SecondaryText>
+                <PrimaryText>{truncateString(card.requester, 4)}</PrimaryText>
               </DataContainer>
-              <SLink to={`/requests/${card.nonce}`}>
+
+              {/* Description */}
+              <DescriptionContainer>
+                <SecondaryText>{card.description}</SecondaryText>
+              </DescriptionContainer>
+
+              {/* Footer section */}
+              <CardFooter>
+                <DataContainer>
+                  <PrimaryText>{card.createdAt}</PrimaryText>
+                </DataContainer>
                 <DetailsButton onClick={() => setSelectedRequest(card)}>
                   <p>See details</p>
                   <Icon name='right-arrow' size='0.9rem' />
                 </DetailsButton>
-              </SLink>
-            </CardFooter>
-          </Card>
+              </CardFooter>
+            </Card>
+          </SLink>
         ))}
 
-      {!requests.length && (
-        <>
-          <CardSkeleton>
-            <div>
-              <Skeleton count={1} />
-            </div>
-            <div>
-              <Skeleton count={1} width='70%' />
-              <Skeleton count={1} width='50%' />
-            </div>
-            <div>
-              <Skeleton count={1} height={60} />
-              <Skeleton count={1} />
-            </div>
-          </CardSkeleton>
-        </>
-      )}
+      {!requests.length && <RequestSkeleton count={9} />}
     </RequestsSection>
   );
 };
@@ -85,7 +77,7 @@ const RequestsSection = styled.section`
   align-items: start;
 `;
 
-const Card = styled.div`
+export const Card = styled.div`
   position: relative;
   background-color: ${({ theme }) => theme.cardBackground};
   border-radius: ${({ theme }) => theme.borderRadius};
@@ -94,12 +86,6 @@ const Card = styled.div`
   height: 21.2rem;
   gap: 1rem;
   padding: 2rem;
-`;
-
-const CardSkeleton = styled(Card)`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 `;
 
 const DataContainer = styled.div`

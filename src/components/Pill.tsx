@@ -33,11 +33,12 @@ interface PillProps {
   iconColor?: string;
   fontSize?: string;
   clickable?: boolean;
+  onClick?: React.MouseEventHandler<HTMLDivElement> | undefined;
 }
 
-export const Pill = ({ iconName, text, copy, size, iconColor, fontSize, clickable }: PillProps) => {
+export const Pill = ({ iconName, text, copy, size, iconColor, fontSize, clickable, onClick }: PillProps) => {
   return (
-    <SPill className={clickable ? 'clickable' : ''}>
+    <SPill className={clickable ? 'clickable' : ''} onClick={onClick}>
       <Icon name={iconName} size={size} color={iconColor} />
       <TextPill fontSize={fontSize}>{text}</TextPill>
       {copy && <Icon name='copy' size='1.2rem' />}
