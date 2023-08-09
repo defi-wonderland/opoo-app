@@ -1,24 +1,33 @@
-// import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Details } from './Details';
 import { Responses } from './Responses';
 import { Modules } from './Modules';
-import { useStateContext } from '~/hooks';
+import { useOpooSdk, useStateContext } from '~/hooks';
+import { formatRequestsData } from '~/utils';
+import { useEffect } from 'react';
 
 const Container = styled.div`
   width: 100%;
 `;
 
 export const RequestsDetails = () => {
-  const { selectedRequest } = useStateContext();
+  const { id } = useParams();
+  const { opooSdk } = useOpooSdk();
+  const { selectedRequest, setSelectedRequest } = useStateContext();
 
-  // TODO: fix error when refreshing page
-  // const { id } = useParams();
-  // useEffect(() => {
-  //   const selectedRequests = requests.filter((request) => request.id === id);
-  //   setSelectedRequest(selectedRequests[0]);
-  // }, [id, requests, setSelectedRequest]);
+  const loadSelectedRequest = async () => {
+    const rawRequests = await opooSdk.batching.getFullRequestData(Number(id), 1);
+    const formattedRequests = await formatRequestsData(rawRequests, opooSdk);
+    setSelectedRequest(formattedRequests[0]);
+  };
+
+  useEffect(() => {
+    if (!selectedRequest.id) {
+      loadSelectedRequest();
+    }
+  }, []);
 
   return (
     <Container>

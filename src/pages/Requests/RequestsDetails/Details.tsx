@@ -5,13 +5,13 @@ import { MOBILE_MAX_WIDTH, statusMsg, truncateString } from '~/utils';
 import { RequestData } from '~/types';
 
 interface DetailsProps {
-  selectedRequest: RequestData;
+  selectedRequest?: RequestData;
 }
 
 export const Details = ({ selectedRequest }: DetailsProps) => {
   return (
     <SBox>
-      <Title>Request #{selectedRequest.nonce}</Title>
+      <Title>Request #{selectedRequest?.nonce}</Title>
 
       <DetailsContainer>
         <SDataContainer>
@@ -22,7 +22,7 @@ export const Details = ({ selectedRequest }: DetailsProps) => {
         <SDataContainer>
           <Text>ID</Text>
           <IdData>
-            <Text>{truncateString(selectedRequest?.id, 9)}</Text>
+            <Text>{truncateString(selectedRequest?.id || '', 9)}</Text>
             <Icon name='copy' size='1.2rem' />
           </IdData>
         </SDataContainer>
@@ -35,8 +35,8 @@ export const Details = ({ selectedRequest }: DetailsProps) => {
         <SDataContainer>
           <Text>Status:</Text>
           <Pill
-            iconName={selectedRequest.status}
-            text={statusMsg(selectedRequest.status)}
+            iconName={selectedRequest?.status || 'unanswered'}
+            text={statusMsg(selectedRequest?.status || 'unanswered')}
             fontSize='1.3rem'
             clickable
           />

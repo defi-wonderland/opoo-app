@@ -1,10 +1,11 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
+import { MOBILE_MAX_WIDTH, formatRequestsData } from '~/utils';
+import { useOpooSdk, useStateContext } from '~/hooks';
 import { RequestSection } from './RequestsSection';
-// import { FiltersSection } from './FiltersSection';
 import { Title } from '~/components';
-import { useStateContext } from '~/hooks';
-import { MOBILE_MAX_WIDTH } from '~/utils';
+// import { FiltersSection } from './FiltersSection';
 
 const Layout = styled.div`
   background-color: ${({ theme: { iconBackground } }) => iconBackground};
@@ -25,7 +26,33 @@ const Container = styled.div`
 `;
 
 export const Requests = () => {
-  const { requests /* filters */ } = useStateContext();
+  const { requests /* filters */, setRequests, setLoading } = useStateContext();
+
+  const { opooSdk } = useOpooSdk();
+
+  const getRequests = async () => {
+    setLoading(true);
+    // temporary logs
+    console.log('loading requests...');
+    try {
+      const rawRequests = await opooSdk.batching.getFullRequestData(128, 9);
+      const formattedRequests = await formatRequestsData(rawRequests, opooSdk);
+
+      console.log('opooSdk', opooSdk);
+      console.log('rawFulRequests', rawRequests);
+
+      setLoading(false);
+      return formattedRequests;
+    } catch (error) {
+      console.error('Error loading requests:', error);
+      setLoading(false);
+      return [];
+    }
+  };
+
+  useEffect(() => {
+    getRequests().then((requests) => setRequests(requests));
+  }, []);
 
   return (
     <Layout>

@@ -1,8 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 
 import { Filter, Modules, RequestData, ThemeName } from '~/types';
-import { THEME_KEY, formatRequestsData } from '~/utils';
-import { useOpooSdk } from '~/hooks';
+import { THEME_KEY } from '~/utils';
 
 type ContextType = {
   modules: Modules[];
@@ -42,32 +41,8 @@ export const StateProvider = ({ children }: StateProps) => {
   const [modules, setModules] = useState<Modules[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const { opooSdk } = useOpooSdk();
-
-  const getRequests = async () => {
-    setLoading(true);
-    // temporary logs
-    console.log('loading requests...');
-    try {
-      const rawRequests = await opooSdk.batching.getFullRequestData(128, 9);
-      const formattedRequests = await formatRequestsData(rawRequests, opooSdk);
-
-      console.log('opooSdk', opooSdk);
-      console.log('rawFulRequests', rawRequests);
-
-      setLoading(false);
-      return formattedRequests;
-    } catch (error) {
-      console.error('Error loading requests:', error);
-      setLoading(false);
-      return [];
-    }
-  };
-
   // temporary effect and fixed values
   useEffect(() => {
-    getRequests().then((requests) => setRequests(requests));
-
     // const filters: Filter[] = [
     //   { text: 'Satus', icon: 'status' },
     //   { text: 'All' },

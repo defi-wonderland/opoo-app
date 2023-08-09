@@ -27,7 +27,7 @@ export const Responses = ({ responses }: ResponsesProps) => {
 
         <Rows>
           {/* Row Values */}
-          {!!tableData.rows.length &&
+          {!!tableData.rows?.length &&
             tableData.rows.map((rows, index) => (
               <Row key={'row-' + index}>
                 {rows.map((value, index) => (
@@ -39,7 +39,7 @@ export const Responses = ({ responses }: ResponsesProps) => {
               </Row>
             ))}
 
-          {!tableData.rows.length && (
+          {!tableData.rows?.length && (
             <Row>
               <MessageText>There are no responses yet</MessageText>
             </Row>

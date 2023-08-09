@@ -43,7 +43,7 @@ export const RequestSection = ({ requests }: RequestSectionProps) => {
               <DataContainer>
                 <PrimaryText>{card.createdAt}</PrimaryText>
               </DataContainer>
-              <SLink to={`/requests/${card.id}`}>
+              <SLink to={`/requests/${card.nonce}`}>
                 <DetailsButton onClick={() => setSelectedRequest(card)}>
                   <p>See details</p>
                   <Icon name='right-arrow' size='0.9rem' />
