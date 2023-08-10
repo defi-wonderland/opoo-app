@@ -16,7 +16,7 @@ export const RequestSection = ({ requests }: RequestSectionProps) => {
     <RequestsSection>
       {!!requests.length &&
         requests.map((card, index) => (
-          <SLink to={`/requests/${card.id}`} key={card.id + index}>
+          <SLink to={`/requests/${card.nonce}`} key={card.id + index}>
             <Card onClick={() => setSelectedRequest(card)}>
               {/* Header section */}
               <PillsContainer>

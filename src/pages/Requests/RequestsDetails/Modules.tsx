@@ -5,17 +5,25 @@ import { useModal, useStateContext } from '~/hooks';
 import { MOBILE_MAX_WIDTH, fontSize } from '~/utils';
 
 export const Modules = () => {
-  const { modules } = useStateContext();
+  const { selectedRequest } = useStateContext();
   const { setOpen } = useModal();
 
+  const modules = selectedRequest.modules;
   const handleModal = () => setOpen(true);
 
   return (
     <SBox>
       <Title>Modules</Title>
       <ModulesContainer>
-        {modules.map((module, index) => (
-          <ModuleCard key={'module-' + index} onClick={handleModal}>
+        {modules?.map((module, index) => (
+          <ModuleCard
+            key={'module-' + index}
+            onClick={() => {
+              // TODO: fill the modal with the module data
+              console.log(module?.data);
+              handleModal();
+            }}
+          >
             {/* temporary text */}
             <Pill iconName='hashtag' text='3d4919c6b9...f368ae1ec2rth' size='1.3rem' copy />
             <MTitle>{module.name}</MTitle>

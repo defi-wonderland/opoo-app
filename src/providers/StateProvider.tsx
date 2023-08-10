@@ -1,12 +1,9 @@
 import { createContext, useEffect, useState } from 'react';
 
-import { Filter, Modules, RequestData, ThemeName } from '~/types';
+import { Filter, RequestData, ThemeName } from '~/types';
 import { THEME_KEY } from '~/utils';
 
 type ContextType = {
-  modules: Modules[];
-  setModules: (val: Modules[]) => void;
-
   filters: Filter[];
   setFilters: (val: Filter[]) => void;
 
@@ -38,7 +35,6 @@ export const StateProvider = ({ children }: StateProps) => {
   const [selectedRequest, setSelectedRequest] = useState<RequestData>({} as RequestData);
   const [requests, setRequests] = useState<RequestData[]>([]);
   const [filters, setFilters] = useState<Filter[]>([]);
-  const [modules, setModules] = useState<Modules[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   // temporary effect and fixed values
@@ -56,42 +52,8 @@ export const StateProvider = ({ children }: StateProps) => {
     //   { icon: 'close' },
     // ];
 
-    const modules = [
-      {
-        name: 'Http Request Module',
-        description:
-          'The HTTP Request module on Optimism enables developers to send and receive HTTP requests to interact with external servers or APIs.',
-        address: '0xe94f1fa4f27d9d288ffea234bb62e1fbc086ca0c',
-      },
-      {
-        name: 'Bonded Response Module',
-        description:
-          'The HTTP Request module on Optimism enables developers to send and receive HTTP requests to interact with external servers or APIs.',
-        address: '0xe94f1fa4f27d9d288ffea234bb62e1fbc086ca0c',
-      },
-      {
-        name: 'Bonded Dispute Module',
-        description:
-          'The HTTP Request module on Optimism enables developers to send and receive HTTP requests to interact with external servers or APIs.',
-        address: '0xe94f1fa4f27d9d288ffea234bb62e1fbc086ca0c',
-      },
-      {
-        name: 'Arbitrator Module',
-        description:
-          'The HTTP Request module on Optimism enables developers to send and receive HTTP requests to interact with external servers or APIs.',
-        address: '0xe94f1fa4f27d9d288ffea234bb62e1fbc086ca0c',
-      },
-      {
-        name: 'Callback Module',
-        description:
-          'The HTTP Request module on Optimism enables developers to send and receive HTTP requests to interact with external servers or APIs.',
-        address: '0xe94f1fa4f27d9d288ffea234bb62e1fbc086ca0c',
-      },
-    ];
-
     setRequests(requests);
     setFilters(filters);
-    setModules(modules);
   }, []);
 
   // Load theme from local storage
@@ -107,8 +69,6 @@ export const StateProvider = ({ children }: StateProps) => {
   return (
     <StateContext.Provider
       value={{
-        modules,
-        setModules,
         filters,
         setFilters,
         requests,

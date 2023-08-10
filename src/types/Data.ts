@@ -10,6 +10,7 @@ export interface RequestData {
   requester: string;
   status: StatusName;
   responses: string[][];
+  modules: Modules[];
 }
 
 export interface Filter {
@@ -21,4 +22,7 @@ export interface Modules {
   name: string;
   description: string;
   address: string;
+  // temporary disabled until we define modules data types
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data?: any;
 }

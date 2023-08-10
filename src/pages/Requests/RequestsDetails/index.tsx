@@ -19,7 +19,9 @@ export const RequestsDetails = () => {
 
   const loadSelectedRequest = async () => {
     const rawRequests = await opooSdk.batching.getFullRequestData(Number(id), 1);
-    const formattedRequests = await formatRequestsData(rawRequests, opooSdk);
+    const returnedTypes = await opooSdk.ipfs.getReturnedTypes(rawRequests[rawRequests.length - 1].request.ipfsHash);
+
+    const formattedRequests = formatRequestsData(rawRequests, returnedTypes);
     setSelectedRequest(formattedRequests[0]);
   };
 

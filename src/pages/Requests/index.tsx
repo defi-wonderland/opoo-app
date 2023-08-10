@@ -35,11 +35,19 @@ export const Requests = () => {
     // temporary logs
     console.log('loading requests...');
     try {
-      const rawRequests = await opooSdk.batching.getFullRequestData(128, 9);
-      const formattedRequests = await formatRequestsData(rawRequests, opooSdk);
+      /* 
+        temporary: delete this when `opooSdk.helpers.totalRequestCount()` works
+        it will need a new deployment
+      */
+      // const requestCount = await opooSdk.helpers.listRequests(0, 1000);
+      // console.log('requests count:', requestCount.length);
+      const rawRequests = await opooSdk.batching.getFullRequestData(242, 9);
+      const returnedTypes = await opooSdk.ipfs.getReturnedTypes(rawRequests[rawRequests.length - 1].request.ipfsHash);
+      const formattedRequests = formatRequestsData(rawRequests, returnedTypes);
 
       console.log('opooSdk', opooSdk);
       console.log('rawFulRequests', rawRequests);
+      console.log('returnedTypes', returnedTypes);
 
       setLoading(false);
       return formattedRequests;
