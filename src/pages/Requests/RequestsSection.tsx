@@ -3,14 +3,15 @@ import styled from 'styled-components';
 import { Icon, SLink, Pill, RequestSkeleton } from '~/components';
 import { useStateContext } from '~/hooks';
 import { RequestData } from '~/types';
-import { fontSize, statusMsg, truncateString } from '~/utils';
+import { fontSize, getTheme, statusMsg, truncateString } from '~/utils';
 
 interface RequestSectionProps {
   requests: RequestData[];
 }
 
 export const RequestSection = ({ requests }: RequestSectionProps) => {
-  const { setSelectedRequest } = useStateContext();
+  const { setSelectedRequest, theme } = useStateContext();
+  const currentTheme = getTheme(theme);
 
   return (
     <RequestsSection>
@@ -61,7 +62,7 @@ export const RequestSection = ({ requests }: RequestSectionProps) => {
           </SLink>
         ))}
 
-      {!requests.length && <RequestSkeleton count={9} />}
+      {!requests.length && <RequestSkeleton count={9} theme={currentTheme} />}
     </RequestsSection>
   );
 };

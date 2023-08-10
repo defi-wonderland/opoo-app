@@ -22,6 +22,8 @@ export interface Theme {
   red: string;
   yellow: string;
   type: 'dark' | 'light';
+  baseColor: string;
+  highlightColor: string;
 }
 
 export interface PropTheme {

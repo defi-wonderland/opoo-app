@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 
 import { Card } from '~/pages/Requests/RequestsSection';
+import { Theme } from '~/types';
 
 const CardSkeleton = styled(Card)`
   display: flex;
@@ -11,21 +12,22 @@ const CardSkeleton = styled(Card)`
 
 interface RequestSkeletonProps {
   count: number;
+  theme: Theme;
 }
-export const RequestSkeleton = ({ count }: RequestSkeletonProps) => {
-  // Request card skeleton
+export const RequestSkeleton = ({ count, theme }: RequestSkeletonProps) => {
+  // Request card loading skeleton
   const Card = (
     <CardSkeleton>
       <div>
-        <Skeleton count={1} />
+        <Skeleton count={1} highlightColor={theme.highlightColor} baseColor={theme.baseColor} />
       </div>
       <div>
-        <Skeleton count={1} width='70%' />
-        <Skeleton count={1} width='50%' />
+        <Skeleton count={1} width='70%' highlightColor={theme.highlightColor} baseColor={theme.baseColor} />
+        <Skeleton count={1} width='50%' highlightColor={theme.highlightColor} baseColor={theme.baseColor} />
       </div>
       <div>
-        <Skeleton count={1} height={60} />
-        <Skeleton count={1} width='60%' />
+        <Skeleton count={1} height={60} highlightColor={theme.highlightColor} baseColor={theme.baseColor} />
+        <Skeleton count={1} width='60%' highlightColor={theme.highlightColor} baseColor={theme.baseColor} />
       </div>
     </CardSkeleton>
   );

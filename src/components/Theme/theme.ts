@@ -22,6 +22,8 @@ export const darkTheme: Theme = {
   red: '#ff0420',
   yellow: '#efbe24',
   close: '#26262E',
+  baseColor: '#313236',
+  highlightColor: '#656871',
 };
 
 export const lightTheme: Theme = {
@@ -46,4 +48,6 @@ export const lightTheme: Theme = {
   red: '#ff0420',
   yellow: '#efbe24',
   close: '#ffffff',
+  baseColor: '', // use default value
+  highlightColor: '', // use default value
 };
