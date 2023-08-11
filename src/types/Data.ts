@@ -26,3 +26,8 @@ export interface Modules {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?: any;
 }
+
+export interface Items {
+  value: string;
+  itemCopied: boolean;
+}

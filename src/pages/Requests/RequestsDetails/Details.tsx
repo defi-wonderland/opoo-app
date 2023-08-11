@@ -1,7 +1,8 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 
+import { MOBILE_MAX_WIDTH, copyData, statusMsg, truncateString } from '~/utils';
 import { Title, Box, Text, Pill, Icon } from '~/components';
-import { MOBILE_MAX_WIDTH, statusMsg, truncateString } from '~/utils';
 import { RequestData } from '~/types';
 
 interface DetailsProps {
@@ -9,6 +10,17 @@ interface DetailsProps {
 }
 
 export const Details = ({ selectedRequest }: DetailsProps) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    copyData(selectedRequest?.id || '');
+    setCopied(true);
+
+    setTimeout(() => {
+      setCopied(false);
+    }, 800);
+  };
+
   return (
     <SBox>
       <Title>Request #{selectedRequest?.nonce}</Title>
@@ -21,9 +33,9 @@ export const Details = ({ selectedRequest }: DetailsProps) => {
 
         <SDataContainer>
           <Text>ID</Text>
-          <IdData>
+          <IdData onClick={handleCopy}>
             <Text>{truncateString(selectedRequest?.id || '', 9)}</Text>
-            <Icon name='copy' size='1.2rem' />
+            <Icon name={copied ? 'copy-success' : 'copy'} size='1.2rem' />
           </IdData>
         </SDataContainer>
 

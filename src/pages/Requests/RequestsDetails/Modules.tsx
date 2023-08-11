@@ -1,15 +1,36 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import { MOBILE_MAX_WIDTH, copyData, fontSize, truncateString } from '~/utils';
 import { Box, Pill, Text, Title } from '~/components';
 import { useModal, useStateContext } from '~/hooks';
-import { MOBILE_MAX_WIDTH, fontSize } from '~/utils';
+import { Items } from '~/types';
 
 export const Modules = () => {
-  const { selectedRequest } = useStateContext();
   const { setOpen } = useModal();
+  const [items, setItems] = useState<Items[]>([]);
+  const {
+    selectedRequest: { modules },
+  } = useStateContext();
 
-  const modules = selectedRequest.modules;
   const handleModal = () => setOpen(true);
+
+  const handleCopy = async (content: string, index: number) => {
+    copyData(content);
+    const newItems = [...items];
+    newItems[index].itemCopied = true;
+    setItems(newItems);
+
+    setTimeout(() => {
+      const newItems = [...items];
+      newItems[index].itemCopied = false;
+      setItems(newItems);
+    }, 800);
+  };
+
+  useEffect(() => {
+    if (modules?.length) setItems(modules.map((module) => ({ value: module.address, itemCopied: false })));
+  }, [modules]);
 
   return (
     <SBox>
@@ -25,7 +46,18 @@ export const Modules = () => {
             }}
           >
             {/* temporary text */}
-            <Pill iconName='hashtag' text='3d4919c6b9...f368ae1ec2rth' size='1.3rem' copy />
+            <Pill
+              onClick={(e) => {
+                e.stopPropagation();
+                handleCopy(module.address, index);
+              }}
+              iconName='hashtag'
+              text={truncateString(module.address, 9)}
+              size='1.3rem'
+              copy
+              clickable
+              copied={items[index]?.itemCopied}
+            />
             <MTitle>{module.name}</MTitle>
             <Description>{module.description}</Description>
           </ModuleCard>

@@ -5,6 +5,7 @@ import { StatusName } from '~/types';
 export type IconName =
   | 'close'
   | 'copy'
+  | 'copy-success'
   | 'discord'
   | 'docs'
   | 'github'

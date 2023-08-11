@@ -1,9 +1,10 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import { copyData, fontSize, statusMsg, truncateString, getTheme } from '~/utils';
 import { Icon, SLink, Pill, RequestSkeleton } from '~/components';
+import { Items, RequestData } from '~/types';
 import { useStateContext } from '~/hooks';
-import { RequestData } from '~/types';
-import { fontSize, getTheme, statusMsg, truncateString } from '~/utils';
 
 interface RequestSectionProps {
   requests: RequestData[];
@@ -12,6 +13,24 @@ interface RequestSectionProps {
 export const RequestSection = ({ requests }: RequestSectionProps) => {
   const { setSelectedRequest, theme } = useStateContext();
   const currentTheme = getTheme(theme);
+  const [items, setItems] = useState<Items[]>([]);
+
+  const handleCopy = async (content: string, index: number) => {
+    copyData(content);
+    const newItems = [...items];
+    newItems[index].itemCopied = true;
+    setItems(newItems);
+
+    setTimeout(() => {
+      const newItems = [...items];
+      newItems[index].itemCopied = false;
+      setItems(newItems);
+    }, 800);
+  };
+
+  useEffect(() => {
+    if (requests.length) setItems(requests.map((request) => ({ value: request.id, itemCopied: false })));
+  }, [requests]);
 
   return (
     <RequestsSection>
@@ -24,12 +43,13 @@ export const RequestSection = ({ requests }: RequestSectionProps) => {
                 <Pill
                   onClick={(e) => {
                     e.preventDefault();
-                    console.log('copy to clipboard');
+                    handleCopy(card.id, index);
                   }}
                   iconName='hashtag'
                   size='1.2rem'
                   text={truncateString(card.id, 9)}
                   copy
+                  copied={items[index]?.itemCopied}
                   clickable
                 />
                 <Pill iconName={card.status} text={statusMsg(card.status)} size='1.3rem' />
