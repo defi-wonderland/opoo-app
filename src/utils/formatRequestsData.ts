@@ -3,7 +3,6 @@ import { RequestFullData } from 'opoo-sdk/dist/batching';
 import { ParamType } from 'ethers';
 
 import { RequestData } from '~/types';
-import { truncateString } from './truncateString';
 import { getStatus } from './getStatus';
 import { getDate } from './getDate';
 
@@ -35,12 +34,12 @@ export const formatRequestsData = (
       status: getStatus(fullRequest),
 
       // Responses section
-      responses: fullRequest.responses.map((response) => [
-        /* response  */ toUtf8String(response.response), // decoded response
-        /* proposer  */ truncateString(response.proposer, 4),
-        /* requestId */ truncateString(response.requestId, 9),
-        /* createdAt */ getDate(response.createdAt),
-      ]),
+      responses: fullRequest.responses.map((response) => ({
+        response: toUtf8String(response.response), // decoded response
+        proposer: response.proposer,
+        requestId: response.requestId,
+        dispute: getDate(response.createdAt), // WIP
+      })),
 
       // Modules section (WIP)
       modules: [

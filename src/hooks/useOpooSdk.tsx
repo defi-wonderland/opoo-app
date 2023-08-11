@@ -12,16 +12,13 @@ export const useOpooSdk = () => {
   const provider = new ethers.JsonRpcProvider(RPC_URL);
 
   // request module
-  const requestIface = new ethers.Interface(IHttpRequestModule.abi);
-  const requestModule = new Module(REQUEST_MODULE, requestIface, provider);
+  const requestModule = new Module(REQUEST_MODULE, IHttpRequestModule.abi, provider);
 
   // response module
-  const responseIface = new ethers.Interface(IResponseModule.abi);
-  const responseModule = new Module(RESPONSE_MODULE, responseIface, provider);
+  const responseModule = new Module(RESPONSE_MODULE, IResponseModule.abi, provider);
 
   // dispute module
-  const disputeIface = new ethers.Interface(IDisputeModule.abi);
-  const disputeModule = new Module(DISPUTE_MODULE, disputeIface, provider);
+  const disputeModule = new Module(DISPUTE_MODULE, IDisputeModule.abi, provider);
 
   const knownModules: ModulesMap = {
     [REQUEST_MODULE]: requestModule,

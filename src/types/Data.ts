@@ -9,8 +9,15 @@ export interface RequestData {
   createdAt: string;
   requester: string;
   status: StatusName;
-  responses: string[][];
+  responses: Response[];
   modules: Modules[];
+}
+
+export interface Response {
+  response: string;
+  proposer: string;
+  requestId: string;
+  dispute: string;
 }
 
 export interface Filter {

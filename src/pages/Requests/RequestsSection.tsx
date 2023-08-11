@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { ExternalLink, Icon, Pill, RequestSkeleton } from '~/components';
+
 import { copyData, fontSize, statusMsg, truncateString, getTheme } from '~/utils';
-import { Icon, SLink, Pill, RequestSkeleton } from '~/components';
 import { Items, RequestData } from '~/types';
 import { useStateContext } from '~/hooks';
 
@@ -11,6 +13,12 @@ interface RequestSectionProps {
 }
 
 export const RequestSection = ({ requests }: RequestSectionProps) => {
+  const navigate = useNavigate();
+
+  const handleClick = (request: RequestData) => {
+    setSelectedRequest(request);
+    navigate(`/requests/${request.nonce}`);
+  };
   const { setSelectedRequest, theme } = useStateContext();
   const currentTheme = getTheme(theme);
   const [items, setItems] = useState<Items[]>([]);
@@ -36,50 +44,53 @@ export const RequestSection = ({ requests }: RequestSectionProps) => {
     <RequestsSection>
       {!!requests.length &&
         requests.map((card, index) => (
-          <SLink to={`/requests/${card.nonce}`} key={card.id + index}>
-            <Card onClick={() => setSelectedRequest(card)}>
-              {/* Header section */}
-              <PillsContainer>
-                <Pill
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleCopy(card.id, index);
-                  }}
-                  iconName='hashtag'
-                  size='1.2rem'
-                  text={truncateString(card.id, 9)}
-                  copy
-                  copied={items[index]?.itemCopied}
-                  clickable
-                />
-                <Pill iconName={card.status} text={statusMsg(card.status)} size='1.3rem' />
-              </PillsContainer>
-              {/* Request number */}
-              <RequestTitle>Request #{card.nonce}</RequestTitle>
+          <Card onClick={() => handleClick(card)} key={card.id + index}>
+            {/* Header section */}
+            <PillsContainer>
+              <Pill
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleCopy(card.id, index);
+                }}
+                iconName='hashtag'
+                size='1.2rem'
+                text={truncateString(card.id, 9)}
+                copy
+                clickable
+                copied={items[index]?.itemCopied}
+              />
+              <Pill iconName={card.status} text={statusMsg(card.status)} size='1.3rem' />
+            </PillsContainer>
+            {/* Request number */}
+            <RequestTitle>Request #{card.nonce}</RequestTitle>
 
-              {/* Requester section */}
-              <DataContainer>
-                <SecondaryText>By</SecondaryText>
+            {/* Requester section */}
+            <DataContainer>
+              <SecondaryText>By</SecondaryText>
+              <ExternalLink
+                href={`https://optimistic.etherscan.io/address/${card.requester}`}
+                onClick={(e) => e.stopPropagation()}
+              >
                 <PrimaryText>{truncateString(card.requester, 4)}</PrimaryText>
+              </ExternalLink>
+            </DataContainer>
+
+            {/* Description */}
+            <DescriptionContainer>
+              <SecondaryText>{card.description}</SecondaryText>
+            </DescriptionContainer>
+
+            {/* Footer section */}
+            <CardFooter>
+              <DataContainer>
+                <PrimaryText>{card.createdAt}</PrimaryText>
               </DataContainer>
-
-              {/* Description */}
-              <DescriptionContainer>
-                <SecondaryText>{card.description}</SecondaryText>
-              </DescriptionContainer>
-
-              {/* Footer section */}
-              <CardFooter>
-                <DataContainer>
-                  <PrimaryText>{card.createdAt}</PrimaryText>
-                </DataContainer>
-                <DetailsButton onClick={() => setSelectedRequest(card)}>
-                  <p>See details</p>
-                  <Icon name='right-arrow' size='0.9rem' />
-                </DetailsButton>
-              </CardFooter>
-            </Card>
-          </SLink>
+              <DetailsButton onClick={() => setSelectedRequest(card)}>
+                <p>See details</p>
+                <Icon name='right-arrow' size='0.9rem' />
+              </DetailsButton>
+            </CardFooter>
+          </Card>
         ))}
 
       {!requests.length && <RequestSkeleton count={9} theme={currentTheme} />}
@@ -107,6 +118,7 @@ export const Card = styled.div`
   height: 21.2rem;
   gap: 1rem;
   padding: 2rem;
+  cursor: pointer;
 `;
 
 const DataContainer = styled.div`

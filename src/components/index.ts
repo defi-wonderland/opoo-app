@@ -1,4 +1,5 @@
 export * from './Box';
+export * from './ExternalLink';
 export * from './Icon';
 export * from './Link';
 export * from './Pill';

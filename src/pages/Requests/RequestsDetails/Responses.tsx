@@ -1,15 +1,32 @@
 import styled from 'styled-components';
 
-import { Title, Box, Text } from '~/components';
-import { MOBILE_MAX_WIDTH, fontSize } from '~/utils';
+import { Title, Box, Text, ExternalLink } from '~/components';
+import { MOBILE_MAX_WIDTH, fontSize, truncateString } from '~/utils';
+import { Response } from '~/types';
 
 interface ResponsesProps {
-  responses: string[][];
+  responses: Response[];
 }
 export const Responses = ({ responses }: ResponsesProps) => {
+  const formattedResponses = responses?.map((response, index) => [
+    // Response:
+    response.response,
+
+    // Proposer:
+    <ExternalLink key={'address-link-' + index} href={`https://optimistic.etherscan.io/address/${response.proposer}`}>
+      {truncateString(response.proposer, 4)}
+    </ExternalLink>,
+
+    // Request Id:
+    truncateString(response.requestId, 9),
+
+    // Dispute:
+    response.dispute,
+  ]);
+
   const tableData = {
     columns: ['Response', 'Proposer', 'ID', 'Dispute'],
-    rows: responses,
+    rows: formattedResponses,
   };
 
   return (
@@ -31,7 +48,7 @@ export const Responses = ({ responses }: ResponsesProps) => {
             tableData.rows.map((rows, index) => (
               <Row key={'row-' + index}>
                 {rows.map((value, index) => (
-                  <SBox key={value + index}>
+                  <SBox key={'row-element-' + index}>
                     <TableTitle>{tableData.columns[index]}</TableTitle>
                     <SText>{value}</SText>
                   </SBox>
