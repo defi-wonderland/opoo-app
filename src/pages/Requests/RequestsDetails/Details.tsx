@@ -45,7 +45,7 @@ export const Details = ({ selectedRequest }: DetailsProps) => {
         </SDataContainer>
 
         <SDataContainer>
-          <Text>Status:</Text>
+          <Text>Status</Text>
           <Pill
             iconName={selectedRequest?.status || 'unanswered'}
             text={statusMsg(selectedRequest?.status || 'unanswered')}
