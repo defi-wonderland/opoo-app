@@ -26,7 +26,7 @@ const TextPill = styled.p<{ fontSize?: string }>`
 `;
 
 interface PillProps {
-  iconName: IconName;
+  iconName?: IconName;
   text?: string;
   copy?: boolean;
   size?: string;
@@ -40,7 +40,7 @@ interface PillProps {
 export const Pill = ({ iconName, text, copy, size, iconColor, fontSize, clickable, onClick, copied }: PillProps) => {
   return (
     <SPill className={clickable ? 'clickable' : ''} onClick={onClick}>
-      <Icon name={iconName} size={size} color={iconColor} />
+      {iconName && <Icon name={iconName} size={size} color={iconColor} />}
       <TextPill fontSize={fontSize}>{text}</TextPill>
       {copy && <Icon name={copied ? 'copy-success' : 'copy'} size='1.2rem' />}
     </SPill>

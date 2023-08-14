@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { ExternalLink, Icon, Pill, RequestSkeleton } from '~/components';
 
-import { copyData, fontSize, statusMsg, truncateString, getTheme } from '~/utils';
+import { copyData, fontSize, statusMsg, truncateString, getTheme, MOBILE_MAX_WIDTH } from '~/utils';
 import { Items, RequestData } from '~/types';
 import { useStateContext } from '~/hooks';
 
@@ -110,6 +110,8 @@ const RequestsSection = styled.section`
 `;
 
 export const Card = styled.div`
+  display: flex;
+  flex-direction: column;
   position: relative;
   background-color: ${({ theme }) => theme.cardBackground};
   border-radius: ${({ theme }) => theme.borderRadius};
@@ -136,6 +138,10 @@ const DescriptionContainer = styled(DataContainer)`
 
   p {
     font-size: ${fontSize.MEDIUM};
+  }
+
+  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+    margin: 0;
   }
 `;
 
@@ -174,7 +180,6 @@ const RequestTitle = styled.h1`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  margin: 1rem 0;
 `;
 
 // ------------------------------- Footer Section ------------------------------- //

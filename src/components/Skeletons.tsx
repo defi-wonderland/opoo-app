@@ -2,12 +2,17 @@ import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 
 import { Card } from '~/pages/Requests/RequestsSection';
+import { MOBILE_MAX_WIDTH } from '~/utils';
 import { Theme } from '~/types';
 
 const CardSkeleton = styled(Card)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+    width: 34rem;
+  }
 `;
 
 interface RequestSkeletonProps {

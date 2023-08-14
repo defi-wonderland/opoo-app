@@ -1,36 +1,16 @@
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { MOBILE_MAX_WIDTH, copyData, fontSize, truncateString } from '~/utils';
-import { Box, Pill, Text, Title } from '~/components';
+import { MOBILE_MAX_WIDTH, fontSize, truncateString } from '~/utils';
+import { Box, ExternalLink, Pill, Text, Title } from '~/components';
 import { useModal, useStateContext } from '~/hooks';
-import { Items } from '~/types';
 
 export const Modules = () => {
   const { setOpen } = useModal();
-  const [items, setItems] = useState<Items[]>([]);
   const {
     selectedRequest: { modules },
   } = useStateContext();
 
   const handleModal = () => setOpen(true);
-
-  const handleCopy = async (content: string, index: number) => {
-    copyData(content);
-    const newItems = [...items];
-    newItems[index].itemCopied = true;
-    setItems(newItems);
-
-    setTimeout(() => {
-      const newItems = [...items];
-      newItems[index].itemCopied = false;
-      setItems(newItems);
-    }, 800);
-  };
-
-  useEffect(() => {
-    if (modules?.length) setItems(modules.map((module) => ({ value: module.address, itemCopied: false })));
-  }, [modules]);
 
   return (
     <SBox>
@@ -45,21 +25,14 @@ export const Modules = () => {
               handleModal();
             }}
           >
-            {/* temporary text */}
-            <Pill
-              onClick={(e) => {
-                e.stopPropagation();
-                handleCopy(module.address, index);
-              }}
-              iconName='hashtag'
-              text={truncateString(module.address, 9)}
-              size='1.3rem'
-              copy
-              clickable
-              copied={items[index]?.itemCopied}
-            />
-            <MTitle>{module.name}</MTitle>
-            <Description>{module.description}</Description>
+            <Pill text={truncateString(module.address, 9)} clickable />
+            <TitleContainer>
+              <MTitle>{module.name}</MTitle>
+              <ExternalLink
+                href={`https://optimistic.etherscan.io/address/${module.address}`}
+                onClick={(e) => e.stopPropagation()}
+              ></ExternalLink>
+            </TitleContainer>
           </ModuleCard>
         ))}
       </ModulesContainer>
@@ -85,7 +58,7 @@ const ModulesContainer = styled(Box)`
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     margin-top: 3rem;
-    gap: 1rem;
+    gap: 2rem;
   }
 `;
 
@@ -94,25 +67,34 @@ const ModuleCard = styled(Box)`
   border-radius: ${({ theme }) => theme.borderRadius};
   padding: 2rem;
   max-width: 40rem;
-  height: 16rem;
+  gap: 1rem;
   justify-content: space-between;
+
   cursor: pointer;
+
+  &:hover {
+    opacity: 0.9;
+    transition: opacity 0.2s ease-in-out;
+  }
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     border: ${({ theme }) => theme.border};
     height: auto;
+    padding: 1rem;
   }
+`;
+
+const TitleContainer = styled(Box)`
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
 `;
 
 const MTitle = styled(Text)`
   font-size: ${fontSize.LARGE};
-  padding: 1rem 0;
-`;
-
-const Description = styled(Text)`
-  color: ${({ theme }) => theme.textSecondary};
-  font-size: ${fontSize.MEDIUM};
-  font-style: normal;
-  font-weight: 400;
-  line-height: 18px; /* 128.571% */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-left: 0.85rem;
 `;

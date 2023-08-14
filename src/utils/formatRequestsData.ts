@@ -45,34 +45,24 @@ export const formatRequestsData = (
       modules: [
         {
           name: 'Http Request Module',
-          description:
-            'The HTTP Request module on Optimism enables developers to send and receive HTTP requests to interact with external servers or APIs.',
-          address: '0xe94f1fa4f27d9d288ffea234bb62e1fbc086ca0c',
+          address: fullRequest.request.requestModule,
           data: requestModuleData,
         },
         {
-          name: 'Bonded Response Module',
-          description:
-            'The HTTP Request module on Optimism enables developers to send and receive HTTP requests to interact with external servers or APIs.',
-          address: '0xe94f1fa4f27d9d288ffea234bb62e1fbc086ca0c',
+          name: 'Response Module',
+          address: fullRequest.request.responseModule,
         },
         {
-          name: 'Bonded Dispute Module',
-          description:
-            'The HTTP Request module on Optimism enables developers to send and receive HTTP requests to interact with external servers or APIs.',
-          address: '0xe94f1fa4f27d9d288ffea234bb62e1fbc086ca0c',
+          name: 'Dispute Module',
+          address: fullRequest.request.disputeModule,
         },
         {
-          name: 'Arbitrator Module',
-          description:
-            'The HTTP Request module on Optimism enables developers to send and receive HTTP requests to interact with external servers or APIs.',
-          address: '0xe94f1fa4f27d9d288ffea234bb62e1fbc086ca0c',
+          name: 'Resolution Module',
+          address: fullRequest.request.resolutionModule,
         },
         {
-          name: 'Callback Module',
-          description:
-            'The HTTP Request module on Optimism enables developers to send and receive HTTP requests to interact with external servers or APIs.',
-          address: '0xe94f1fa4f27d9d288ffea234bb62e1fbc086ca0c',
+          name: 'Finality Module',
+          address: fullRequest.request.finalityModule,
         },
       ],
     };
