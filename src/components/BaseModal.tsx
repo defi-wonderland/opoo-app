@@ -1,61 +1,96 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 
 import { Icon, Pill, Box, Text } from '~/components';
-import { MOBILE_MAX_WIDTH, fontSize } from '~/utils';
+import { MOBILE_MAX_WIDTH, copyData, fontSize, truncateString } from '~/utils';
+import { useStateContext } from '~/hooks';
 
 interface BaseModalProps {
   setOpen: (val: boolean) => void;
 }
 export const BaseModal = ({ setOpen }: BaseModalProps) => {
+  const { selectedModule } = useStateContext();
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = (data: string) => {
+    copyData(data);
+    setCopied(true);
+
+    setTimeout(() => {
+      setCopied(false);
+    }, 600);
+  };
+
   return (
     <SModal>
       <MHeader>
         <div>
-          <h1>Http Request Module</h1>
-          <Pill iconName='hashtag' text='3d4919c6b9...f368ae1ec2rth' copy />
+          <h1>{selectedModule.name}</h1>
+          <Pill
+            iconName='hashtag'
+            text={truncateString(selectedModule.address, 6)}
+            onClick={() => handleCopy(selectedModule.address)}
+            copy
+            clickable
+            copied={copied}
+          />
         </div>
-        <CloseIcon name='close' size='1.2rem' onClick={() => setOpen(false)} />
+        <CloseIcon onClick={() => setOpen(false)}>
+          <Icon name='close' size='1.2rem' />
+        </CloseIcon>
       </MHeader>
 
-      <MBody>
+      <MBody className='custom-scrollbar'>
         <Content>
           {/* Temporary fixed values */}
-          <SDataContainer>
-            <SText>URL</SText>
-            <SText>https://api.coingecko.com/api/v3/simple/price</SText>
-          </SDataContainer>
+          {selectedModule.data.url && (
+            <SDataContainer>
+              <SText>URL</SText>
+              <SText>{selectedModule.data.url}</SText>
+            </SDataContainer>
+          )}
 
-          <SDataContainer>
-            <SText>Method</SText>
-            <SText>GET</SText>
-          </SDataContainer>
+          {selectedModule.data.method && (
+            <SDataContainer>
+              <SText>Method</SText>
+              <SText>{selectedModule.data.method}</SText>
+            </SDataContainer>
+          )}
 
-          <SDataContainer>
-            <SText>Body</SText>
-            <SText>ids=ethereum&vs_currencies=usdh</SText>
-          </SDataContainer>
+          {selectedModule.data.body && (
+            <SDataContainer>
+              <SText>Body</SText>
+              <SText>{selectedModule.data.body}</SText>
+            </SDataContainer>
+          )}
 
-          <SDataContainer>
-            <SText>Accounting extension</SText>
-            <SText>0xFFeA234bB62E1fBC086CA0cE94f1fa4F27D9d288</SText>
-          </SDataContainer>
+          {selectedModule.data.accountingExtension && (
+            <SDataContainer>
+              <SText>Accounting extension</SText>
+              <SText>{selectedModule.data.accountingExtension}</SText>
+            </SDataContainer>
+          )}
 
-          <SDataContainer>
-            <SText>Payment token</SText>
-            <SText>0xFFeA234bB62E1fBC086CA0cE94f1fa4F27D9d288</SText>
-          </SDataContainer>
+          {selectedModule.data.paymentToken && (
+            <SDataContainer>
+              <SText>Payment token</SText>
+              <SText>{selectedModule.data.paymentToken}</SText>
+            </SDataContainer>
+          )}
 
-          <SDataContainer>
-            <SText>Payment amount</SText>
-            <SText>1000</SText>
-          </SDataContainer>
+          {selectedModule.data.paymentAmount && (
+            <SDataContainer>
+              <SText>Payment amount</SText>
+              <SText>{selectedModule.data.paymentAmount}</SText>
+            </SDataContainer>
+          )}
 
-          <SDataContainer>
-            <SText>Initialization data</SText>
-            <SText>
-              0x0000000000000000000000001d1499e622d69689cdf9004d05ec547d650ff2110000000000000000000000007f5c764cbc14f9669b88837ca1490cca17c316070000000000000000000000000000000000000000000000056bc75e2d6310000000000000000000000000000000000000000000000000000000
-            </SText>
-          </SDataContainer>
+          {selectedModule.data.initializationData && (
+            <SDataContainer>
+              <SText>Initialization data</SText>
+              <SText>{selectedModule.data.initializationData}</SText>
+            </SDataContainer>
+          )}
         </Content>
       </MBody>
     </SModal>
@@ -88,6 +123,7 @@ const MHeader = styled(Box)`
   justify-content: space-between;
   align-items: center;
   height: auto;
+  width: 100%;
 
   div:first-child {
     display: flex;
@@ -108,8 +144,13 @@ const MHeader = styled(Box)`
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     padding: 2.4rem 1.6rem;
     align-items: start;
+    justify-content: space-between;
+    width: 100%;
+
     h1 {
+      text-align: start;
       color: ${({ theme }) => theme.red};
+      font-size: ${fontSize.LARGE};
     }
   }
 `;
@@ -119,6 +160,7 @@ const MBody = styled.div`
   background-color: ${({ theme }) => theme.backgroundPrimary};
   padding: 2.4rem 3rem;
   border-radius: 1.2rem;
+  width: 100%;
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     background-color: ${({ theme }) => theme.backgroundPrimary};
@@ -177,15 +219,23 @@ const SDataContainer = styled.div`
   }
 `;
 
-const CloseIcon = styled(Icon)`
+const CloseIcon = styled.div`
   border-radius: 100%;
   background-color: ${({ theme }) => theme.close};
-  padding: 1.2rem;
+  padding: 0.8rem;
   cursor: pointer;
+  display: flex;
+  width: 3.5rem;
+  height: 3.5rem;
+  align-items: center;
+  justify-content: center;
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
-    padding: 0.8rem;
-    margin-top: 0.2rem;
+    width: 3rem;
+    height: 3rem;
+    i {
+      font-size: 1rem;
+    }
   }
 `;
 

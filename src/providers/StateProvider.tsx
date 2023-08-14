@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from 'react';
 
-import { Filter, RequestData, ThemeName } from '~/types';
+import { Filter, RequestData, ThemeName, Modules } from '~/types';
 import { THEME_KEY } from '~/utils';
 
 type ContextType = {
@@ -12,6 +12,9 @@ type ContextType = {
 
   selectedRequest: RequestData;
   setSelectedRequest: (val: RequestData) => void;
+
+  selectedModule: Modules;
+  setSelectedModule: (val: Modules) => void;
 
   theme: ThemeName;
   setTheme: (val: ThemeName) => void;
@@ -31,8 +34,9 @@ export const StateContext = createContext({} as ContextType);
 
 export const StateProvider = ({ children }: StateProps) => {
   const [type, setType] = useState<string | null>(null);
-  const [theme, setTheme] = useState<ThemeName>('light');
+  const [theme, setTheme] = useState<ThemeName>('dark');
   const [selectedRequest, setSelectedRequest] = useState<RequestData>({} as RequestData);
+  const [selectedModule, setSelectedModule] = useState<Modules>({} as Modules);
   const [requests, setRequests] = useState<RequestData[]>([]);
   const [filters, setFilters] = useState<Filter[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -75,6 +79,8 @@ export const StateProvider = ({ children }: StateProps) => {
         setRequests,
         selectedRequest,
         setSelectedRequest,
+        selectedModule,
+        setSelectedModule,
         theme,
         setTheme,
         type,

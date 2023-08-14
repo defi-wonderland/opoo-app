@@ -1,38 +1,59 @@
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-import { MOBILE_MAX_WIDTH, fontSize, truncateString } from '~/utils';
-import { Box, ExternalLink, Pill, Text, Title } from '~/components';
+import { MOBILE_MAX_WIDTH, fontSize, truncateString, copyData } from '~/utils';
+import { Box, Pill, Text, Title } from '~/components';
 import { useModal, useStateContext } from '~/hooks';
+import { Items, Modules as ModuleType } from '~/types';
 
 export const Modules = () => {
   const { setOpen } = useModal();
+  const [items, setItems] = useState<Items[]>([]);
   const {
     selectedRequest: { modules },
+    setSelectedModule,
   } = useStateContext();
 
-  const handleModal = () => setOpen(true);
+  const handleCopy = async (content: string, index: number) => {
+    copyData(content);
+    const newItems = [...items];
+    newItems[index].itemCopied = true;
+    setItems(newItems);
+
+    setTimeout(() => {
+      const newItems = [...items];
+      newItems[index].itemCopied = false;
+      setItems(newItems);
+    }, 800);
+  };
+
+  const handleClick = (module: ModuleType) => {
+    setSelectedModule(module);
+    setOpen(true);
+  };
+
+  useEffect(() => {
+    if (modules?.length) setItems(modules.map((module) => ({ value: module.address, itemCopied: false })));
+  }, [modules]);
 
   return (
     <SBox>
       <Title>Modules</Title>
       <ModulesContainer>
         {modules?.map((module, index) => (
-          <ModuleCard
-            key={'module-' + index}
-            onClick={() => {
-              // TODO: fill the modal with the module data
-              console.log(module?.data);
-              handleModal();
-            }}
-          >
-            <Pill text={truncateString(module.address, 9)} clickable />
-            <TitleContainer>
-              <MTitle>{module.name}</MTitle>
-              <ExternalLink
-                href={`https://optimistic.etherscan.io/address/${module.address}`}
-                onClick={(e) => e.stopPropagation()}
-              ></ExternalLink>
-            </TitleContainer>
+          <ModuleCard key={'module-' + index} onClick={() => handleClick(module)}>
+            <Pill
+              onClick={(e) => {
+                e.stopPropagation();
+                handleCopy(module.address, index);
+              }}
+              text={truncateString(module.address, 9)}
+              size='1.3rem'
+              copy
+              clickable
+              copied={items[index]?.itemCopied}
+            />
+            <MTitle>{module.name}</MTitle>
           </ModuleCard>
         ))}
       </ModulesContainer>
@@ -82,13 +103,6 @@ const ModuleCard = styled(Box)`
     height: auto;
     padding: 1rem;
   }
-`;
-
-const TitleContainer = styled(Box)`
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: space-between;
 `;
 
 const MTitle = styled(Text)`

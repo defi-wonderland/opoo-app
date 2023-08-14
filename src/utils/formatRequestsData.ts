@@ -47,7 +47,14 @@ export const formatRequestsData = (
         {
           name: 'Http Request Module',
           address: fullRequest.request.requestModule,
-          data: requestModuleData,
+          data: {
+            url: requestModuleData[0],
+            method: requestModuleData[1],
+            body: requestModuleData[2],
+            accountingExtension: requestModuleData[3],
+            paymentToken: requestModuleData[4],
+            paymentAmount: requestModuleData[5].toString(),
+          },
         },
         {
           name: 'Response Module',
