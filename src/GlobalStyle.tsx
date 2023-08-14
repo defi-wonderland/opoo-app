@@ -52,6 +52,10 @@ const GlobalStyle = createGlobalStyle`
   .custom-scrollbar::-webkit-scrollbar-thumb:active {
     background: ${({ theme }) => theme.backgroundPrimary};
   }  
+
+  #opoo-tooltip {
+    z-index: 100;
+  }
 `;
 
 export default GlobalStyle;

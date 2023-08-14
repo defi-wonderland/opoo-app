@@ -4,8 +4,6 @@ import { ParamType } from 'ethers';
 
 import { RequestData } from '~/types';
 import { getStatus } from './getStatus';
-import { getDate } from './getDate';
-import { timeAgo } from './misc';
 
 export const decodeData = (types: (string | ParamType)[], data: string) => {
   return AbiCoder.defaultAbiCoder().decode(types, data);
@@ -29,7 +27,7 @@ export const formatRequestsData = (
     return {
       id: fullRequest.requestId,
       description: requestModuleData[2],
-      createdAt: timeAgo(fullRequest.request.createdAt),
+      createdAt: fullRequest.request.createdAt,
       requester: fullRequest.request.requester,
       nonce: fullRequest.request.nonce.toString(),
       status: getStatus(fullRequest),
@@ -39,7 +37,7 @@ export const formatRequestsData = (
         response: toUtf8String(response.response), // decoded response
         proposer: response.proposer,
         requestId: response.requestId,
-        dispute: getDate(response.createdAt), // WIP
+        dispute: response.createdAt,
       })),
 
       // Modules section (WIP)

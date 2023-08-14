@@ -1,6 +1,7 @@
 import '~/assets/fonts/opoo-icons/style.css';
 
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { Tooltip } from 'react-tooltip';
 
 import { RequestsDetails } from './pages/Requests/RequestsDetails';
 import { About, Landing, Requests } from '~/pages';
@@ -34,6 +35,7 @@ function App() {
       <StateProvider>
         <Themable>
           <GlobalStyle />
+          <Tooltip id='opoo-tooltip' />
           <ScrollToTop />
           <Modals />
           <AppRouter />

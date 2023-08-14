@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { ExternalLink, Icon, Pill, RequestSkeleton } from '~/components';
 
-import { copyData, fontSize, statusMsg, truncateString, getTheme, MOBILE_MAX_WIDTH } from '~/utils';
+import { copyData, fontSize, statusMsg, truncateString, getTheme, getDate, timeAgo, MOBILE_MAX_WIDTH } from '~/utils';
 import { Items, RequestData } from '~/types';
 import { useStateContext } from '~/hooks';
 
@@ -84,7 +84,9 @@ export const RequestSection = ({ requests, loading }: RequestSectionProps) => {
             {/* Footer section */}
             <CardFooter>
               <DataContainer>
-                <PrimaryText>{card.createdAt}</PrimaryText>
+                <PrimaryText data-tooltip-id='opoo-tooltip' data-tooltip-content={getDate(card.createdAt)}>
+                  {timeAgo(card.createdAt)}
+                </PrimaryText>
               </DataContainer>
               <DetailsButton onClick={() => setSelectedRequest(card)}>
                 <p>See details</p>
