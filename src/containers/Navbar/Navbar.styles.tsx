@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { MOBILE_MAX_WIDTH, fontSize } from '~/utils';
+import { TABLET_MAX_WIDTH, fontSize } from '~/utils';
 
 // ------------------------------- Navbar Container ------------------------------- //
 export const SNavbar = styled.div`
@@ -38,7 +38,7 @@ export const SNavbar = styled.div`
     transition: transform 200ms cubic-bezier(1, 0.5, 0.8, 1);
   }
 
-  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+  @media (max-width: ${TABLET_MAX_WIDTH}px) {
     padding: 0 2rem;
     height: 7.2rem;
     position: fixed;
@@ -61,6 +61,7 @@ export const SNavbar = styled.div`
 
       background-color: ${({ theme }) => theme.headerBackground};
       height: 100vh;
+      min-width: 100%;
     }
 
     .show-links a {
@@ -87,6 +88,7 @@ export const SNavbar = styled.div`
       justify-content: center;
       background-color: transparent;
       gap: 2rem;
+      min-width: 100%;
     }
 
     .show-icons a {
@@ -97,7 +99,9 @@ export const SNavbar = styled.div`
 
 // ------------------------------- Logo Section ------------------------------- //
 
-export const LogoContainer = styled.div``;
+export const LogoContainer = styled.div`
+  margin-right: 10rem;
+`;
 
 export const Logo = styled(Link)`
   font-family: 'Rubik', sans-serif;
@@ -113,7 +117,7 @@ export const Logo = styled(Link)`
 export const LinkContainer = styled.div<{ menuOpen?: boolean }>`
   display: flex;
   flex-direction: row;
-  gap: 4.5rem;
+  gap: 10rem;
 `;
 
 export const LinkText = styled(Link)`
@@ -141,7 +145,7 @@ export const MenuButton = styled.button`
     color: ${({ theme }) => theme.textPrimary};
   }
 
-  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+  @media (max-width: ${TABLET_MAX_WIDTH}px) {
     display: block;
   }
 `;
@@ -151,8 +155,9 @@ export const MenuButton = styled.button`
 export const Icons = styled.div<{ menuOpen?: boolean }>`
   display: flex;
   flex-direction: row;
-  width: 35.4rem;
   justify-content: end;
+  max-width: 100vw;
+  width: 100%;
 `;
 
 export const IconLink = styled(LinkText)`
