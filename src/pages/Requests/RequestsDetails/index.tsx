@@ -5,7 +5,7 @@ import { Details } from './Details';
 import { Responses } from './Responses';
 import { Modules } from './Modules';
 import { useOpooSdk, useStateContext } from '~/hooks';
-import { formatRequestsData } from '~/utils';
+import { formatRequestsData, getRequestEnsNames } from '~/utils';
 import { useEffect } from 'react';
 
 const Container = styled.div`
@@ -14,14 +14,15 @@ const Container = styled.div`
 
 export const RequestsDetails = () => {
   const { id } = useParams();
-  const { opooSdk } = useOpooSdk();
+  const { opooSdk, client } = useOpooSdk();
   const { selectedRequest, setSelectedRequest } = useStateContext();
 
   const loadSelectedRequest = async () => {
     const rawRequests = await opooSdk.batching.getFullRequestData(Number(id), 1);
     const returnedTypes = await opooSdk.ipfs.getReturnedTypes(rawRequests[rawRequests.length - 1].request.ipfsHash);
+    const ensName = await getRequestEnsNames(rawRequests, client);
 
-    const formattedRequests = formatRequestsData(rawRequests, returnedTypes);
+    const formattedRequests = formatRequestsData(rawRequests, ensName, returnedTypes);
     setSelectedRequest(formattedRequests[0]);
   };
 

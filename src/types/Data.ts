@@ -46,3 +46,8 @@ export interface RequestModuleData {
   paymentToken: string;
   paymentAmount: string;
 }
+
+export interface TypeResults {
+  name?: string;
+  type: string;
+}

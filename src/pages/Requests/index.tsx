@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { MOBILE_MAX_WIDTH, formatRequestsData } from '~/utils';
+import { MOBILE_MAX_WIDTH, formatRequestsData, getRequestEnsNames } from '~/utils';
 import { useOpooSdk, useStateContext } from '~/hooks';
 import { RequestSection } from './RequestsSection';
 import { Title } from '~/components';
@@ -30,9 +30,9 @@ export const Requests = () => {
   const MOST_RECENT_REQUEST_NONCE = 242;
   const REQUESTS_AMOUNT = 9; // the max amount of requests that can be loaded at once
 
+  const { opooSdk, client } = useOpooSdk();
   const { requests /* filters */, setRequests, setLoading, loading } = useStateContext();
   const [lastRequestNonce, setLastRequestNonce] = useState(MOST_RECENT_REQUEST_NONCE);
-  const { opooSdk } = useOpooSdk();
 
   const getRequests = async () => {
     setLoading(true);
@@ -47,15 +47,16 @@ export const Requests = () => {
       // console.log('requests count:', requestCount.length);
       const rawRequests = await opooSdk.batching.getFullRequestData(lastRequestNonce, REQUESTS_AMOUNT);
 
+      const ensNames = await getRequestEnsNames(rawRequests, client);
       const returnedTypes = await opooSdk.ipfs.getReturnedTypes(
         // temporary: use the commented line below when the sdk is updated (+ new deployment)
         /* rawRequests[rawRequests.length - 1].request.ipfsHash */ '0xb253c6667c1658ebcb3c5ad11183cea14e6e527bd31e18e3091538f399890e45',
         //                                                                   ^ NOTE: this is not a private key, it's a ipfsHash
       );
-
-      const formattedRequests = formatRequestsData(rawRequests, returnedTypes);
+      const formattedRequests = formatRequestsData(rawRequests, ensNames, returnedTypes);
 
       console.log('opooSdk', opooSdk);
+      console.log('ensNames', ensNames);
       console.log('rawFulRequests', rawRequests);
       console.log('returnedTypes', returnedTypes);
       setLastRequestNonce(lastRequestNonce - REQUESTS_AMOUNT);

@@ -5,7 +5,7 @@ import IHttpRequestModule from 'opoo-core/abi/IHttpRequestModule.json';
 import IResponseModule from 'opoo-core/abi/IResponseModule.json';
 import IDisputeModule from 'opoo-core/abi/IDisputeModule.json';
 
-import { getConfig } from '~/config';
+import { getConfig, client } from '~/config';
 
 export const useOpooSdk = () => {
   const { RPC_URL, ORACLE, REQUEST_MODULE, RESPONSE_MODULE, DISPUTE_MODULE } = getConfig();
@@ -28,5 +28,5 @@ export const useOpooSdk = () => {
 
   const opooSdk = new OpooSDK(provider, ORACLE, knownModules);
 
-  return { opooSdk };
+  return { opooSdk, client };
 };
