@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { MOBILE_MAX_WIDTH, formatRequestsData } from '~/utils';
@@ -26,8 +26,12 @@ const Container = styled.div`
 `;
 
 export const Requests = () => {
-  const { requests /* filters */, setRequests, setLoading } = useStateContext();
+  // temporary:
+  const MOST_RECENT_REQUEST_NONCE = 242;
+  const REQUESTS_AMOUNT = 9; // the max amount of requests that can be loaded at once
 
+  const { requests /* filters */, setRequests, setLoading, loading } = useStateContext();
+  const [lastRequestNonce, setLastRequestNonce] = useState(MOST_RECENT_REQUEST_NONCE);
   const { opooSdk } = useOpooSdk();
 
   const getRequests = async () => {
@@ -41,15 +45,22 @@ export const Requests = () => {
       */
       // const requestCount = await opooSdk.helpers.listRequests(0, 1000);
       // console.log('requests count:', requestCount.length);
-      const rawRequests = await opooSdk.batching.getFullRequestData(242, 9);
-      const returnedTypes = await opooSdk.ipfs.getReturnedTypes(rawRequests[rawRequests.length - 1].request.ipfsHash);
+      const rawRequests = await opooSdk.batching.getFullRequestData(lastRequestNonce, REQUESTS_AMOUNT);
+
+      const returnedTypes = await opooSdk.ipfs.getReturnedTypes(
+        // temporary: use the commented line below when the sdk is updated (+ new deployment)
+        /* rawRequests[rawRequests.length - 1].request.ipfsHash */ '0xb253c6667c1658ebcb3c5ad11183cea14e6e527bd31e18e3091538f399890e45',
+        //                                                                   ^ NOTE: this is not a private key, it's a ipfsHash
+      );
+
       const formattedRequests = formatRequestsData(rawRequests, returnedTypes);
 
       console.log('opooSdk', opooSdk);
       console.log('rawFulRequests', rawRequests);
       console.log('returnedTypes', returnedTypes);
-
+      setLastRequestNonce(lastRequestNonce - REQUESTS_AMOUNT);
       setLoading(false);
+
       return formattedRequests;
     } catch (error) {
       console.error('Error loading requests:', error);
@@ -58,8 +69,27 @@ export const Requests = () => {
     }
   };
 
+  const handleScroll = async () => {
+    // diff between the bottom of the page and the user's current position
+    const diff = document.documentElement.offsetHeight - window.innerHeight - document.documentElement.scrollTop;
+
+    // if the user is not at the bottom of the page, or if the requests are still loading, do nothing
+    if (diff > 100 || loading) return;
+
+    const newRequests = await getRequests();
+    setRequests([...requests, ...newRequests]);
+  };
+
   useEffect(() => {
-    getRequests().then((requests) => setRequests(requests));
+    // infinite scroll implementation
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [loading]);
+
+  useEffect(() => {
+    getRequests().then((newRequests) => {
+      setRequests([...requests, ...newRequests]);
+    });
   }, []);
 
   return (
@@ -69,7 +99,7 @@ export const Requests = () => {
 
         {/* <FiltersSection filters={filters} /> */}
 
-        <RequestSection requests={requests} />
+        <RequestSection requests={requests} loading={loading} />
       </Container>
     </Layout>
   );

@@ -10,18 +10,19 @@ import { useStateContext } from '~/hooks';
 
 interface RequestSectionProps {
   requests: RequestData[];
+  loading: boolean;
 }
 
-export const RequestSection = ({ requests }: RequestSectionProps) => {
+export const RequestSection = ({ requests, loading }: RequestSectionProps) => {
   const navigate = useNavigate();
+  const { setSelectedRequest, theme } = useStateContext();
+  const currentTheme = getTheme(theme);
+  const [items, setItems] = useState<Items[]>([]);
 
   const handleClick = (request: RequestData) => {
     setSelectedRequest(request);
     navigate(`/requests/${request.nonce}`);
   };
-  const { setSelectedRequest, theme } = useStateContext();
-  const currentTheme = getTheme(theme);
-  const [items, setItems] = useState<Items[]>([]);
 
   const handleCopy = async (content: string, index: number) => {
     copyData(content);
@@ -93,7 +94,7 @@ export const RequestSection = ({ requests }: RequestSectionProps) => {
           </Card>
         ))}
 
-      {!requests.length && <RequestSkeleton count={9} theme={currentTheme} />}
+      {(!requests.length || loading) && <RequestSkeleton count={9} theme={currentTheme} />}
     </RequestsSection>
   );
 };

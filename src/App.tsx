@@ -9,6 +9,7 @@ import { Themable } from './components/Theme';
 import { StateProvider } from './providers/StateProvider';
 import { ModalProvider } from './providers';
 import { Modals } from './containers/Modal/Modal';
+import { ScrollToTop } from './hooks';
 
 const AppRouter = () => {
   return (
@@ -31,6 +32,7 @@ function App() {
     <ModalProvider>
       <StateProvider>
         <Themable>
+          <ScrollToTop />
           <Modals />
           <AppRouter />
         </Themable>
