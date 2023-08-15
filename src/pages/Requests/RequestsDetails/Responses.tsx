@@ -1,13 +1,31 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { Title, Box, Text, ExternalLink } from '~/components';
-import { MOBILE_MAX_WIDTH, fontSize, truncateString } from '~/utils';
-import { Response } from '~/types';
+import { Title, Box, Text, ExternalLink, Icon } from '~/components';
+import { MOBILE_MAX_WIDTH, fontSize, truncateString, copyData } from '~/utils';
+import { Items, Response } from '~/types';
 
 interface ResponsesProps {
   responses: Response[];
+  loading: boolean;
 }
-export const Responses = ({ responses }: ResponsesProps) => {
+
+export const Responses = ({ responses, loading }: ResponsesProps) => {
+  const [items, setItems] = useState<Items[]>([]);
+
+  const handleCopy = async (content: string, index: number) => {
+    copyData(content);
+    const newItems = [...items];
+    newItems[index].itemCopied = true;
+    setItems(newItems);
+
+    setTimeout(() => {
+      const newItems = [...items];
+      newItems[index].itemCopied = false;
+      setItems(newItems);
+    }, 800);
+  };
+
   const formattedResponses = responses?.map((response, index) => [
     // Response:
     response.response,
@@ -18,7 +36,10 @@ export const Responses = ({ responses }: ResponsesProps) => {
     </ExternalLink>,
 
     // Request Id:
-    truncateString(response.requestId, 9),
+    <Id key={'request-id-' + index} onClick={() => handleCopy(response.requestId, index)}>
+      {truncateString(response.requestId, 4)}
+      <Icon name={items[index]?.itemCopied ? 'copy-success' : 'copy'} size='1.2rem' />
+    </Id>,
 
     // Dispute:
     response.dispute,
@@ -28,6 +49,10 @@ export const Responses = ({ responses }: ResponsesProps) => {
     columns: ['Response', 'Proposer', 'ID', 'Dispute'],
     rows: formattedResponses,
   };
+
+  useEffect(() => {
+    if (responses?.length) setItems(responses?.map((response) => ({ value: response.response, itemCopied: false })));
+  }, [responses]);
 
   return (
     <ResponsesContainer>
@@ -58,7 +83,7 @@ export const Responses = ({ responses }: ResponsesProps) => {
 
           {!tableData.rows?.length && (
             <Row>
-              <MessageText>There are no responses yet</MessageText>
+              <MessageText>{loading ? 'Loading responses...' : 'There are no responses yet'}</MessageText>
             </Row>
           )}
         </Rows>
@@ -80,8 +105,12 @@ const ResponsesContainer = styled(Box)`
 const Row = styled(Box)`
   background-color: ${({ theme: { backgroundPrimary } }) => backgroundPrimary};
   flex-direction: row;
-  gap: 0.6rem;
+  gap: 2rem;
   padding: 1.2rem 3rem;
+
+  div:nth-child(1) {
+    min-width: 30%;
+  }
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     background-color: ${({ theme: { backgroundSecondary } }) => backgroundSecondary};
@@ -173,7 +202,7 @@ const TableTitle = styled(Text)`
   }
 `;
 
-const SText = styled(Text).attrs({ className: 'ellipsis' })`
+const SText = styled.div.attrs({ className: 'ellipsis' })`
   color: ${({ theme }) => theme.textSecondary};
   width: 100%;
   text-align: start;
@@ -194,4 +223,11 @@ const SText = styled(Text).attrs({ className: 'ellipsis' })`
 `;
 const MessageText = styled(SText)`
   text-align: center;
+`;
+
+const Id = styled.div`
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  cursor: pointer;
 `;

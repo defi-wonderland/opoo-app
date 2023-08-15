@@ -5,7 +5,7 @@ import { Card } from '~/pages/Requests/RequestsSection';
 import { MOBILE_MAX_WIDTH } from '~/utils';
 import { Theme } from '~/types';
 
-const CardSkeleton = styled(Card)`
+export const CardSkeleton = styled(Card)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -15,11 +15,11 @@ const CardSkeleton = styled(Card)`
   }
 `;
 
-interface RequestSkeletonProps {
+export interface SkeletonProps {
   count: number;
   theme: Theme;
 }
-export const RequestSkeleton = ({ count, theme }: RequestSkeletonProps) => {
+export const RequestSkeleton = ({ count, theme }: SkeletonProps) => {
   // Request card loading skeleton
   const Card = (
     <CardSkeleton>

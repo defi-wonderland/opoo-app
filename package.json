@@ -31,7 +31,7 @@
   "dependencies": {
     "ethers": "6.7.0",
     "opoo-core": "0.0.0-88e224d8",
-    "opoo-sdk": "0.0.0-145bffd1",
+    "opoo-sdk": "0.0.0-d7e5437c",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-loading-skeleton": "3.3.1",

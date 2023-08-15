@@ -1,4 +1,6 @@
-import { RequestFullData } from 'opoo-sdk/dist/batching';
+import { RequestFullData } from 'opoo-sdk';
+
+import { ID_ZERO, getDate } from '~/utils';
 import { StatusName } from '~/types';
 
 export const getStatus = (requests: RequestFullData): StatusName => {
@@ -7,4 +9,10 @@ export const getStatus = (requests: RequestFullData): StatusName => {
   if (requests.responses.length > 0) return 'message';
 
   return 'unanswered';
+};
+
+export const getDispute = (disputeId: string, timestamp: string): string => {
+  if (disputeId === ID_ZERO) return '—';
+
+  return `Active since ${getDate(timestamp)}`;
 };

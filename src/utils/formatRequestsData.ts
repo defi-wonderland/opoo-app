@@ -1,8 +1,8 @@
-import { RequestFullData } from 'opoo-sdk/dist/batching';
+import { RequestFullData } from 'opoo-sdk';
 import { hexToString, Address } from 'viem';
 
-import { RequestData, TypeResults } from '~/types';
-import { decodeData, getStatus } from '~/utils';
+import { EnsNames, RequestData, TypeResults } from '~/types';
+import { decodeData, getDispute, getStatus } from '~/utils';
 
 export interface ReturnedTypes {
   [key: string]: TypeResults[];
@@ -10,7 +10,7 @@ export interface ReturnedTypes {
 
 export const formatRequestsData = (
   requestsFullData: RequestFullData[],
-  ensNames: { [requestId: string]: string | null },
+  ensNames: EnsNames,
   returnedTypes: ReturnedTypes,
 ): RequestData[] => {
   const lastRequest = requestsFullData[requestsFullData.length - 1];
@@ -22,20 +22,30 @@ export const formatRequestsData = (
     return {
       id: fullRequest.requestId,
       description: requestModuleData[2],
-      createdAt: fullRequest.request.createdAt,
-      requester: ensNames[fullRequest.requestId] || fullRequest.request.requester,
+      createdAt: fullRequest.request.createdAt.toString(),
+      requester: ensNames[fullRequest.requestId].requester || fullRequest.request.requester,
       nonce: fullRequest.request.nonce.toString(),
       status: getStatus(fullRequest),
 
       // Responses section
-      responses: fullRequest.responses.map((response) => ({
+      responses: fullRequest.responses.map((response, index) => ({
         response: hexToString(response.response as Address), // decoded response
-        proposer: response.proposer,
+        proposer: ensNames[fullRequest.requestId].responses[index].proposer || response.proposer,
         requestId: response.requestId,
-        dispute: response.createdAt,
+        dispute: getDispute(response.disputeId, response.createdAt),
       })),
 
-      // Modules section (WIP)
+      // Finalized response
+      finalizedResponse: {
+        // Note: this is required to clean up the fetched the data format
+        createdAt: Number(fullRequest.finalizedResponse.createdAt),
+        proposer: fullRequest.finalizedResponse.proposer,
+        disputeId: fullRequest.finalizedResponse.disputeId,
+        response: fullRequest.finalizedResponse.response,
+        requestId: fullRequest.finalizedResponse.requestId,
+      },
+
+      // Modules section
       modules: [
         {
           name: 'Http Request Module',

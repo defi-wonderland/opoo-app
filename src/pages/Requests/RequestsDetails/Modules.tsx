@@ -2,11 +2,15 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { MOBILE_MAX_WIDTH, fontSize, truncateString, copyData } from '~/utils';
-import { Box, Pill, Text, Title } from '~/components';
+import { Box, ModuleSkeleton, Pill, Text, Title } from '~/components';
+import { Items, Modules as ModuleType, Theme } from '~/types';
 import { useModal, useStateContext } from '~/hooks';
-import { Items, Modules as ModuleType } from '~/types';
 
-export const Modules = () => {
+interface Props {
+  loading: boolean;
+  theme: Theme;
+}
+export const Modules = ({ loading, theme }: Props) => {
   const { setOpen } = useModal();
   const [items, setItems] = useState<Items[]>([]);
   const {
@@ -40,22 +44,25 @@ export const Modules = () => {
     <SBox>
       <Title>Modules</Title>
       <ModulesContainer>
-        {modules?.map((module, index) => (
-          <ModuleCard key={'module-' + index} onClick={() => handleClick(module)}>
-            <Pill
-              onClick={(e) => {
-                e.stopPropagation();
-                handleCopy(module.address, index);
-              }}
-              text={truncateString(module.address, 9)}
-              size='1.3rem'
-              copy
-              clickable
-              copied={items[index]?.itemCopied}
-            />
-            <MTitle>{module.name}</MTitle>
-          </ModuleCard>
-        ))}
+        {!loading &&
+          modules?.map((module, index) => (
+            <ModuleCard key={'module-' + index} onClick={() => handleClick(module)}>
+              <Pill
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleCopy(module.address, index);
+                }}
+                text={truncateString(module.address, 9)}
+                size='1.3rem'
+                copy
+                clickable
+                copied={items[index]?.itemCopied}
+              />
+              <MTitle>{module.name}</MTitle>
+            </ModuleCard>
+          ))}
+
+        {loading && <ModuleSkeleton count={5} theme={theme} />}
       </ModulesContainer>
     </SBox>
   );

@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-import { MOBILE_MAX_WIDTH, copyData, statusMsg, truncateString } from '~/utils';
-import { Title, Box, Text, Pill, Icon } from '~/components';
-import { RequestData } from '~/types';
+import { MOBILE_MAX_WIDTH, copyData, getDate, statusMsg, truncateString } from '~/utils';
+import { Title, Box, Text, Pill, Icon, DetailsSkeleton } from '~/components';
+import { RequestData, Theme } from '~/types';
 
 interface DetailsProps {
   selectedRequest?: RequestData;
+  loading?: boolean;
+  theme: Theme;
 }
 
-export const Details = ({ selectedRequest }: DetailsProps) => {
+export const Details = ({ selectedRequest, theme, loading }: DetailsProps) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -26,33 +28,39 @@ export const Details = ({ selectedRequest }: DetailsProps) => {
       <Title>Request #{selectedRequest?.nonce}</Title>
 
       <DetailsContainer>
-        <SDataContainer>
-          <Text>Description</Text>
-          <Text>{selectedRequest?.description || 'N/A'}</Text>
-        </SDataContainer>
+        {!loading && selectedRequest?.nonce && (
+          <>
+            <SDataContainer>
+              <Text>Description</Text>
+              <Text>{selectedRequest.description}</Text>
+            </SDataContainer>
 
-        <SDataContainer>
-          <Text>ID</Text>
-          <IdData onClick={handleCopy}>
-            <Text>{truncateString(selectedRequest?.id || '', 9)}</Text>
-            <Icon name={copied ? 'copy-success' : 'copy'} size='1.2rem' />
-          </IdData>
-        </SDataContainer>
+            <SDataContainer>
+              <Text>ID</Text>
+              <IdData onClick={handleCopy}>
+                <Text>{truncateString(selectedRequest.id, 9)}</Text>
+                <Icon name={copied ? 'copy-success' : 'copy'} size='1.2rem' />
+              </IdData>
+            </SDataContainer>
 
-        <SDataContainer>
-          <Text>Created at</Text>
-          <Text>{selectedRequest?.createdAt}</Text>
-        </SDataContainer>
+            <SDataContainer>
+              <Text>Created at</Text>
+              <Text>{getDate(selectedRequest.createdAt)}</Text>
+            </SDataContainer>
 
-        <SDataContainer>
-          <Text>Status</Text>
-          <Pill
-            iconName={selectedRequest?.status || 'unanswered'}
-            text={statusMsg(selectedRequest?.status || 'unanswered')}
-            fontSize='1.3rem'
-            clickable
-          />
-        </SDataContainer>
+            <SDataContainer>
+              <Text>Status</Text>
+              <Pill
+                iconName={selectedRequest.status}
+                text={statusMsg(selectedRequest.status)}
+                fontSize='1.3rem'
+                clickable
+              />
+            </SDataContainer>
+          </>
+        )}
+
+        {loading && <DetailsSkeleton theme={theme} />}
       </DetailsContainer>
     </SBox>
   );

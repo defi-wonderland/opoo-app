@@ -5,7 +5,7 @@ import { Details } from './Details';
 import { Responses } from './Responses';
 import { Modules } from './Modules';
 import { useOpooSdk, useStateContext } from '~/hooks';
-import { formatRequestsData, getRequestEnsNames } from '~/utils';
+import { formatRequestsData, getRequestEnsNames, getTheme } from '~/utils';
 import { useEffect } from 'react';
 
 const Container = styled.div`
@@ -15,15 +15,23 @@ const Container = styled.div`
 export const RequestsDetails = () => {
   const { id } = useParams();
   const { opooSdk, client } = useOpooSdk();
-  const { selectedRequest, setSelectedRequest } = useStateContext();
+  const { selectedRequest, setSelectedRequest, loading, setLoading, theme } = useStateContext();
+  const currentTheme = getTheme(theme);
 
   const loadSelectedRequest = async () => {
-    const rawRequests = await opooSdk.batching.getFullRequestData(Number(id), 1);
-    const returnedTypes = await opooSdk.ipfs.getReturnedTypes(rawRequests[rawRequests.length - 1].request.ipfsHash);
-    const ensName = await getRequestEnsNames(rawRequests, client);
+    setLoading(true);
+    try {
+      const rawRequests = await opooSdk.batching.getFullRequestData(Number(id), 1);
+      const returnedTypes = await opooSdk.ipfs.getReturnedTypes(rawRequests[rawRequests.length - 1].request.ipfsHash);
+      const ensName = await getRequestEnsNames(rawRequests, client);
 
-    const formattedRequests = formatRequestsData(rawRequests, ensName, returnedTypes);
-    setSelectedRequest(formattedRequests[0]);
+      const formattedRequests = formatRequestsData(rawRequests, ensName, returnedTypes);
+      setLoading(false);
+      setSelectedRequest(formattedRequests[0]);
+    } catch (error) {
+      setLoading(false);
+      console.error(`Error loading request #${id}:`, error);
+    }
   };
 
   useEffect(() => {
@@ -35,13 +43,13 @@ export const RequestsDetails = () => {
   return (
     <Container>
       {/* Request details section */}
-      <Details selectedRequest={selectedRequest} />
+      <Details selectedRequest={selectedRequest} loading={loading} theme={currentTheme} />
 
       {/* Proposed responses section */}
-      <Responses responses={selectedRequest.responses} />
+      <Responses responses={selectedRequest.responses} loading={loading} />
 
       {/* Modules section */}
-      <Modules /* modules={selectedRequest.modules} */ />
+      <Modules loading={loading} theme={currentTheme} />
     </Container>
   );
 };

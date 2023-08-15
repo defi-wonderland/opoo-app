@@ -1,8 +1,8 @@
 import { decodeAbiParameters, Address } from 'viem';
-import { RequestFullData } from 'opoo-sdk/dist/batching';
+import { RequestFullData } from 'opoo-sdk';
 
 import { client as publicClient } from '~/config';
-import { TypeResults } from '~/types';
+import { EnsNames, TypeResults } from '~/types';
 
 export const copyData = (data: string) => {
   navigator.clipboard.writeText(data);
@@ -36,16 +36,32 @@ export const decodeData = (types: TypeResults[], data: Address): string[] => {
   return decodedValues;
 };
 
+const getEnsName = async (address: string, client: typeof publicClient) => {
+  return await client.getEnsName({ address: address as Address });
+};
+
 export const getRequestEnsNames = async (
   requests: RequestFullData[],
   client: typeof publicClient,
-): Promise<{ [requestId: string]: string | null }> => {
-  const ensNames = requests.map(async (request) => [
-    request.requestId,
-    await client.getEnsName({ address: request.request.requester as Address }),
-  ]);
+): Promise<EnsNames> => {
+  const ensNamePromises = requests.map(async (request) => {
+    const requester = await getEnsName(request.request.requester, client);
+    const responsePromises = request.responses.map(async (response) => ({
+      proposer: await getEnsName(response.proposer, client),
+    }));
+    const responses = await Promise.all(responsePromises);
 
-  const result = await Promise.all(ensNames);
+    return [
+      request.requestId,
+      {
+        requester,
+        responses,
+      },
+    ];
+  });
 
-  return Object.fromEntries(result);
+  const ensNameResults = await Promise.all(ensNamePromises);
+  const ensNames = Object.fromEntries(ensNameResults);
+
+  return ensNames;
 };

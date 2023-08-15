@@ -1,6 +1,5 @@
 import { ethers } from 'ethers';
-import { Module, OpooSDK } from 'opoo-sdk';
-import { ModulesMap } from 'opoo-sdk/dist/types/Module';
+import { Module, OpooSDK, ModulesMap } from 'opoo-sdk';
 import IHttpRequestModule from 'opoo-core/abi/IHttpRequestModule.json';
 import IResponseModule from 'opoo-core/abi/IResponseModule.json';
 import IDisputeModule from 'opoo-core/abi/IDisputeModule.json';

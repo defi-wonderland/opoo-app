@@ -11,6 +11,13 @@ export interface RequestData {
   status: StatusName;
   responses: Response[];
   modules: Modules[];
+  finalizedResponse: {
+    createdAt: number;
+    proposer: string;
+    requestId: string;
+    disputeId: string;
+    response: string;
+  };
 }
 
 export interface Response {
@@ -50,4 +57,11 @@ export interface RequestModuleData {
 export interface TypeResults {
   name?: string;
   type: string;
+}
+
+export interface EnsNames {
+  [requestId: string]: {
+    requester: string | null;
+    responses: { proposer: string | null }[];
+  };
 }
