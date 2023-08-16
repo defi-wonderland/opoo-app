@@ -3,7 +3,7 @@
 =============================================*/
 
 export const THEME_KEY = 'opoo-explorer-theme';
-
+export const REQUESTS_AMOUNT = 9; // the max amount of requests that can be loaded at once
 export const ID_ZERO = '0x0000000000000000000000000000000000000000000000000000000000000000';
 
 /*=============================================

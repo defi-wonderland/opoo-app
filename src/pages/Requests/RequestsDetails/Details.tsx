@@ -108,8 +108,8 @@ const SDataContainer = styled.div`
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     p:nth-child(1) {
-      width: 6.5rem;
-      min-width: 6.5rem;
+      width: 8rem;
+      min-width: 8rem;
     }
 
     p {

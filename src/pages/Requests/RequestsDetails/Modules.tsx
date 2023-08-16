@@ -46,7 +46,11 @@ export const Modules = ({ loading, theme }: Props) => {
       <ModulesContainer>
         {!loading &&
           modules?.map((module, index) => (
-            <ModuleCard key={'module-' + index} onClick={() => handleClick(module)}>
+            <ModuleCard
+              key={'module-' + index}
+              className={module.data ? 'clickable' : ''}
+              onClick={() => module.data && handleClick(module)}
+            >
               <Pill
                 onClick={(e) => {
                   e.stopPropagation();
@@ -87,6 +91,7 @@ const ModulesContainer = styled(Box)`
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     margin-top: 3rem;
     gap: 2rem;
+    justify-content: center;
   }
 `;
 
@@ -97,13 +102,6 @@ const ModuleCard = styled(Box)`
   max-width: 40rem;
   gap: 1rem;
   justify-content: space-between;
-
-  cursor: pointer;
-
-  &:hover {
-    opacity: 0.9;
-    transition: opacity 0.2s ease-in-out;
-  }
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     border: ${({ theme }) => theme.border};

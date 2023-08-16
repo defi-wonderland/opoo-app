@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { MOBILE_MAX_WIDTH, formatRequestsData, getRequestEnsNames } from '~/utils';
+import { MOBILE_MAX_WIDTH, REQUESTS_AMOUNT, formatRequestsData, getMetadatas, getRequestEnsNames } from '~/utils';
 import { useOpooSdk, useStateContext } from '~/hooks';
 import { RequestSection } from './RequestsSection';
 import { Title } from '~/components';
@@ -27,38 +27,28 @@ const Container = styled.div`
 
 export const Requests = () => {
   // temporary:
-  const MOST_RECENT_REQUEST_NONCE = 242;
-  const REQUESTS_AMOUNT = 9; // the max amount of requests that can be loaded at once
 
   const { opooSdk, client } = useOpooSdk();
   const { requests /* filters */, setRequests, setLoading, loading } = useStateContext();
-  const [lastRequestNonce, setLastRequestNonce] = useState(MOST_RECENT_REQUEST_NONCE);
+  const [lastRequestNonce, setLastRequestNonce] = useState<number | undefined>();
 
-  const getRequests = async () => {
+  const getRequests = async (lastRequestNonce: number) => {
     setLoading(true);
     // temporary logs
     console.log('loading requests...');
     try {
-      /* 
-        temporary: delete this when `opooSdk.helpers.totalRequestCount()` works
-        it will need a new deployment
-      */
-      // const requestCount = await opooSdk.helpers.listRequests(0, 1000);
-      // console.log('requests count:', requestCount.length);
       const rawRequests = await opooSdk.batching.getFullRequestData(lastRequestNonce, REQUESTS_AMOUNT);
+      console.log('rawFulRequests', rawRequests);
 
       const ensNames = await getRequestEnsNames(rawRequests, client);
-      const returnedTypes = await opooSdk.ipfs.getReturnedTypes(
-        // temporary: use the commented line below when the sdk is updated (+ new deployment)
-        /* rawRequests[rawRequests.length - 1].request.ipfsHash */ '0xb253c6667c1658ebcb3c5ad11183cea14e6e527bd31e18e3091538f399890e45',
-        //                                                                   ^ NOTE: this is not a private key, it's a ipfsHash
-      );
-      const formattedRequests = formatRequestsData(rawRequests, ensNames, returnedTypes);
+      console.log('ensNames', ensNames);
+
+      const metadatas = await getMetadatas(rawRequests, opooSdk);
+      console.log('metadatas', metadatas);
+
+      const formattedRequests = formatRequestsData(rawRequests, ensNames, metadatas);
 
       console.log('opooSdk', opooSdk);
-      console.log('ensNames', ensNames);
-      console.log('rawFulRequests', rawRequests);
-      console.log('returnedTypes', returnedTypes);
       setLastRequestNonce(lastRequestNonce - REQUESTS_AMOUNT);
       setLoading(false);
 
@@ -75,9 +65,9 @@ export const Requests = () => {
     const diff = document.documentElement.offsetHeight - window.innerHeight - document.documentElement.scrollTop;
 
     // if the user is not at the bottom of the page, or if the requests are still loading, do nothing
-    if (diff > 100 || loading) return;
+    if (diff > 150 || loading || !lastRequestNonce) return;
 
-    const newRequests = await getRequests();
+    const newRequests = await getRequests(lastRequestNonce);
     setRequests([...requests, ...newRequests]);
   };
 
@@ -88,9 +78,17 @@ export const Requests = () => {
   }, [loading]);
 
   useEffect(() => {
-    getRequests().then((newRequests) => {
-      setRequests([...requests, ...newRequests]);
-    });
+    if (!lastRequestNonce) {
+      console.log('getting last request nonce...');
+      opooSdk.helpers.totalRequestCount().then((count) => {
+        setLastRequestNonce(Number(count) - REQUESTS_AMOUNT);
+
+        console.log('last request nonce:', count);
+        getRequests(Number(count) - REQUESTS_AMOUNT).then((newRequests) => {
+          setRequests([...requests, ...newRequests]);
+        });
+      });
+    }
   }, []);
 
   return (

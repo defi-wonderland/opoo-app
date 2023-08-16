@@ -5,7 +5,7 @@ import { Details } from './Details';
 import { Responses } from './Responses';
 import { Modules } from './Modules';
 import { useOpooSdk, useStateContext } from '~/hooks';
-import { formatRequestsData, getRequestEnsNames, getTheme } from '~/utils';
+import { formatRequestsData, getRequestEnsNames, getTheme, getMetadatas } from '~/utils';
 import { useEffect } from 'react';
 
 const Container = styled.div`
@@ -22,10 +22,14 @@ export const RequestsDetails = () => {
     setLoading(true);
     try {
       const rawRequests = await opooSdk.batching.getFullRequestData(Number(id), 1);
-      const returnedTypes = await opooSdk.ipfs.getReturnedTypes(rawRequests[rawRequests.length - 1].request.ipfsHash);
+      console.log('rawRequests', rawRequests);
+
+      const metadatas = await getMetadatas(rawRequests, opooSdk);
+      console.log('metadatas', metadatas);
+
       const ensName = await getRequestEnsNames(rawRequests, client);
 
-      const formattedRequests = formatRequestsData(rawRequests, ensName, returnedTypes);
+      const formattedRequests = formatRequestsData(rawRequests, ensName, metadatas);
       setLoading(false);
       setSelectedRequest(formattedRequests[0]);
     } catch (error) {

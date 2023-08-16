@@ -9,6 +9,7 @@ export const CardSkeleton = styled(Card)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  z-index: 0;
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     width: 34rem;

@@ -32,6 +32,11 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
   }
 
+  .clickable:hover {
+    opacity: 0.9;
+    transition: opacity 0.2s ease-in-out;
+  }
+
   .custom-scrollbar::-webkit-scrollbar {
     width: 0.6rem;
     height: 0%.6rem;;

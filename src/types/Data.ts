@@ -40,9 +40,7 @@ export interface Items {
 export interface Modules {
   name: string;
   address: string;
-  // temporary any until we define all modules data types
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data?: RequestModuleData | any;
+  data?: { name: string; value: string }[];
 }
 
 export interface RequestModuleData {
@@ -55,7 +53,7 @@ export interface RequestModuleData {
 }
 
 export interface TypeResults {
-  name?: string;
+  name: string;
   type: string;
 }
 
@@ -64,4 +62,8 @@ export interface EnsNames {
     requester: string | null;
     responses: { proposer: string | null }[];
   };
+}
+
+export interface ReturnedTypes {
+  [moduleAddress: string]: TypeResults[] | undefined;
 }

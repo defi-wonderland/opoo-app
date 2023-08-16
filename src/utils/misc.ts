@@ -31,9 +31,16 @@ export const timeAgo = (timestamp: string | number) => {
   }
 };
 
-export const decodeData = (types: TypeResults[], data: Address): string[] => {
-  const decodedValues = decodeAbiParameters(types, data) as string[];
-  return decodedValues;
+export const decodeData = (types: TypeResults[] | undefined, data: Address): string[] => {
+  if (!types) return [];
+
+  try {
+    const decodedValues = decodeAbiParameters(types, data) as string[];
+    return decodedValues;
+  } catch (error) {
+    console.error('Error calling "decodeData" function:', error);
+    return [];
+  }
 };
 
 const getEnsName = async (address: string, client: typeof publicClient) => {

@@ -108,7 +108,7 @@ const RequestsSection = styled.section`
   flex-direction: row;
   flex-wrap: wrap;
   gap: 3rem;
-  justify-content: start;
+  justify-content: center;
   align-items: start;
 `;
 
@@ -190,8 +190,7 @@ const DetailsButton = styled.button`
   background-color: ${({ theme: { detailsBackground } }) => detailsBackground};
   color: ${({ theme }) => theme.textPrimary};
   display: flex;
-  height: 24px;
-  padding: 4px 8px;
+  padding: 0.6rem 1rem;
   align-items: center;
   gap: 8px;
   border-radius: 100px;

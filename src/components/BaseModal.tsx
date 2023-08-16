@@ -42,55 +42,12 @@ export const BaseModal = ({ setOpen }: BaseModalProps) => {
 
       <MBody className='custom-scrollbar'>
         <Content>
-          {/* Temporary fixed values */}
-          {selectedModule.data.url && (
-            <SDataContainer>
-              <SText>URL</SText>
-              <SText>{selectedModule.data.url}</SText>
+          {selectedModule.data?.map(({ name, value }, index) => (
+            <SDataContainer key={'request-data-' + index}>
+              <SText>{name}</SText>
+              <SText>{value}</SText>
             </SDataContainer>
-          )}
-
-          {selectedModule.data.method && (
-            <SDataContainer>
-              <SText>Method</SText>
-              <SText>{selectedModule.data.method}</SText>
-            </SDataContainer>
-          )}
-
-          {selectedModule.data.body && (
-            <SDataContainer>
-              <SText>Body</SText>
-              <SText>{selectedModule.data.body}</SText>
-            </SDataContainer>
-          )}
-
-          {selectedModule.data.accountingExtension && (
-            <SDataContainer>
-              <SText>Accounting extension</SText>
-              <SText>{selectedModule.data.accountingExtension}</SText>
-            </SDataContainer>
-          )}
-
-          {selectedModule.data.paymentToken && (
-            <SDataContainer>
-              <SText>Payment token</SText>
-              <SText>{selectedModule.data.paymentToken}</SText>
-            </SDataContainer>
-          )}
-
-          {selectedModule.data.paymentAmount && (
-            <SDataContainer>
-              <SText>Payment amount</SText>
-              <SText>{selectedModule.data.paymentAmount}</SText>
-            </SDataContainer>
-          )}
-
-          {selectedModule.data.initializationData && (
-            <SDataContainer>
-              <SText>Initialization data</SText>
-              <SText>{selectedModule.data.initializationData}</SText>
-            </SDataContainer>
-          )}
+          ))}
         </Content>
       </MBody>
     </SModal>
@@ -142,7 +99,7 @@ const MHeader = styled(Box)`
   }
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
-    padding: 2.4rem 1.6rem;
+    padding: 2.4rem 2.8rem;
     align-items: start;
     justify-content: space-between;
     width: 100%;
@@ -205,8 +162,8 @@ const SDataContainer = styled.div`
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     p:nth-child(1) {
-      width: 12rem;
-      min-width: 12rem;
+      width: 14rem;
+      min-width: 14rem;
     }
     p:nth-child(2) {
       word-break: break-all;
