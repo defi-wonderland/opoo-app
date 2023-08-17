@@ -11,6 +11,7 @@ const SCardSkeleton = styled(CardSkeleton)`
   padding: 0;
   display: flex;
   flex-direction: row;
+  background-color: inherit;
 `;
 
 const SBox = styled.div`

@@ -14,6 +14,7 @@ export const StyledModals = styled(TransitionGroup)`
   align-items: center;
   justify-content: center;
   pointer-events: none;
+  padding: 0 2rem;
   z-index: 1;
 
   .slideBottom-enter {

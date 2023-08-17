@@ -58,7 +58,8 @@ export const SModal = styled(Box)`
   border-radius: 1.2rem;
   border: ${({ theme }) => theme.border};
   background-color: ${({ theme }) => theme.backgroundSecondary};
-  width: 88.8rem;
+  width: 100%;
+  max-width: 88.8rem;
   height: fit-content;
   pointer-events: all;
   overflow: hidden;

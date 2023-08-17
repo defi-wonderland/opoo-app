@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { IconLink, Icons, LinkText, Logo, LogoContainer } from '../Navbar/Navbar.styles';
@@ -37,6 +39,10 @@ const SLinkContainer = styled.div`
   gap: 15rem;
   padding: 0 3rem;
 
+  .link-active {
+    color: ${({ theme }) => theme.textPrimary};
+  }
+
   @media (max-width: ${TABLET_MAX_WIDTH}px) {
     flex-direction: row;
     gap: 6rem;
@@ -52,17 +58,38 @@ const SIcons = styled(Icons)`
 
 export const Footer = () => {
   const { theme } = useStateContext();
+
+  const route = useLocation();
+  const currentRoute = useMemo(() => route.pathname.split('/')[1], [route]);
+
+  const links = [
+    {
+      text: 'Requests',
+      to: 'requests',
+    },
+    {
+      text: 'About',
+      to: 'about',
+    },
+    {
+      text: 'FAQ',
+      to: 'faq',
+    },
+  ];
+
   return (
     <FooterContainer>
       <TopSection>
         <LogoContainer>
-          <Logo to='#'>OpOO</Logo>
+          <Logo to='/'>OpOO</Logo>
         </LogoContainer>
 
         <SLinkContainer>
-          <LinkText to='#'>Requests</LinkText>
-          <LinkText to='#'>About</LinkText>
-          <LinkText to='#'>FAQ</LinkText>
+          {links.map((link, index) => (
+            <LinkText key={'link-' + index} className={link.to === currentRoute ? 'link-active' : ''} to={link.to}>
+              {link.text}
+            </LinkText>
+          ))}
         </SLinkContainer>
 
         <SIcons>

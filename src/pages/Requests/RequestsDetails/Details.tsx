@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-import { MOBILE_MAX_WIDTH, copyData, getDate, statusMsg, truncateString } from '~/utils';
+import { MOBILE_MAX_WIDTH, TABLET_MAX_WIDTH, copyData, getDate, statusMsg, truncateString } from '~/utils';
 import { Title, Box, Text, Pill, Icon, DetailsSkeleton } from '~/components';
 import { RequestData, Theme } from '~/types';
 
@@ -69,6 +69,10 @@ export const Details = ({ selectedRequest, theme, loading }: DetailsProps) => {
 const SBox = styled(Box)`
   background-color: ${({ theme }) => theme.backgroundPrimary};
   padding: 4rem 8rem 8rem;
+
+  @media (max-width: ${TABLET_MAX_WIDTH}px) {
+    padding-top: 12rem;
+  }
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     padding: 12rem 3rem 3rem;

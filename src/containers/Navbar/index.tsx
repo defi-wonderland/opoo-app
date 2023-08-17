@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 
 import { Icon } from '~/components';
@@ -11,6 +12,32 @@ export const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const animationDuration = 200;
 
+  const route = useLocation();
+  const currentRoute = useMemo(() => route.pathname.split('/')[1], [route]);
+
+  const links = [
+    {
+      text: 'Requests',
+      to: 'requests',
+      active: true,
+    },
+    {
+      text: 'About',
+      to: 'about',
+      active: false,
+    },
+    {
+      text: 'FAQ',
+      to: 'faq',
+      active: false,
+    },
+    {
+      text: 'Docs',
+      to: 'docs',
+      active: false,
+    },
+  ];
+
   const handleThemeChange = () => {
     if (theme === 'light') {
       localStorage.setItem(THEME_KEY, 'dark');
@@ -21,7 +48,7 @@ export const Navbar = () => {
     }
   };
 
-  const handleCloseMenu = () => {
+  const handleClick = () => {
     setMenuOpen(false);
   };
 
@@ -35,18 +62,16 @@ export const Navbar = () => {
       {/* Navbar Links */}
       <CSSTransition in={menuOpen} timeout={animationDuration} classNames='slide'>
         <LinkContainer className={menuOpen ? 'show-links' : 'hidden'}>
-          <LinkText onClick={handleCloseMenu} to='/requests'>
-            Requests
-          </LinkText>
-          <LinkText onClick={handleCloseMenu} to='#'>
-            About
-          </LinkText>
-          <LinkText onClick={handleCloseMenu} to='#'>
-            FAQ
-          </LinkText>
-          <LinkText onClick={handleCloseMenu} to='#'>
-            Docs
-          </LinkText>
+          {links.map(({ text, to }, index) => (
+            <LinkText
+              onClick={handleClick}
+              to={to}
+              className={currentRoute === to ? 'link-active' : ''}
+              key={'link-' + index}
+            >
+              {text}
+            </LinkText>
+          ))}
         </LinkContainer>
       </CSSTransition>
 

@@ -78,7 +78,7 @@ export const RequestSection = ({ requests, loading }: RequestSectionProps) => {
 
             {/* Description */}
             <DescriptionContainer>
-              <SecondaryText>{card.description}</SecondaryText>
+              <SecondaryText className='multiline-ellipsis'>{card.description}</SecondaryText>
             </DescriptionContainer>
 
             {/* Footer section */}
@@ -124,6 +124,11 @@ export const Card = styled.div`
   gap: 1rem;
   padding: 2rem;
   cursor: pointer;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.backgroundActive};
+    transition: all 0.2s ease-in-out;
+  }
 `;
 
 const DataContainer = styled.div`
@@ -137,7 +142,7 @@ const DataContainer = styled.div`
 const DescriptionContainer = styled(DataContainer)`
   height: 4.8rem;
   align-items: start;
-  margin: 1rem 0;
+  overflow: hidden;
 
   p {
     font-size: ${fontSize.MEDIUM};
@@ -165,7 +170,14 @@ export const SecondaryText = styled.p`
   font-size: ${fontSize.SMALL};
   font-style: normal;
   font-weight: 400;
-  line-height: 14px; /* 140% */
+  line-height: 1.6rem; /* 140% */
+
+  /* Multiline ellipsis */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* start showing ellipsis when 3rd line is reached */
+  white-space: pre-wrap; /* let the text wrap preserving spaces */
 `;
 
 // ------------------------------- Header Section ------------------------------- //

@@ -5,6 +5,8 @@ export interface Theme {
   textSecondary: string;
   backgroundPrimary: string;
   backgroundSecondary: string;
+  backgroundActive: string;
+  backgroundActiveSecondary: string;
   titleColor: string;
   titleFontFamily: string;
   textFontFamily: string;

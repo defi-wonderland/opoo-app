@@ -19,11 +19,11 @@ const AppRouter = () => {
       <Route path={`/`} element={<AppLayout />}>
         {/* temporary until we have a landing page */}
         <Route path='/' element={<Navigate to='/requests' />} />
-        <Route path={`/requests/`} element={<Requests />} />
-        <Route path={`/requests/:id`} element={<RequestsDetails />} />
-        <Route path={`/FAQ`} element={<Landing />} />
-        <Route path={`/about`} element={<About />} />
-        <Route path={`/docs`} element={<About />} />
+        <Route path='/requests/' element={<Requests />} />
+        <Route path='/requests/:id' element={<RequestsDetails />} />
+        <Route path='/faq' element={<Landing />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/docs' element={<About />} />
       </Route>
     </Routes>
   );

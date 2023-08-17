@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-import { MOBILE_MAX_WIDTH, fontSize, truncateString, copyData } from '~/utils';
+import { MOBILE_MAX_WIDTH, fontSize, truncateString, copyData, TABLET_MAX_WIDTH } from '~/utils';
 import { Box, ModuleSkeleton, Pill, Text, Title } from '~/components';
 import { Items, Modules as ModuleType, Theme } from '~/types';
 import { useModal, useStateContext } from '~/hooks';
@@ -88,6 +88,10 @@ const ModulesContainer = styled(Box)`
   flex-wrap: wrap;
   justify-content: left;
 
+  @media (max-width: ${TABLET_MAX_WIDTH}px) {
+    justify-content: center;
+  }
+
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     margin-top: 3rem;
     gap: 2rem;
@@ -102,6 +106,11 @@ const ModuleCard = styled(Box)`
   max-width: 40rem;
   gap: 1rem;
   justify-content: space-between;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.backgroundActiveSecondary};
+    transition: all 0.2s ease-in-out;
+  }
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     border: ${({ theme }) => theme.border};

@@ -10,6 +10,11 @@ export const CardSkeleton = styled(Card)`
   flex-direction: column;
   justify-content: space-between;
   z-index: 0;
+  cursor: auto;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.cardBackground};
+  }
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     width: 34rem;

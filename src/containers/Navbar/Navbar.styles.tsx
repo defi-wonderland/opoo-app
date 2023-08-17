@@ -118,17 +118,25 @@ export const LinkContainer = styled.div<{ menuOpen?: boolean }>`
   display: flex;
   flex-direction: row;
   gap: 10rem;
+
+  .link-active {
+    color: ${({ theme }) => theme.textPrimary};
+  }
 `;
 
 export const LinkText = styled(Link)`
   text-decoration: none;
-  color: #68778d;
+  color: ${({ theme }) => theme.textSecondary};
   text-align: center;
   font-family: Open Sans;
   font-size: ${fontSize.LARGE};
   font-style: normal;
   font-weight: 600;
   line-height: 20px;
+
+  &:hover {
+    color: ${({ theme }) => theme.textPrimary};
+  }
 `;
 
 export const MenuButton = styled.button`
