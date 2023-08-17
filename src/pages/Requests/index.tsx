@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { MOBILE_MAX_WIDTH, REQUESTS_AMOUNT, formatRequestsData, getMetadatas, getRequestEnsNames } from '~/utils';
-import { useOpooSdk, useStateContext } from '~/hooks';
+import { useOpooSdk, useStateContext, InfiniteScroll } from '~/hooks';
 import { RequestSection } from './RequestsSection';
 import { Title } from '~/components';
 // import { FiltersSection } from './FiltersSection';
@@ -60,22 +60,11 @@ export const Requests = () => {
     }
   };
 
-  const handleScroll = async () => {
-    // diff between the bottom of the page and the user's current position
-    const diff = document.documentElement.offsetHeight - window.innerHeight - document.documentElement.scrollTop;
-
-    // if the user is not at the bottom of the page, or if the requests are still loading, do nothing
-    if (diff > 150 || loading || !lastRequestNonce) return;
-
+  const updateRequests = async () => {
+    if (!lastRequestNonce) return;
     const newRequests = await getRequests(lastRequestNonce);
     setRequests([...requests, ...newRequests]);
   };
-
-  useEffect(() => {
-    // infinite scroll implementation
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [loading]);
 
   useEffect(() => {
     if (!lastRequestNonce) {
@@ -99,6 +88,7 @@ export const Requests = () => {
         {/* <FiltersSection filters={filters} /> */}
 
         <RequestSection requests={requests} loading={loading} />
+        <InfiniteScroll update={updateRequests} loading={loading} />
       </Container>
     </Layout>
   );
