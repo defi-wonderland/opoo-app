@@ -11,6 +11,7 @@ export const CardSkeleton = styled(Card)`
   justify-content: space-between;
   z-index: 0;
   cursor: auto;
+  user-select: none;
 
   &:hover {
     background-color: ${({ theme }) => theme.cardBackground};
