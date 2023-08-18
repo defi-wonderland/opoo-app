@@ -114,7 +114,7 @@ export const Logo = styled(Link)`
 `;
 
 // ------------------------------- Links Section ------------------------------- //
-export const LinkContainer = styled.div<{ menuOpen?: boolean }>`
+export const LinkContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: 10rem;
@@ -160,7 +160,7 @@ export const MenuButton = styled.button`
 
 // ------------------------------- Icons Section ------------------------------- //
 
-export const Icons = styled.div<{ menuOpen?: boolean }>`
+export const Icons = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: end;

@@ -24,6 +24,9 @@ type ContextType = {
 
   loading: boolean;
   setLoading: (val: boolean) => void;
+
+  isError: boolean;
+  setIsError: (val: boolean) => void;
 };
 
 interface StateProps {
@@ -40,25 +43,7 @@ export const StateProvider = ({ children }: StateProps) => {
   const [requests, setRequests] = useState<RequestData[]>([]);
   const [filters, setFilters] = useState<Filter[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-
-  // temporary effect and fixed values
-  useEffect(() => {
-    // const filters: Filter[] = [
-    //   { text: 'Satus', icon: 'status' },
-    //   { text: 'All' },
-    //   { text: 'Created date', icon: 'created-date' },
-    //   { text: 'less than' },
-    //   { text: '3 days ago' },
-    //   { text: 'Requester', icon: 'requester' },
-    //   { text: 'search result' },
-    //   { text: 'ID', icon: 'tag' },
-    //   { text: 'search result' },
-    //   { icon: 'close' },
-    // ];
-
-    setRequests(requests);
-    setFilters(filters);
-  }, []);
+  const [isError, setIsError] = useState<boolean>(false);
 
   // Load theme from local storage
   useEffect(() => {
@@ -87,6 +72,8 @@ export const StateProvider = ({ children }: StateProps) => {
         setType,
         loading,
         setLoading,
+        isError,
+        setIsError,
       }}
     >
       {children}

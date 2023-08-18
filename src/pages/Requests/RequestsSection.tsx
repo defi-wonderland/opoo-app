@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { ExternalLink, Icon, Pill, RequestSkeleton } from '~/components';
+import { ExternalLink, Icon, Pill, RequestSkeleton, Text } from '~/components';
 
 import { copyData, fontSize, statusMsg, truncateString, getTheme, getDate, timeAgo, MOBILE_MAX_WIDTH } from '~/utils';
 import { Items, RequestData } from '~/types';
@@ -11,9 +11,10 @@ import { useStateContext } from '~/hooks';
 interface RequestSectionProps {
   requests: RequestData[];
   loading: boolean;
+  error: boolean;
 }
 
-export const RequestSection = ({ requests, loading }: RequestSectionProps) => {
+export const RequestSection = ({ requests, loading, error }: RequestSectionProps) => {
   const navigate = useNavigate();
   const { setSelectedRequest, theme } = useStateContext();
   const currentTheme = getTheme(theme);
@@ -96,7 +97,9 @@ export const RequestSection = ({ requests, loading }: RequestSectionProps) => {
           </Card>
         ))}
 
-      {(!requests.length || loading) && <RequestSkeleton count={9} theme={currentTheme} />}
+      {loading && <RequestSkeleton count={9} theme={currentTheme} />}
+
+      {!loading && error && !requests.length && <Text>Something went wrong</Text>}
     </RequestsSection>
   );
 };
@@ -110,6 +113,8 @@ const RequestsSection = styled.section`
   gap: 3rem;
   justify-content: center;
   align-items: start;
+  min-height: 80vh;
+  height: 100%;
 `;
 
 export const Card = styled.div`

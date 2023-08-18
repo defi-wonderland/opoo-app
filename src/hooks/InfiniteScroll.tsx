@@ -11,7 +11,7 @@ export const InfiniteScroll = ({ update, loading }: Props) => {
     const diff = document.documentElement.offsetHeight - window.innerHeight - document.documentElement.scrollTop;
 
     // if the user is not at the bottom of the page, or if the requests are still loading, do nothing
-    if (diff > 300 || loading) return;
+    if (diff > 400 || loading) return;
 
     update();
   };

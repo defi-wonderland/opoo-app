@@ -1,10 +1,10 @@
 import '~/assets/fonts/opoo-icons/style.css';
 
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 
 import { RequestsDetails } from './pages/Requests/RequestsDetails';
-import { About, Landing, Requests } from '~/pages';
+import { About, Faq, Landing, Requests } from '~/pages';
 import { AppLayout } from './containers/Layout';
 import { Themable } from './components/Theme';
 import { StateProvider } from './providers/StateProvider';
@@ -16,14 +16,12 @@ import { ScrollToTop } from './hooks';
 const AppRouter = () => {
   return (
     <Routes>
-      <Route path={`/`} element={<AppLayout />}>
-        {/* temporary until we have a landing page */}
-        <Route path='/' element={<Navigate to='/requests' />} />
+      <Route path='/' element={<Landing />} />
+      <Route element={<AppLayout />}>
         <Route path='/requests/' element={<Requests />} />
         <Route path='/requests/:id' element={<RequestsDetails />} />
-        <Route path='/faq' element={<Landing />} />
+        <Route path='/faq' element={<Faq />} />
         <Route path='/about' element={<About />} />
-        <Route path='/docs' element={<About />} />
       </Route>
     </Routes>
   );

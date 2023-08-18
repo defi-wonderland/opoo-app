@@ -26,15 +26,12 @@ const Container = styled.div`
 `;
 
 export const Requests = () => {
-  // temporary:
-
   const { opooSdk, client } = useOpooSdk();
-  const { requests /* filters */, setRequests, setLoading, loading } = useStateContext();
+  const { requests /* filters */, setRequests, setLoading, loading, setIsError, isError } = useStateContext();
   const [lastRequestNonce, setLastRequestNonce] = useState<number | undefined>();
 
   const getRequests = async (lastRequestNonce: number) => {
     setLoading(true);
-    // temporary logs
     console.log('loading requests...');
     try {
       const rawRequests = await opooSdk.batching.getFullRequestData(lastRequestNonce, REQUESTS_AMOUNT);
@@ -66,18 +63,26 @@ export const Requests = () => {
     setRequests([...requests, ...newRequests]);
   };
 
-  useEffect(() => {
-    if (!lastRequestNonce) {
-      console.log('getting last request nonce...');
-      opooSdk.helpers.totalRequestCount().then((count) => {
-        setLastRequestNonce(Number(count) - REQUESTS_AMOUNT);
+  const handleLoad = async () => {
+    try {
+      if (!lastRequestNonce) {
+        setLoading(true);
+        console.log('getting last request nonce...');
+        const lastRequestNonce = await opooSdk.helpers.totalRequestCount();
 
-        console.log('last request nonce:', count);
-        getRequests(Number(count) - REQUESTS_AMOUNT).then((newRequests) => {
-          setRequests([...requests, ...newRequests]);
-        });
-      });
+        console.log('last request nonce:', lastRequestNonce);
+        const newRequests = await getRequests(Number(lastRequestNonce) - REQUESTS_AMOUNT);
+        setRequests([...requests, ...newRequests]);
+      }
+    } catch (error) {
+      console.error('Error getting last requests:', error);
+      setLoading(false);
+      setIsError(true);
     }
+  };
+
+  useEffect(() => {
+    handleLoad();
   }, []);
 
   return (
@@ -87,7 +92,7 @@ export const Requests = () => {
 
         {/* <FiltersSection filters={filters} /> */}
 
-        <RequestSection requests={requests} loading={loading} />
+        <RequestSection requests={requests} loading={loading} error={isError} />
         <InfiniteScroll update={updateRequests} loading={loading} />
       </Container>
     </Layout>
