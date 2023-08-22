@@ -68,6 +68,7 @@ export const Navbar = () => {
               to={to}
               className={currentRoute === to ? 'link-active' : ''}
               key={'link-' + index}
+              data-testid={to + '-page-btn'}
             >
               {text}
             </LinkText>

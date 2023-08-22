@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Title } from '~/components';
 
 const Container = styled.div`
   width: 100%;
@@ -7,5 +8,9 @@ const Container = styled.div`
 `;
 
 export const Faq = () => {
-  return <Container>index</Container>;
+  return (
+    <Container>
+      <Title data-testid='faq-page-title'>FAQ</Title>
+    </Container>
+  );
 };

@@ -8,13 +8,13 @@ export const Landing = () => {
   return (
     <LandingContainer>
       <Content>
-        <Title>Optimistic Oracles</Title>
+        <Title data-testid='landing-page-title'>Optimistic Oracles</Title>
         <Text>
           A versatile and fully adaptable optimistic oracle solution that transcends the boundaries of conventional
           dispute resolution modules
         </Text>
         <LinksContainer>
-          <SLink to='/requests'>
+          <SLink to='/requests' data-testid='requests-page-btn'>
             <SPill>Explorer</SPill>
           </SLink>
           <SLink to='/requests'>

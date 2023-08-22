@@ -65,7 +65,7 @@ export const RequestSection = ({ requests, loading, error }: RequestSectionProps
               <Pill iconName={card.status} text={statusMsg(card.status)} size='1.3rem' />
             </PillsContainer>
             {/* Request number */}
-            <RequestTitle>Request #{card.nonce}</RequestTitle>
+            <RequestTitle data-testid='request-card'>Request #{card.nonce}</RequestTitle>
 
             {/* Requester section */}
             <DataContainer>

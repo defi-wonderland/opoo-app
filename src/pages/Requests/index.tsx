@@ -97,7 +97,7 @@ export const Requests = () => {
   return (
     <Layout>
       <Container>
-        <Title>Requests</Title>
+        <Title data-testid='requests-page-title'>Requests</Title>
 
         {/* <FiltersSection filters={filters} /> */}
 

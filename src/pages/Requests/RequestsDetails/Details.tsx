@@ -25,7 +25,7 @@ export const Details = ({ selectedRequest, theme, loading }: DetailsProps) => {
 
   return (
     <SBox>
-      <Title>Request #{selectedRequest?.nonce}</Title>
+      <Title data-testid='request-page-title'>Request #{selectedRequest?.nonce}</Title>
 
       <DetailsContainer>
         {!loading && selectedRequest?.nonce && (
