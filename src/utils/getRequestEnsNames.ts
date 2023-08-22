@@ -3,9 +3,12 @@ import { RequestFullData } from 'opoo-sdk';
 
 import { client as publicClient } from '~/config';
 import { EnsNames } from '~/types';
+import { fulfillWithTimeLimit } from './getMetadatas';
 
 const getEnsName = async (address: string, client: typeof publicClient) => {
-  return await client.getEnsName({ address: address as Address });
+  const task = client.getEnsName({ address: address as Address });
+  const data = await fulfillWithTimeLimit(3000, task, '');
+  return data;
 };
 
 export const getRequestEnsNames = async (

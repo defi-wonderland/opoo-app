@@ -24,10 +24,11 @@ export const RequestsDetails = () => {
       const rawRequests = await opooSdk.batching.getFullRequestData(Number(id), 1);
       console.log('rawRequests', rawRequests);
 
-      const metadatas = await getMetadatas(rawRequests, opooSdk);
-      console.log('metadatas', metadatas);
+      const metadatasPromise = getMetadatas(rawRequests, opooSdk);
+      const ensNamePromise = getRequestEnsNames(rawRequests, client);
 
-      const ensName = await getRequestEnsNames(rawRequests, client);
+      const [metadatas, ensName] = await Promise.all([metadatasPromise, ensNamePromise]);
+      console.log('metadatas', metadatas);
 
       const formattedRequests = formatRequestsData(rawRequests, ensName, metadatas);
       setLoading(false);

@@ -35,7 +35,7 @@ export const getMetadatas = async (requests: RequestFullData[], opooSdk: OpooSDK
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function fulfillWithTimeLimit(timeLimit: number, task: Promise<any>, failureValue: any) {
+export async function fulfillWithTimeLimit(timeLimit: number, task: Promise<any>, failureValue: any) {
   let timeout;
   const timeoutPromise = new Promise((resolve) => {
     timeout = setTimeout(() => {

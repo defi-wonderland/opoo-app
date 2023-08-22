@@ -45,10 +45,11 @@ export const Requests = () => {
       const rawRequests = await opooSdk.batching.getFullRequestData(totalRequestCount, REQUESTS_AMOUNT);
       console.log('rawFulRequests', rawRequests);
 
-      const ensNames = await getRequestEnsNames(rawRequests, client);
-      console.log('ensNames', ensNames);
+      const ensNamesPromise = getRequestEnsNames(rawRequests, client);
+      const metadatasPromise = getMetadatas(rawRequests, opooSdk);
 
-      const metadatas = await getMetadatas(rawRequests, opooSdk);
+      const [ensNames, metadatas] = await Promise.all([ensNamesPromise, metadatasPromise]);
+      console.log('ensNames', ensNames);
       console.log('metadatas', metadatas);
 
       const formattedRequests = formatRequestsData(rawRequests, ensNames, metadatas);
