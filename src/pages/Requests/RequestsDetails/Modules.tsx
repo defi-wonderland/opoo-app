@@ -145,6 +145,4 @@ const SCardFooter = styled.div`
   color: ${({ theme }) => theme.textSecondary};
 `;
 
-const SDetailsButton = styled(DetailsButton)`
-  padding: 0.8rem;
-`;
+const SDetailsButton = styled(DetailsButton)``;

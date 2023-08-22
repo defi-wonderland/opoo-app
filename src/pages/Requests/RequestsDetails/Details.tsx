@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 import { MOBILE_MAX_WIDTH, TABLET_MAX_WIDTH, copyData, getDate, statusMsg, truncateString } from '~/utils';
-import { Title, Box, Text, Pill, Icon, DetailsSkeleton } from '~/components';
+import { Title, Box, Text, Icon, DetailsSkeleton, ExternalLink } from '~/components';
 import { RequestData, Theme } from '~/types';
 
 interface DetailsProps {
@@ -31,6 +31,15 @@ export const Details = ({ selectedRequest, theme, loading }: DetailsProps) => {
         {!loading && selectedRequest?.nonce && (
           <>
             <SDataContainer>
+              <Text>By</Text>
+              <Text className='ellipsis'>
+                <ExternalLink href={`https://optimistic.etherscan.io/address/${selectedRequest.requester}`}>
+                  {selectedRequest.requester}
+                </ExternalLink>
+              </Text>
+            </SDataContainer>
+
+            <SDataContainer>
               <Text>Description</Text>
               <Text>{selectedRequest.description}</Text>
             </SDataContainer>
@@ -39,7 +48,8 @@ export const Details = ({ selectedRequest, theme, loading }: DetailsProps) => {
               <Text>ID</Text>
               <IdData onClick={handleCopy}>
                 <Text>{truncateString(selectedRequest.id, 9)}</Text>
-                <Icon name={copied ? 'copy-success' : 'copy'} size='1.2rem' />
+                {!copied && <Icon name='copy' size='1.2rem' />}
+                {copied && <SIcon name='copy-success' size='1.2rem' />}
               </IdData>
             </SDataContainer>
 
@@ -50,12 +60,10 @@ export const Details = ({ selectedRequest, theme, loading }: DetailsProps) => {
 
             <SDataContainer>
               <Text>Status</Text>
-              <Pill
-                iconName={selectedRequest.status}
-                text={statusMsg(selectedRequest.status)}
-                fontSize='1.3rem'
-                clickable
-              />
+              <StatusContainer>
+                <Icon name={selectedRequest.status} size='1.3rem' />
+                <Text>{statusMsg(selectedRequest.status)}</Text>
+              </StatusContainer>
             </SDataContainer>
           </>
         )}
@@ -68,7 +76,7 @@ export const Details = ({ selectedRequest, theme, loading }: DetailsProps) => {
 
 const SBox = styled(Box)`
   background-color: ${({ theme }) => theme.backgroundPrimary};
-  padding: 4rem 8rem 8rem;
+  padding: 12rem 8rem 8rem;
 
   @media (max-width: ${TABLET_MAX_WIDTH}px) {
     padding-top: 12rem;
@@ -131,8 +139,30 @@ const IdData = styled.div`
   gap: 1rem;
   cursor: pointer;
 
+  i {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  &:hover i {
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+  }
+
   p:nth-child(1) {
+    color: ${({ theme }) => theme.textPrimary};
     display: inline-block;
     width: unset;
   }
+`;
+
+export const SIcon = styled(Icon)`
+  opacity: 1 !important;
+`;
+
+const StatusContainer = styled(Box)`
+  align-items: center;
+  justify-content: start;
+  gap: 0.6rem;
+  flex-direction: row;
 `;

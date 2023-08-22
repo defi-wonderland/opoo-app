@@ -2,11 +2,17 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { ExternalLink, Icon, Pill, RequestSkeleton, Text } from '~/components';
+import { Box, Icon, Pill, RequestSkeleton, Text } from '~/components';
 
 import { copyData, fontSize, statusMsg, truncateString, getTheme, getDate, timeAgo, MOBILE_MAX_WIDTH } from '~/utils';
-import { Items, RequestData } from '~/types';
+import { RequestData } from '~/types';
 import { useStateContext } from '~/hooks';
+import { SIcon } from './RequestsDetails/Details';
+
+interface Items {
+  value: string;
+  itemsCopied: boolean[];
+}
 
 interface RequestSectionProps {
   requests: RequestData[];
@@ -26,21 +32,21 @@ export const RequestSection = ({ requests, loading, error }: RequestSectionProps
     navigate(`/requests/${request.nonce}`);
   };
 
-  const handleCopy = async (content: string, index: number) => {
+  const handleCopy = async (content: string, index: number, item: number) => {
     copyData(content);
     const newItems = [...items];
-    newItems[index].itemCopied = true;
+    newItems[index].itemsCopied[item] = true;
     setItems(newItems);
 
     setTimeout(() => {
       const newItems = [...items];
-      newItems[index].itemCopied = false;
+      newItems[index].itemsCopied[item] = false;
       setItems(newItems);
     }, 800);
   };
 
   useEffect(() => {
-    if (requests.length) setItems(requests.map((request) => ({ value: request.id, itemCopied: false })));
+    if (requests.length) setItems(requests.map((request) => ({ value: request.id, itemsCopied: [false, false] })));
   }, [requests]);
 
   return (
@@ -53,14 +59,14 @@ export const RequestSection = ({ requests, loading, error }: RequestSectionProps
               <Pill
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleCopy(card.id, index);
+                  handleCopy(card.id, index, 0);
                 }}
                 iconName='hashtag'
                 size='1.2rem'
                 text={truncateString(card.id, 9)}
                 copy
                 clickable
-                copied={items[index]?.itemCopied}
+                copied={items[index]?.itemsCopied[0]}
               />
               <Pill iconName={card.status} text={statusMsg(card.status)} size='1.3rem' />
             </PillsContainer>
@@ -68,14 +74,18 @@ export const RequestSection = ({ requests, loading, error }: RequestSectionProps
             <RequestTitle data-testid='request-card'>Request #{card.nonce}</RequestTitle>
 
             {/* Requester section */}
-            <DataContainer>
-              <SecondaryText>By</SecondaryText>
-              <ExternalLink
-                href={`https://optimistic.etherscan.io/address/${card.requester}`}
-                onClick={(e) => e.stopPropagation()}
-              >
+            <DataContainer
+              onClick={(e) => {
+                e.stopPropagation();
+                handleCopy(card.requester, index, 1);
+              }}
+            >
+              <SBox>
+                <SecondaryText>By</SecondaryText>
                 <PrimaryText>{truncateString(card.requester, 4)}</PrimaryText>
-              </ExternalLink>
+                {!items[index]?.itemsCopied[1] && <Icon name='copy' size='1.2rem' />}
+                {items[index]?.itemsCopied[1] && <SIcon name='copy-success' size='1.2rem' />}
+              </SBox>
             </DataContainer>
 
             {/* Description */}
@@ -91,7 +101,6 @@ export const RequestSection = ({ requests, loading, error }: RequestSectionProps
                 </PrimaryText>
               </DataContainer>
               <DetailsButton onClick={() => setSelectedRequest(card)}>
-                <p>See details</p>
                 <Icon name='right-arrow' size='0.9rem' />
               </DetailsButton>
             </CardFooter>
@@ -113,6 +122,7 @@ const RequestsSection = styled.section`
   flex-wrap: wrap;
   gap: 3rem;
   justify-content: center;
+  align-content: baseline;
   align-items: start;
   min-height: 80vh;
   height: 100%;
@@ -142,7 +152,6 @@ const DataContainer = styled.div`
   gap: 0.4rem;
   flex-direction: row;
   align-items: center;
-  /* height: 3rem; */
 `;
 
 const DescriptionContainer = styled(DataContainer)`
@@ -203,12 +212,34 @@ const RequestTitle = styled.h1`
   line-height: normal;
 `;
 
+const SBox = styled(Box)`
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  gap: 0.6rem;
+
+  i {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  &:hover i {
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  p {
+    display: inline-block;
+    width: fit-content;
+  }
+`;
+
 // ------------------------------- Footer Section ------------------------------- //
 export const DetailsButton = styled.button`
   background-color: ${({ theme: { detailsBackground } }) => detailsBackground};
   color: ${({ theme }) => theme.textPrimary};
   display: flex;
-  padding: 0.6rem 1rem;
+  padding: 0.8rem;
   align-items: center;
   gap: 8px;
   border-radius: 100px;

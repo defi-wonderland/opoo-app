@@ -12,3 +12,12 @@ export const AppLayout = () => {
     </>
   );
 };
+
+export const RequestsLayout = () => {
+  return (
+    <>
+      <Navbar />
+      <Outlet />
+    </>
+  );
+};

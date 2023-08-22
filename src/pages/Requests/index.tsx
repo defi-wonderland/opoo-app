@@ -10,7 +10,7 @@ import { Title } from '~/components';
 const Layout = styled.div`
   background-color: ${({ theme: { iconBackground } }) => iconBackground};
   width: 100%;
-  padding: 12rem 8rem;
+  padding: 20rem 8rem 10rem;
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     padding: 12rem 1.6rem 0;

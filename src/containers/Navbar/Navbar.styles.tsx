@@ -5,7 +5,7 @@ import { TABLET_MAX_WIDTH, fontSize } from '~/utils';
 
 // ------------------------------- Navbar Container ------------------------------- //
 export const SNavbar = styled.div`
-  position: relative;
+  position: fixed;
   display: flex;
   height: 8rem;
   padding: 0 8rem;
@@ -16,6 +16,7 @@ export const SNavbar = styled.div`
   border-bottom: ${({ theme }) => theme.border};
   width: 100%;
   max-width: 100vw;
+  z-index: 100;
 
   /* Transition animation */
   .slide-enter {

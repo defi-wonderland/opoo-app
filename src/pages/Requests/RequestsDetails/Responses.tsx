@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Title, Box, Text, ExternalLink, Icon } from '~/components';
 import { MOBILE_MAX_WIDTH, fontSize, truncateString, copyData } from '~/utils';
 import { Items, Response } from '~/types';
+import { SIcon } from './Details';
 
 interface ResponsesProps {
   responses: Response[];
@@ -38,7 +39,8 @@ export const Responses = ({ responses, loading }: ResponsesProps) => {
     // Request Id:
     <Id key={'request-id-' + index} onClick={() => handleCopy(response.requestId, index)}>
       {truncateString(response.requestId, 4)}
-      <Icon name={items[index]?.itemCopied ? 'copy-success' : 'copy'} size='1.2rem' />
+      {!items[index]?.itemCopied && <Icon name='copy' size='1.2rem' />}
+      {items[index]?.itemCopied && <SIcon name='copy-success' size='1.2rem' />}
     </Id>,
 
     // Dispute:
@@ -105,8 +107,8 @@ const ResponsesContainer = styled(Box)`
 const Row = styled(Box)`
   background-color: ${({ theme: { backgroundPrimary } }) => backgroundPrimary};
   flex-direction: row;
-  gap: 2rem;
-  padding: 1.2rem 3rem;
+  gap: 3rem;
+  padding: 3rem;
 
   div:nth-child(1) {
     min-width: 30%;
@@ -126,7 +128,7 @@ const Row = styled(Box)`
 const ColumnTitles = styled(Row)`
   background: ${({ theme }) => theme.tableHeaderBackground};
   border: ${({ theme }) => theme.border};
-  border-radius: 8px 8px 0px 0px;
+  border-radius: 0.8rem 0.8rem 0 0;
   padding-left: 3rem;
 
   div {
@@ -141,7 +143,7 @@ const ColumnTitles = styled(Row)`
 
 const Rows = styled(Box)`
   border: ${({ theme }) => theme.border};
-  border-radius: 0px 0px 4px 4px;
+  border-radius: 0 0 0.8rem 0.8rem;
   overflow: hidden;
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
@@ -230,4 +232,14 @@ const Id = styled.div`
   gap: 0.6rem;
   align-items: center;
   cursor: pointer;
+
+  i {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  &:hover i {
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+  }
 `;

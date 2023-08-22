@@ -8,4 +8,9 @@ export const ExternalLink = styled.a.attrs({
   text-decoration: none;
   font-weight: inherit;
   font-size: inherit;
+
+  &:hover {
+    opacity: 0.8;
+    transition: opacity 0.2s ease-in-out;
+  }
 `;
