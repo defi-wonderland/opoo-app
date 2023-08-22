@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { MOBILE_MAX_WIDTH, REQUESTS_AMOUNT, formatRequestsData, getMetadatas, getRequestEnsNames } from '~/utils';
@@ -27,14 +27,22 @@ const Container = styled.div`
 
 export const Requests = () => {
   const { opooSdk, client } = useOpooSdk();
-  const { requests /* filters */, setRequests, setLoading, loading, setIsError, isError } = useStateContext();
-  const [lastRequestNonce, setLastRequestNonce] = useState<number | undefined>();
+  const {
+    requests /* filters */,
+    setRequests,
+    setLoading,
+    loading,
+    setIsError,
+    isError,
+    totalRequestCount,
+    setTotalRequestCount,
+  } = useStateContext();
 
-  const getRequests = async (lastRequestNonce: number) => {
+  const getRequests = async (totalRequestCount: number) => {
     setLoading(true);
     console.log('loading requests...');
     try {
-      const rawRequests = await opooSdk.batching.getFullRequestData(lastRequestNonce, REQUESTS_AMOUNT);
+      const rawRequests = await opooSdk.batching.getFullRequestData(totalRequestCount, REQUESTS_AMOUNT);
       console.log('rawFulRequests', rawRequests);
 
       const ensNames = await getRequestEnsNames(rawRequests, client);
@@ -44,9 +52,10 @@ export const Requests = () => {
       console.log('metadatas', metadatas);
 
       const formattedRequests = formatRequestsData(rawRequests, ensNames, metadatas);
+      console.log('formattedRequests', formattedRequests);
 
       console.log('opooSdk', opooSdk);
-      setLastRequestNonce(lastRequestNonce - REQUESTS_AMOUNT);
+      setTotalRequestCount(totalRequestCount - REQUESTS_AMOUNT);
       setLoading(false);
 
       return formattedRequests;
@@ -58,20 +67,20 @@ export const Requests = () => {
   };
 
   const updateRequests = async () => {
-    if (!lastRequestNonce) return;
-    const newRequests = await getRequests(lastRequestNonce);
+    if (!totalRequestCount) return;
+    const newRequests = await getRequests(totalRequestCount);
     setRequests([...requests, ...newRequests]);
   };
 
   const handleLoad = async () => {
     try {
-      if (!lastRequestNonce) {
+      if (!totalRequestCount) {
         setLoading(true);
         console.log('getting last request nonce...');
-        const lastRequestNonce = await opooSdk.helpers.totalRequestCount();
+        const totalRequestCount = await opooSdk.helpers.totalRequestCount();
 
-        console.log('last request nonce:', lastRequestNonce);
-        const newRequests = await getRequests(Number(lastRequestNonce) - REQUESTS_AMOUNT);
+        console.log('last request nonce:', totalRequestCount);
+        const newRequests = await getRequests(Number(totalRequestCount) - REQUESTS_AMOUNT);
         setRequests([...requests, ...newRequests]);
       }
     } catch (error) {

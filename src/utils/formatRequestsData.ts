@@ -1,5 +1,5 @@
 import { RequestFullData } from 'opoo-sdk';
-import { hexToString, Address } from 'viem';
+import { Address } from 'viem';
 
 import { EnsNames, RequestData } from '~/types';
 import { Metadata, decodeData, getDispute, getStatus } from '~/utils';
@@ -29,7 +29,7 @@ export const formatRequestsData = (
       finalizedResponse,
       responses,
     } = fullRequest;
-    const { returnedTypes, description } = metadatas[index];
+    const { returnedTypes, description, responseType } = metadatas[index];
 
     const requestData = decodeData(returnedTypes[requestModule], requestModuleData as Address);
     const responseData = decodeData(returnedTypes[responseModule], responseModuleData as Address);
@@ -47,7 +47,7 @@ export const formatRequestsData = (
 
       // Responses section
       responses: responses.map((response, index) => ({
-        response: hexToString(response.response as Address), // decoded response
+        response: decodeData([{ name: '', type: responseType }], response.response as Address)[0].toString(), // decoded response
         proposer: ensNames[requestId].responses[index].proposer || response.proposer,
         requestId: response.requestId,
         dispute: getDispute(response.disputeId, response.createdAt),

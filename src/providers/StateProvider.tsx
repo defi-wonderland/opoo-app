@@ -13,6 +13,9 @@ type ContextType = {
   selectedRequest: RequestData;
   setSelectedRequest: (val: RequestData) => void;
 
+  totalRequestCount: number;
+  setTotalRequestCount: (val: number) => void;
+
   selectedModule: Modules;
   setSelectedModule: (val: Modules) => void;
 
@@ -39,6 +42,7 @@ export const StateProvider = ({ children }: StateProps) => {
   const [type, setType] = useState<string | null>(null);
   const [theme, setTheme] = useState<ThemeName>('dark');
   const [selectedRequest, setSelectedRequest] = useState<RequestData>({} as RequestData);
+  const [totalRequestCount, setTotalRequestCount] = useState<number>(0);
   const [selectedModule, setSelectedModule] = useState<Modules>({} as Modules);
   const [requests, setRequests] = useState<RequestData[]>([]);
   const [filters, setFilters] = useState<Filter[]>([]);
@@ -64,6 +68,8 @@ export const StateProvider = ({ children }: StateProps) => {
         setRequests,
         selectedRequest,
         setSelectedRequest,
+        totalRequestCount,
+        setTotalRequestCount,
         selectedModule,
         setSelectedModule,
         theme,

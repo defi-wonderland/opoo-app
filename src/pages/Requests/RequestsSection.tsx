@@ -16,12 +16,13 @@ interface RequestSectionProps {
 
 export const RequestSection = ({ requests, loading, error }: RequestSectionProps) => {
   const navigate = useNavigate();
-  const { setSelectedRequest, theme } = useStateContext();
+  const { setSelectedRequest, theme, setLoading } = useStateContext();
   const currentTheme = getTheme(theme);
   const [items, setItems] = useState<Items[]>([]);
 
   const handleClick = (request: RequestData) => {
     setSelectedRequest(request);
+    setLoading(false);
     navigate(`/requests/${request.nonce}`);
   };
 
@@ -203,7 +204,7 @@ const RequestTitle = styled.h1`
 `;
 
 // ------------------------------- Footer Section ------------------------------- //
-const DetailsButton = styled.button`
+export const DetailsButton = styled.button`
   background-color: ${({ theme: { detailsBackground } }) => detailsBackground};
   color: ${({ theme }) => theme.textPrimary};
   display: flex;

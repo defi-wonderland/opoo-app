@@ -1,4 +1,4 @@
-import { decodeAbiParameters, Address } from 'viem';
+import { Address, decodeAbiParameters } from 'viem';
 import { RequestFullData } from 'opoo-sdk';
 
 import { client as publicClient } from '~/config';
@@ -39,7 +39,9 @@ export const decodeData = (types: TypeResults[] | undefined, data: Address): str
     return decodedValues;
   } catch (error) {
     console.error('Error calling "decodeData" function:', error);
-    return [];
+
+    // if we cant decode the data, return the raw data
+    return [data];
   }
 };
 

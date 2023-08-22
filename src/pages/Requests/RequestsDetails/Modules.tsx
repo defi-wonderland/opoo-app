@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { MOBILE_MAX_WIDTH, fontSize, truncateString, copyData, TABLET_MAX_WIDTH } from '~/utils';
-import { Box, ModuleSkeleton, Pill, Text, Title } from '~/components';
+import { Box, ModuleSkeleton, Pill, Text, Title, Icon } from '~/components';
+import { DetailsButton } from '~/pages/Requests/RequestsSection';
 import { Items, Modules as ModuleType, Theme } from '~/types';
 import { useModal, useStateContext } from '~/hooks';
 
@@ -51,6 +52,7 @@ export const Modules = ({ loading, theme }: Props) => {
               className={module.data ? 'clickable' : ''}
               onClick={() => module.data && handleClick(module)}
             >
+              {/* Module Address */}
               <Pill
                 onClick={(e) => {
                   e.stopPropagation();
@@ -62,7 +64,16 @@ export const Modules = ({ loading, theme }: Props) => {
                 clickable
                 copied={items[index]?.itemCopied}
               />
+
+              {/* Module Name */}
               <MTitle>{module.name}</MTitle>
+
+              {/* Card Footer */}
+              <SCardFooter>
+                <SDetailsButton>
+                  <Icon name='right-arrow' size='0.9rem' />
+                </SDetailsButton>
+              </SCardFooter>
             </ModuleCard>
           ))}
 
@@ -125,4 +136,15 @@ const MTitle = styled(Text)`
   text-overflow: ellipsis;
   white-space: nowrap;
   padding-left: 0.85rem;
+`;
+
+const SCardFooter = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: end;
+  color: ${({ theme }) => theme.textSecondary};
+`;
+
+const SDetailsButton = styled(DetailsButton)`
+  padding: 0.8rem;
 `;
