@@ -30,7 +30,7 @@ export const getMetadatas = async (requests: RequestFullData[], opooSdk: OpooSDK
       metadatas.push(data);
     }
   }
-  console.log('metadatas', metadatas);
+
   return metadatas;
 };
 

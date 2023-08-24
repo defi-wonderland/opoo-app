@@ -32,9 +32,9 @@ export const Responses = ({ responses, loading }: ResponsesProps) => {
     response.response,
 
     // Proposer:
-    <ExternalLink key={'address-link-' + index} href={`https://optimistic.etherscan.io/address/${response.proposer}`}>
+    <SExternalLink key={'address-link-' + index} href={`https://optimistic.etherscan.io/address/${response.proposer}`}>
       {truncateString(response.proposer, 4)}
-    </ExternalLink>,
+    </SExternalLink>,
 
     // Request Id:
     <Id key={'request-id-' + index} onClick={() => handleCopy(response.requestId, index)}>
@@ -223,6 +223,7 @@ const SText = styled.div.attrs({ className: 'ellipsis' })`
     font-size: ${fontSize.SMALL};
   }
 `;
+
 const MessageText = styled(SText)`
   text-align: center;
 `;
@@ -242,4 +243,8 @@ const Id = styled.div`
     opacity: 1;
     transition: opacity 0.2s ease-in-out;
   }
+`;
+
+const SExternalLink = styled(ExternalLink)`
+  color: ${({ theme }) => theme.textPrimary};
 `;

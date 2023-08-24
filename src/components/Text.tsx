@@ -23,7 +23,7 @@ export const Title = styled.h1`
   line-height: 6.4rem;
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
-    font-size: ${fontSize.LARGE};
+    font-size: ${fontSize.SECTION_TITLE};
     line-height: normal;
   }
 `;

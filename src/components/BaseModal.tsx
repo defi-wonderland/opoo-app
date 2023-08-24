@@ -1,39 +1,50 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { Icon, Pill, Box, Text } from '~/components';
-import { MOBILE_MAX_WIDTH, copyData, fontSize, truncateString } from '~/utils';
+import { Icon, Box, Text, ExternalLink } from '~/components';
+import { MOBILE_MAX_WIDTH, copyData, fontSize } from '~/utils';
+import { SIcon } from '~/pages/Requests/RequestsDetails/Details';
 import { useStateContext } from '~/hooks';
+import { Items } from '~/types';
 
 interface BaseModalProps {
   setOpen: (val: boolean) => void;
 }
 export const BaseModal = ({ setOpen }: BaseModalProps) => {
   const { selectedModule } = useStateContext();
-  const [copied, setCopied] = useState(false);
+  const [items, setItems] = useState<Items[]>([{ value: 'id', itemCopied: false }]);
 
-  const handleCopy = (data: string) => {
-    copyData(data);
-    setCopied(true);
+  const handleCopy = async (content: string, index: number) => {
+    copyData(content);
+    const newItems = [...items];
+    newItems[index].itemCopied = true;
+    setItems(newItems);
 
     setTimeout(() => {
-      setCopied(false);
-    }, 600);
+      const newItems = [...items];
+      newItems[index].itemCopied = false;
+      setItems(newItems);
+    }, 800);
   };
+
+  useEffect(() => {
+    if (selectedModule.data) {
+      const newItems = selectedModule.data.map((data) => ({
+        value: data.name,
+        itemCopied: false,
+      }));
+      setItems([...newItems, ...items]);
+    }
+  }, [selectedModule]);
 
   return (
     <SModal>
       <MHeader>
         <div>
           <h1>{selectedModule.name}</h1>
-          <Pill
-            iconName='hashtag'
-            text={truncateString(selectedModule.address, 6)}
-            onClick={() => handleCopy(selectedModule.address)}
-            copy
-            clickable
-            copied={copied}
-          />
+          <SExternalLink>
+            <SText>{selectedModule.address}</SText>
+          </SExternalLink>
         </div>
         <CloseIcon onClick={() => setOpen(false)}>
           <Icon name='close' size='1.2rem' />
@@ -41,11 +52,18 @@ export const BaseModal = ({ setOpen }: BaseModalProps) => {
       </MHeader>
 
       <MBody className='custom-scrollbar'>
-        <Content>
+        <Content className='custom-scrollbar'>
           {selectedModule.data?.map(({ name, value }, index) => (
-            <SDataContainer key={'request-data-' + index}>
+            <SDataContainer key={'request-data-' + index} className='ellipsis'>
               <SText>{name}</SText>
-              <SText>{value}</SText>
+              <SBox onClick={() => handleCopy(value, index)}>
+                <SText>
+                  {value}
+
+                  {!items[index]?.itemCopied && <Icon name='copy' size='1.2rem' />}
+                  {items[index]?.itemCopied && <SIcon name='copy-success' size='1.2rem' />}
+                </SText>
+              </SBox>
             </SDataContainer>
           ))}
         </Content>
@@ -83,6 +101,10 @@ const MHeader = styled(Box)`
   height: auto;
   width: 100%;
 
+  div {
+    overflow: hidden;
+  }
+
   div:first-child {
     display: flex;
     flex-direction: column;
@@ -91,7 +113,7 @@ const MHeader = styled(Box)`
 
   h1 {
     color: ${({ theme }) => theme.textPrimary};
-    text-align: center;
+    text-align: start;
     font-family: Rubik;
     font-size: ${fontSize.SECTION_TITLE};
     font-style: normal;
@@ -110,6 +132,15 @@ const MHeader = styled(Box)`
       color: ${({ theme }) => theme.red};
       font-size: ${fontSize.LARGE};
     }
+  }
+`;
+
+const SExternalLink = styled(ExternalLink)`
+  p {
+    color: ${({ theme }) => theme.textSecondary};
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 `;
 
@@ -139,6 +170,8 @@ const Content = styled.div`
   border-radius: 1.2rem;
   max-width: 100%;
   width: 100%;
+  max-height: 35rem;
+  overflow-y: scroll;
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     gap: 1rem;
@@ -155,25 +188,50 @@ const SDataContainer = styled.div`
   gap: 3rem;
   align-items: start;
 
-  p:first-child {
+  & > p {
     word-break: unset;
-    width: 24rem;
+    max-width: 20rem;
     color: ${({ theme }) => theme.textSecondary};
   }
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+    gap: 1rem;
     p:nth-child(1) {
-      width: 14rem;
-      min-width: 14rem;
-    }
-    p:nth-child(2) {
-      word-break: break-all;
+      width: 100%;
     }
 
     p {
       font-size: ${fontSize.SMALL};
-      overflow-wrap: break-word;
     }
+
+    & > p {
+      max-width: 15rem;
+    }
+  }
+`;
+
+const SBox = styled(Box)`
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  gap: 0.6rem;
+  cursor: pointer;
+
+  i {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    padding-left: 0.6rem;
+  }
+
+  &:hover i {
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  p {
+    display: inline-block;
+    width: fit-content;
+    gap: 0.6rem;
   }
 `;
 

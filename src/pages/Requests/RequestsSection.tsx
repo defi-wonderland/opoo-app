@@ -4,7 +4,17 @@ import styled from 'styled-components';
 
 import { Box, Icon, Pill, RequestSkeleton, Text } from '~/components';
 
-import { copyData, fontSize, statusMsg, truncateString, getTheme, getDate, timeAgo, MOBILE_MAX_WIDTH } from '~/utils';
+import {
+  copyData,
+  fontSize,
+  statusMsg,
+  truncateString,
+  getTheme,
+  getDate,
+  timeAgo,
+  MOBILE_MAX_WIDTH,
+  REQUESTS_AMOUNT,
+} from '~/utils';
 import { RequestData } from '~/types';
 import { useStateContext } from '~/hooks';
 import { SIcon } from './RequestsDetails/Details';
@@ -70,6 +80,7 @@ export const RequestSection = ({ requests, loading, error }: RequestSectionProps
               />
               <Pill iconName={card.status} text={statusMsg(card.status)} size='1.3rem' />
             </PillsContainer>
+
             {/* Request number */}
             <RequestTitle data-testid='request-card'>Request #{card.nonce}</RequestTitle>
 
@@ -107,7 +118,7 @@ export const RequestSection = ({ requests, loading, error }: RequestSectionProps
           </Card>
         ))}
 
-      {loading && <RequestSkeleton count={9} theme={currentTheme} />}
+      {loading && <RequestSkeleton count={REQUESTS_AMOUNT} theme={currentTheme} />}
 
       {!loading && error && !requests.length && <Text>Something went wrong</Text>}
     </RequestsSection>
@@ -136,7 +147,7 @@ export const Card = styled.div`
   border-radius: ${({ theme }) => theme.borderRadius};
   border: ${({ theme }) => theme.border};
   width: 40.6rem;
-  height: 21.2rem;
+  height: auto;
   gap: 1rem;
   padding: 2rem;
   cursor: pointer;
@@ -210,6 +221,7 @@ const RequestTitle = styled.h1`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  padding: 0.8rem 0;
 `;
 
 const SBox = styled(Box)`

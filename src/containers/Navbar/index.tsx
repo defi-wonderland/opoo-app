@@ -95,10 +95,6 @@ export const Navbar = () => {
           <IconLink to='#'>
             <Icon name='discord' size='1.6rem' color={theme === 'light' ? 'black' : 'white'} />
           </IconLink>
-
-          <IconLink to='#'>
-            <Icon name='docs' size='1.6rem' color={theme === 'light' ? 'black' : 'white'} />
-          </IconLink>
         </Icons>
       </CSSTransition>
     </SNavbar>

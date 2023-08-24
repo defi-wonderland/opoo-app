@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
 
-import { MOBILE_MAX_WIDTH, REQUESTS_AMOUNT, formatRequestsData, getMetadatas, getRequestEnsNames } from '~/utils';
+import { MOBILE_MAX_WIDTH, formatRequestsData, getMetadatas, getRequestEnsNames, getRawRequests } from '~/utils';
 import { useOpooSdk, useStateContext, InfiniteScroll } from '~/hooks';
 import { RequestSection } from './RequestsSection';
 import { Title } from '~/components';
@@ -21,6 +21,7 @@ const Container = styled.div`
   background-color: ${({ theme: { iconBackground } }) => iconBackground};
   max-width: 128rem;
   width: 100%;
+  min-height: 100vh;
   height: 100%;
   margin: 0 auto;
 `;
@@ -28,7 +29,7 @@ const Container = styled.div`
 export const Requests = () => {
   const { opooSdk, client } = useOpooSdk();
   const {
-    requests /* filters */,
+    requests,
     setRequests,
     setLoading,
     loading,
@@ -36,29 +37,33 @@ export const Requests = () => {
     isError,
     totalRequestCount,
     setTotalRequestCount,
+    requestAmount,
+    setRequestAmount,
   } = useStateContext();
 
-  const getRequests = async (totalRequestCount: number) => {
+  const getRequests = async (totalRequestCount: number, requestAmount: number) => {
     setLoading(true);
-    console.log('loading requests...');
+    console.log('loading requests from:', totalRequestCount, 'to:', totalRequestCount + requestAmount, '...');
     try {
-      const rawRequests = await opooSdk.batching.getFullRequestData(totalRequestCount, REQUESTS_AMOUNT);
-      console.log('rawFulRequests', rawRequests);
+      if (requestAmount === 0) {
+        setLoading(false);
+        return [];
+      }
+
+      const rawRequests = await getRawRequests(opooSdk, totalRequestCount, requestAmount);
 
       const ensNamesPromise = getRequestEnsNames(rawRequests, client);
       const metadatasPromise = getMetadatas(rawRequests, opooSdk);
 
       const [ensNames, metadatas] = await Promise.all([ensNamesPromise, metadatasPromise]);
-      console.log('ensNames', ensNames);
-      console.log('metadatas', metadatas);
 
       const formattedRequests = formatRequestsData(rawRequests, ensNames, metadatas);
-      console.log('formattedRequests', formattedRequests);
 
-      console.log('opooSdk', opooSdk);
-      setTotalRequestCount(totalRequestCount - REQUESTS_AMOUNT);
+      const newTotalRequestCount = totalRequestCount - requestAmount;
+      if (newTotalRequestCount > 0) setTotalRequestCount(newTotalRequestCount);
+
+      setRequestAmount(requestAmount);
       setLoading(false);
-
       return formattedRequests;
     } catch (error) {
       console.error('Error loading requests:', error);
@@ -69,7 +74,7 @@ export const Requests = () => {
 
   const updateRequests = async () => {
     if (!totalRequestCount) return;
-    const newRequests = await getRequests(totalRequestCount);
+    const newRequests = await getRequests(totalRequestCount, requestAmount);
     setRequests([...requests, ...newRequests]);
   };
 
@@ -80,8 +85,11 @@ export const Requests = () => {
         console.log('getting last request nonce...');
         const totalRequestCount = await opooSdk.helpers.totalRequestCount();
 
+        // if the request amount is bigger than the total request count, we set the request amount to the total request count
+        const newRequestAmount = requestAmount < Number(totalRequestCount) ? requestAmount : Number(totalRequestCount);
+
         console.log('last request nonce:', totalRequestCount);
-        const newRequests = await getRequests(Number(totalRequestCount) - REQUESTS_AMOUNT);
+        const newRequests = await getRequests(Number(totalRequestCount) - newRequestAmount, newRequestAmount);
         setRequests([...requests, ...newRequests]);
       }
     } catch (error) {

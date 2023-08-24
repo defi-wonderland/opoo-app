@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-import { MOBILE_MAX_WIDTH, TABLET_MAX_WIDTH, copyData, getDate, statusMsg, truncateString } from '~/utils';
+import { MOBILE_MAX_WIDTH, TABLET_MAX_WIDTH, copyData, getDate, statusMsg } from '~/utils';
 import { Title, Box, Text, Icon, DetailsSkeleton, ExternalLink } from '~/components';
 import { RequestData, Theme } from '~/types';
 
@@ -41,28 +41,30 @@ export const Details = ({ selectedRequest, theme, loading }: DetailsProps) => {
 
             <SDataContainer>
               <Text>Description</Text>
-              <Text>{selectedRequest.description}</Text>
+              <SText>{selectedRequest.description}</SText>
             </SDataContainer>
 
             <SDataContainer>
               <Text>ID</Text>
-              <IdData onClick={handleCopy}>
-                <Text>{truncateString(selectedRequest.id, 9)}</Text>
-                {!copied && <Icon name='copy' size='1.2rem' />}
-                {copied && <SIcon name='copy-success' size='1.2rem' />}
+              <IdData onClick={handleCopy} className='ellipsis'>
+                <SText>
+                  {selectedRequest.id}
+                  {!copied && <Icon name='copy' size='1.2rem' />}
+                  {copied && <SIcon name='copy-success' size='1.2rem' />}
+                </SText>
               </IdData>
             </SDataContainer>
 
             <SDataContainer>
               <Text>Created at</Text>
-              <Text>{getDate(selectedRequest.createdAt)}</Text>
+              <SText>{getDate(selectedRequest.createdAt)}</SText>
             </SDataContainer>
 
             <SDataContainer>
               <Text>Status</Text>
               <StatusContainer>
                 <Icon name={selectedRequest.status} size='1.3rem' />
-                <Text>{statusMsg(selectedRequest.status)}</Text>
+                <SText>{statusMsg(selectedRequest.status)}</SText>
               </StatusContainer>
             </SDataContainer>
           </>
@@ -142,6 +144,7 @@ const IdData = styled.div`
   i {
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
+    padding-left: 0.6rem;
   }
 
   &:hover i {
@@ -150,9 +153,8 @@ const IdData = styled.div`
   }
 
   p:nth-child(1) {
-    color: ${({ theme }) => theme.textPrimary};
     display: inline-block;
-    width: unset;
+    width: 100%;
   }
 `;
 
@@ -165,4 +167,8 @@ const StatusContainer = styled(Box)`
   justify-content: start;
   gap: 0.6rem;
   flex-direction: row;
+`;
+
+const SText = styled(Text)`
+  color: ${({ theme }) => theme.textSecondary};
 `;

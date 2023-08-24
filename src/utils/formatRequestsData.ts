@@ -2,7 +2,7 @@ import { RequestFullData } from 'opoo-sdk';
 import { Address } from 'viem';
 
 import { EnsNames, RequestData } from '~/types';
-import { Metadata, decodeData, getDispute, getStatus } from '~/utils';
+import { Metadata, decodeData, formatModuleName, getDispute, getStatus } from '~/utils';
 
 export const formatRequestsData = (
   requestsFullData: RequestFullData[],
@@ -28,6 +28,11 @@ export const formatRequestsData = (
       requestId,
       finalizedResponse,
       responses,
+      disputeModuleName,
+      requestModuleName,
+      finalityModuleName,
+      responseModuleName,
+      resolutionModuleName,
     } = fullRequest;
     const { returnedTypes, description, responseType } = metadatas[index];
 
@@ -66,7 +71,7 @@ export const formatRequestsData = (
       // Modules section
       modules: [
         {
-          name: 'Request Module',
+          name: formatModuleName(requestModuleName),
           address: requestModule,
           data: returnedTypes[requestModule]?.map((type, index) => ({
             name: type.name,
@@ -74,7 +79,7 @@ export const formatRequestsData = (
           })),
         },
         {
-          name: 'Response Module',
+          name: formatModuleName(responseModuleName),
           address: responseModule,
           data: returnedTypes[responseModule]?.map((type, index) => ({
             name: type.name,
@@ -82,7 +87,7 @@ export const formatRequestsData = (
           })),
         },
         {
-          name: 'Dispute Module',
+          name: formatModuleName(disputeModuleName),
           address: disputeModule,
           data: returnedTypes[disputeModule]?.map((type, index) => ({
             name: type.name,
@@ -90,7 +95,7 @@ export const formatRequestsData = (
           })),
         },
         {
-          name: 'Resolution Module',
+          name: formatModuleName(resolutionModuleName),
           address: resolutionModule,
           data: returnedTypes[resolutionModule]?.map((type, index) => ({
             name: type.name,
@@ -98,7 +103,7 @@ export const formatRequestsData = (
           })),
         },
         {
-          name: 'Finality Module',
+          name: formatModuleName(finalityModuleName),
           address: finalityModule,
           data: returnedTypes[finalityModule]?.map((type, index) => ({
             name: type.name,
@@ -109,6 +114,5 @@ export const formatRequestsData = (
     };
   });
 
-  console.log(requests);
   return requests.reverse();
 };

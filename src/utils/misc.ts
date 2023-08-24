@@ -42,3 +42,9 @@ export const decodeData = (types: TypeResults[] | undefined, data: Address): str
     return [data];
   }
 };
+
+// moduleNames are camelCase, this function formats them to be more readable
+export const formatModuleName = (moduleName: string) => {
+  const name = moduleName.split(/(?=[A-Z])/);
+  return name.join(' ');
+};

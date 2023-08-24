@@ -1,6 +1,7 @@
 export * from './formatRequestsData';
 export * from './getDate';
 export * from './getMetadatas';
+export * from './getRawRequests';
 export * from './getRequestEnsNames';
 export * from './getStatus';
 export * from './getTheme';

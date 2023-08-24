@@ -29,6 +29,11 @@ export const fullRequestDataMock = [
       response: '0x0000000000000000000000000000000000000000',
     },
     disputeStatus: 0,
+    disputeModuleName: '',
+    requestModuleName: '',
+    finalityModuleName: '',
+    responseModuleName: '',
+    resolutionModuleName: '',
   },
 ];
 

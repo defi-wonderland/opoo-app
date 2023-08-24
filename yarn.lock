@@ -6706,10 +6706,10 @@ opoo-core-abi@0.0.0-83be3eb5:
     forge-std "https://github.com/foundry-rs/forge-std.git#e8a047e3f40f13fa37af6fe14e6e06283d9a060e"
     solmate "https://github.com/transmissions11/solmate.git#bfc9c25865a274a7827fea5abf6e4fb64fc64e6c"
 
-opoo-sdk@0.0.0-013260d1:
-  version "0.0.0-013260d1"
-  resolved "https://registry.npmjs.org/opoo-sdk/-/opoo-sdk-0.0.0-013260d1.tgz#4160ee7bfe51e328435364116af56caa3e8adce6"
-  integrity sha512-E7pKj9cil7PQ72hi9wBTinX0Zmwb/FV3N7FydKjpLwlSE3mmquBa/iAm7H5DYb+hmO62y+xxBEcYBnXOXVutSA==
+opoo-sdk@0.0.0-843ad820:
+  version "0.0.0-843ad820"
+  resolved "https://registry.npmjs.org/opoo-sdk/-/opoo-sdk-0.0.0-843ad820.tgz#b7b6d7547efeb6698290f9a66dbbb58c3eaca97f"
+  integrity sha512-S5lNjbZDVDDGbrS1YVQ1wZS2g+R211VnQcxTe8t3jbfX/z9s5jAWtjCTgx5ZQb9wj/9HZAItf9fsBsI6OH/Nsw==
   dependencies:
     "@pinata/sdk" "2.1.0"
     axios "1.4.0"

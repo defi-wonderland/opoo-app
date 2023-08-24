@@ -54,7 +54,7 @@ export const SNavbar = styled.div`
     .show-links {
       flex-direction: column;
       position: fixed;
-      padding-top: 8rem;
+      padding-top: 7rem;
       top: 7.2rem;
       left: 0;
       right: 0;
@@ -74,10 +74,6 @@ export const SNavbar = styled.div`
       font-weight: 400;
       line-height: 100%; /* 20px */
       text-transform: capitalize;
-    }
-
-    .show-links a:last-child {
-      display: none;
     }
 
     .show-icons {

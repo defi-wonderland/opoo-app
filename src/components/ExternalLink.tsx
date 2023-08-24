@@ -8,6 +8,7 @@ export const ExternalLink = styled.a.attrs({
   text-decoration: none;
   font-weight: inherit;
   font-size: inherit;
+  cursor: pointer;
 
   &:hover {
     opacity: 0.8;
