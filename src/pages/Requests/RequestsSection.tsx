@@ -14,6 +14,7 @@ import {
   timeAgo,
   MOBILE_MAX_WIDTH,
   REQUESTS_AMOUNT,
+  TABLET_MAX_WIDTH,
 } from '~/utils';
 import { RequestData } from '~/types';
 import { useStateContext } from '~/hooks';
@@ -128,15 +129,25 @@ export const RequestSection = ({ requests, loading, error }: RequestSectionProps
 const RequestsSection = styled.section`
   margin-top: 4rem;
   padding-bottom: 4rem;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+
   gap: 3rem;
-  justify-content: center;
   align-content: baseline;
-  align-items: start;
   min-height: 80vh;
   height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4rem;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: ${TABLET_MAX_WIDTH}px) {
+    grid-template-columns: repeat(1, 1fr);
+    margin-top: 3rem;
+    gap: 2rem;
+    justify-content: center;
+  }
 `;
 
 export const Card = styled.div`
@@ -146,7 +157,7 @@ export const Card = styled.div`
   background-color: ${({ theme }) => theme.cardBackground};
   border-radius: ${({ theme }) => theme.borderRadius};
   border: ${({ theme }) => theme.border};
-  width: 40.6rem;
+  width: 100%;
   height: auto;
   gap: 1rem;
   padding: 2rem;

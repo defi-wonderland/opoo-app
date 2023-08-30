@@ -12,6 +12,7 @@ export const CardSkeleton = styled(Card)`
   z-index: 0;
   cursor: auto;
   user-select: none;
+  width: 100%;
 
   &:hover {
     background-color: ${({ theme }) => theme.cardBackground};

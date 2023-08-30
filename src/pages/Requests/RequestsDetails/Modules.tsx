@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-import { MOBILE_MAX_WIDTH, fontSize, truncateString, copyData, TABLET_MAX_WIDTH } from '~/utils';
+import { MOBILE_MAX_WIDTH, fontSize, truncateString, copyData, TABLET_MAX_WIDTH, ZERO_ADDRESS } from '~/utils';
 import { Box, ModuleSkeleton, Pill, Text, Title, Icon } from '~/components';
 import { DetailsButton } from '~/pages/Requests/RequestsSection';
 import { Items, Modules as ModuleType, Theme } from '~/types';
@@ -47,34 +47,38 @@ export const Modules = ({ loading, theme }: Props) => {
       <ModulesContainer>
         {!loading &&
           modules?.map((module, index) => (
-            <ModuleCard
-              key={'module-' + index}
-              className={module.data ? 'clickable' : ''}
-              onClick={() => module.data && handleClick(module)}
-            >
-              {/* Module Address */}
-              <Pill
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleCopy(module.address, index);
-                }}
-                text={truncateString(module.address, 9)}
-                size='1.3rem'
-                copy
-                clickable
-                copied={items[index]?.itemCopied}
-              />
+            <>
+              {module.address !== ZERO_ADDRESS && (
+                <ModuleCard
+                  key={'module-' + index}
+                  className={module.data ? 'clickable' : ''}
+                  onClick={() => module.data && handleClick(module)}
+                >
+                  {/* Module Address */}
+                  <Pill
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleCopy(module.address, index);
+                    }}
+                    text={truncateString(module.address, 9)}
+                    size='1.3rem'
+                    copy
+                    clickable
+                    copied={items[index]?.itemCopied}
+                  />
 
-              {/* Module Name */}
-              <MTitle>{module.name}</MTitle>
+                  {/* Module Name */}
+                  <MTitle>{module.name}</MTitle>
 
-              {/* Card Footer */}
-              <SCardFooter>
-                <SDetailsButton>
-                  <Icon name='right-arrow' size='0.9rem' />
-                </SDetailsButton>
-              </SCardFooter>
-            </ModuleCard>
+                  {/* Card Footer */}
+                  <SCardFooter>
+                    <SDetailsButton>
+                      <Icon name='right-arrow' size='0.9rem' />
+                    </SDetailsButton>
+                  </SCardFooter>
+                </ModuleCard>
+              )}
+            </>
           ))}
 
         {loading && <ModuleSkeleton count={5} theme={theme} />}
@@ -94,16 +98,16 @@ const SBox = styled(Box)`
 
 const ModulesContainer = styled(Box)`
   margin-top: 5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 4rem;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: left;
 
-  @media (max-width: ${TABLET_MAX_WIDTH}px) {
-    justify-content: center;
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  @media (max-width: ${MOBILE_MAX_WIDTH}px) {
+  @media (max-width: ${TABLET_MAX_WIDTH}px) {
+    grid-template-columns: repeat(1, 1fr);
     margin-top: 3rem;
     gap: 2rem;
     justify-content: center;
@@ -114,7 +118,7 @@ const ModuleCard = styled(Box)`
   background-color: ${({ theme }) => theme.backgroundSecondary};
   border-radius: ${({ theme }) => theme.borderRadius};
   padding: 2rem;
-  max-width: 40rem;
+  max-width: 100%;
   gap: 1rem;
   justify-content: space-between;
 

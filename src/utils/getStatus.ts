@@ -11,7 +11,8 @@ export const getStatus = (requests: RequestFullData): StatusName => {
   return 'unanswered';
 };
 
-export const getDispute = (disputeId: string, timestamp: string): string => {
+export const getDispute = (disputeId: string, timestamp: string, finalized: boolean): string => {
+  if (finalized) return 'Finalized';
   if (disputeId === ID_ZERO) return '—';
 
   return `Active since ${getDate(timestamp)}`;

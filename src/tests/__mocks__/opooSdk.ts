@@ -13,7 +13,7 @@ export class OpooSDKMock {
 }
 
 class BatchingMock {
-  public getFullRequestData() {
+  public listRequests() {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(fullRequestDataMock);

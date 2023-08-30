@@ -37,8 +37,8 @@ export const Responses = ({ responses, loading }: ResponsesProps) => {
     </SExternalLink>,
 
     // Request Id:
-    <Id key={'request-id-' + index} onClick={() => handleCopy(response.requestId, index)}>
-      {truncateString(response.requestId, 4)}
+    <Id key={'request-id-' + index} onClick={() => handleCopy(response.responseId, index)}>
+      {truncateString(response.responseId, 4)}
       {!items[index]?.itemCopied && <Icon name='copy' size='1.2rem' />}
       {items[index]?.itemCopied && <SIcon name='copy-success' size='1.2rem' />}
     </Id>,
@@ -73,7 +73,7 @@ export const Responses = ({ responses, loading }: ResponsesProps) => {
           {/* Row Values */}
           {!!tableData.rows?.length &&
             tableData.rows.map((rows, index) => (
-              <Row key={'row-' + index}>
+              <Row key={'row-' + index} className={responses[index].finalized ? 'finalized-response' : ''}>
                 {rows.map((value, index) => (
                   <SBox key={'row-element-' + index}>
                     <TableTitle>{tableData.columns[index]}</TableTitle>
@@ -145,6 +145,14 @@ const Rows = styled(Box)`
   border: ${({ theme }) => theme.border};
   border-radius: 0 0 0.8rem 0.8rem;
   overflow: hidden;
+
+  .finalized-response {
+    background-color: ${({ theme: { backgroundSecondary } }) => backgroundSecondary};
+
+    div {
+      color: ${({ theme }) => theme.textPrimary};
+    }
+  }
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     background-color: ${({ theme: { backgroundPrimary } }) => backgroundPrimary};
@@ -247,4 +255,5 @@ const Id = styled.div`
 
 const SExternalLink = styled(ExternalLink)`
   color: ${({ theme }) => theme.textPrimary};
+  font-weight: 600;
 `;

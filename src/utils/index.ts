@@ -5,6 +5,7 @@ export * from './getRawRequests';
 export * from './getRequestEnsNames';
 export * from './getStatus';
 export * from './getTheme';
+export * from './getTotalRequestCount';
 export * from './misc';
 export * from './Variables';
 export * from './statusMessage';

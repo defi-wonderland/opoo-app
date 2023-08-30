@@ -2,7 +2,7 @@ import { RequestFullData } from 'opoo-sdk';
 import { Address } from 'viem';
 
 import { EnsNames, RequestData } from '~/types';
-import { Metadata, decodeData, formatModuleName, getDispute, getStatus } from '~/utils';
+import { Metadata, decodeData, formatModuleName, getDispute, getStatus, isFinalResponse } from '~/utils';
 
 export const formatRequestsData = (
   requestsFullData: RequestFullData[],
@@ -54,8 +54,9 @@ export const formatRequestsData = (
       responses: responses.map((response, index) => ({
         response: decodeData([{ name: '', type: responseType }], response.response as Address)[0].toString(), // decoded response
         proposer: ensNames[requestId].responses[index].proposer || response.proposer,
-        requestId: response.requestId,
-        dispute: getDispute(response.disputeId, response.createdAt),
+        responseId: response.responseId,
+        dispute: getDispute(response.disputeId, response.createdAt, isFinalResponse(response, finalizedResponse)),
+        finalized: isFinalResponse(response, finalizedResponse),
       })),
 
       // Finalized response

@@ -1,6 +1,6 @@
 import { decodeAbiParameters, Address } from 'viem';
 
-import { TypeResults } from '~/types';
+import { RawResponse, TypeResults } from '~/types';
 
 export const copyData = (data: string) => {
   navigator.clipboard.writeText(data);
@@ -30,7 +30,7 @@ export const timeAgo = (timestamp: string | number) => {
 };
 
 export const decodeData = (types: TypeResults[] | undefined, data: Address): string[] => {
-  if (!types) return [];
+  if (!types || !data) return [];
 
   try {
     const decodedValues = decodeAbiParameters(types, data) as string[];
@@ -47,4 +47,15 @@ export const decodeData = (types: TypeResults[] | undefined, data: Address): str
 export const formatModuleName = (moduleName: string) => {
   const name = moduleName.split(/(?=[A-Z])/);
   return name.join(' ');
+};
+
+export const isFinalResponse = (response: RawResponse, finalResponse: RawResponse) => {
+  if (
+    response.createdAt === finalResponse.createdAt &&
+    response.proposer === finalResponse.proposer &&
+    response.requestId === finalResponse.requestId &&
+    response.response === finalResponse.response
+  )
+    return true;
+  return false;
 };

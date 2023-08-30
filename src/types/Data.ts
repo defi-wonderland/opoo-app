@@ -11,20 +11,31 @@ export interface RequestData {
   status: StatusName;
   responses: Response[];
   modules: Modules[];
-  finalizedResponse: {
-    createdAt: number;
-    proposer: string;
-    requestId: string;
-    disputeId: string;
-    response: string;
-  };
+  finalizedResponse: FinalizedResponse;
 }
 
 export interface Response {
   response: string;
   proposer: string;
-  requestId: string;
+  responseId: string;
   dispute: string;
+  finalized: boolean;
+}
+
+export interface FinalizedResponse {
+  createdAt: number;
+  proposer: string;
+  requestId: string;
+  disputeId: string;
+  response: string;
+}
+
+export interface RawResponse {
+  createdAt: string;
+  response: string;
+  proposer: string;
+  requestId: string;
+  disputeId: string;
 }
 
 export interface Filter {

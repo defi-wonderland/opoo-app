@@ -5,6 +5,7 @@
 export const THEME_KEY = 'opoo-explorer-theme';
 export const REQUESTS_AMOUNT = 6; // the max amount of requests that can be loaded at once
 export const ID_ZERO = '0x0000000000000000000000000000000000000000000000000000000000000000';
+export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 /*=============================================
 =               Style Variables               =

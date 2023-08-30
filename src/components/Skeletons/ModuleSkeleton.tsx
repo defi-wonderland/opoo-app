@@ -4,7 +4,7 @@ import Skeleton from 'react-loading-skeleton';
 import { CardSkeleton, SkeletonProps } from './RequestSkeleton';
 
 const SCardSkeleton = styled(CardSkeleton)`
-  width: 40rem;
+  width: 100%;
   height: 9.6rem;
 `;
 

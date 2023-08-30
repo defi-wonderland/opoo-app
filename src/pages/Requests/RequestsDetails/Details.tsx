@@ -60,6 +60,13 @@ export const Details = ({ selectedRequest, theme, loading }: DetailsProps) => {
               <SText>{getDate(selectedRequest.createdAt)}</SText>
             </SDataContainer>
 
+            {!!selectedRequest.finalizedResponse.createdAt && (
+              <SDataContainer>
+                <Text>Finalized at</Text>
+                <SText>{getDate(selectedRequest.finalizedResponse.createdAt)}</SText>
+              </SDataContainer>
+            )}
+
             <SDataContainer>
               <Text>Status</Text>
               <StatusContainer>
