@@ -9,10 +9,6 @@ describe('Renders every page', () => {
       render(<App />);
     });
 
-    // navigates to the requests page
-    await act(async () => {
-      fireEvent.click(screen.getByTestId('requests-page-btn'));
-    });
     expect(screen.getByTestId('requests-page-title')).toBeInTheDocument();
 
     // loads the request
@@ -26,10 +22,6 @@ describe('Renders every page', () => {
       render(<App />);
     });
 
-    // navigates to the requests page
-    await act(async () => {
-      fireEvent.click(screen.getByTestId('requests-page-btn'));
-    });
     expect(screen.getByTestId('requests-page-title')).toBeInTheDocument();
 
     // loads the request page

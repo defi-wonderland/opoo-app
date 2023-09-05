@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { IconLink, Icons, LinkText, Logo, LogoContainer } from '../Navbar/Navbar.styles';
+import { IconLink, Icons, Logo, LogoContainer } from '../Navbar/Navbar.styles';
 import { useStateContext } from '~/hooks';
 import { Icon, Text } from '~/components';
 import { TABLET_MAX_WIDTH } from '~/utils';
+import { getConfig } from '~/config';
 
 const FooterContainer = styled.div`
   width: 100%;
@@ -34,22 +34,6 @@ const TopSection = styled.div`
   }
 `;
 
-const SLinkContainer = styled.div`
-  display: flex;
-  gap: 15rem;
-  padding: 0 3rem;
-
-  .link-active {
-    color: ${({ theme }) => theme.textPrimary};
-  }
-
-  @media (max-width: ${TABLET_MAX_WIDTH}px) {
-    flex-direction: row;
-    gap: 6rem;
-    padding: 2rem 0;
-  }
-`;
-
 const SIcons = styled(Icons)`
   @media (max-width: ${TABLET_MAX_WIDTH}px) {
     display: none;
@@ -59,23 +43,15 @@ const SIcons = styled(Icons)`
 export const Footer = () => {
   const { theme } = useStateContext();
 
-  const route = useLocation();
-  const currentRoute = useMemo(() => route.pathname.split('/')[1], [route]);
+  const docsLink = useMemo(() => {
+    const { DEV_MODE, docsLink } = getConfig();
 
-  const links = [
-    {
-      text: 'Requests',
-      to: 'requests',
-    },
-    {
-      text: 'About',
-      to: 'about',
-    },
-    {
-      text: 'FAQ',
-      to: 'faq',
-    },
-  ];
+    if (DEV_MODE) {
+      return `https://dev.${docsLink}`;
+    } else {
+      return `https://${docsLink}`;
+    }
+  }, []);
 
   return (
     <FooterContainer>
@@ -84,21 +60,17 @@ export const Footer = () => {
           <Logo to='/'>Prophet</Logo>
         </LogoContainer>
 
-        <SLinkContainer>
-          {links.map((link, index) => (
-            <LinkText key={'link-' + index} className={link.to === currentRoute ? 'link-active' : ''} to={link.to}>
-              {link.text}
-            </LinkText>
-          ))}
-        </SLinkContainer>
-
         <SIcons>
-          <IconLink to='#'>
+          <IconLink href='#'>
             <Icon name='github' size='1.6rem' color={theme === 'light' ? 'black' : 'white'} />
           </IconLink>
 
-          <IconLink to='#'>
+          <IconLink href='#'>
             <Icon name='discord' size='1.6rem' color={theme === 'light' ? 'black' : 'white'} />
+          </IconLink>
+
+          <IconLink href={docsLink}>
+            <Icon name='docs' size='1.6rem' color={theme === 'light' ? 'black' : 'white'} />
           </IconLink>
         </SIcons>
       </TopSection>

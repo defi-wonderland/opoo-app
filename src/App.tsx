@@ -4,7 +4,6 @@ import { Routes, Route } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 
 import { RequestsDetails } from './pages/Requests/RequestsDetails';
-import { About, Faq, Landing, Requests } from '~/pages';
 import { AppLayout, RequestsLayout } from './containers/Layout';
 import { Themable } from './components/Theme';
 import { StateProvider } from './providers/StateProvider';
@@ -12,20 +11,17 @@ import { ModalProvider } from './providers';
 import { Modals } from './containers/Modal/Modal';
 import GlobalStyle from './GlobalStyle';
 import { ScrollToTop } from './hooks';
+import { Requests } from '~/pages';
 
 const AppRouter = () => {
   return (
     <Routes>
-      <Route path='/' element={<Landing />} />
-
       <Route element={<RequestsLayout />}>
-        <Route path='/requests/' element={<Requests />} />
+        <Route path='/' element={<Requests />} />
       </Route>
 
       <Route element={<AppLayout />}>
         <Route path='/requests/:id' element={<RequestsDetails />} />
-        <Route path='/faq' element={<Faq />} />
-        <Route path='/about' element={<About />} />
       </Route>
     </Routes>
   );

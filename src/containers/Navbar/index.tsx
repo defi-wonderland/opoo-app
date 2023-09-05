@@ -1,42 +1,26 @@
 import { useMemo, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 
 import { Icon } from '~/components';
-import { SNavbar, LogoContainer, Logo, LinkText, LinkContainer, Icons, IconLink, MenuButton } from './Navbar.styles';
+import { SNavbar, LogoContainer, Logo, LinkContainer, Icons, IconLink, MenuButton, ThemeButton } from './Navbar.styles';
 import { useStateContext } from '~/hooks';
 import { THEME_KEY } from '~/utils';
+import { getConfig } from '~/config';
 
 export const Navbar = () => {
   const { setTheme, theme } = useStateContext();
   const [menuOpen, setMenuOpen] = useState(false);
   const animationDuration = 200;
 
-  const route = useLocation();
-  const currentRoute = useMemo(() => route.pathname.split('/')[1], [route]);
+  const docsLink = useMemo(() => {
+    const { DEV_MODE, docsLink } = getConfig();
 
-  const links = [
-    {
-      text: 'Requests',
-      to: 'requests',
-      active: true,
-    },
-    {
-      text: 'About',
-      to: 'about',
-      active: false,
-    },
-    {
-      text: 'FAQ',
-      to: 'faq',
-      active: false,
-    },
-    {
-      text: 'Docs',
-      to: 'docs',
-      active: false,
-    },
-  ];
+    if (DEV_MODE) {
+      return `https://dev.${docsLink}`;
+    } else {
+      return `https://${docsLink}`;
+    }
+  }, []);
 
   const handleThemeChange = () => {
     if (theme === 'light') {
@@ -48,32 +32,16 @@ export const Navbar = () => {
     }
   };
 
-  const handleClick = () => {
-    setMenuOpen(false);
-  };
-
   return (
     <SNavbar>
       {/* Logo */}
       <LogoContainer>
-        <Logo to='/'>Prophet</Logo>
+        <Logo to='/'>Prophet Explorer</Logo>
       </LogoContainer>
 
       {/* Navbar Links */}
       <CSSTransition in={menuOpen} timeout={animationDuration} classNames='slide'>
-        <LinkContainer className={menuOpen ? 'show-links' : 'hidden'}>
-          {links.map(({ text, to }, index) => (
-            <LinkText
-              onClick={handleClick}
-              to={to}
-              className={currentRoute === to ? 'link-active' : ''}
-              key={'link-' + index}
-              data-testid={to + '-page-btn'}
-            >
-              {text}
-            </LinkText>
-          ))}
-        </LinkContainer>
+        <LinkContainer className={menuOpen ? 'show-links' : 'hidden'}>{/* Add navbar links here... */}</LinkContainer>
       </CSSTransition>
 
       {/* Menu Button (Mobile) */}
@@ -84,16 +52,20 @@ export const Navbar = () => {
       {/* Icons Section */}
       <CSSTransition in={menuOpen} timeout={300} classNames='slide'>
         <Icons className={menuOpen ? 'show-icons' : 'hidden'}>
-          <IconLink to='#' onClick={handleThemeChange}>
+          <ThemeButton onClick={handleThemeChange}>
             <Icon name={theme === 'light' ? 'moon' : 'sun'} size='1.6rem' />
-          </IconLink>
+          </ThemeButton>
 
-          <IconLink to='#'>
+          <IconLink href='#'>
             <Icon name='github' size='1.6rem' color={theme === 'light' ? 'black' : 'white'} />
           </IconLink>
 
-          <IconLink to='#'>
+          <IconLink href='#'>
             <Icon name='discord' size='1.6rem' color={theme === 'light' ? 'black' : 'white'} />
+          </IconLink>
+
+          <IconLink href={docsLink}>
+            <Icon name='docs' size='1.6rem' color={theme === 'light' ? 'black' : 'white'} />
           </IconLink>
         </Icons>
       </CSSTransition>

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { ExternalLink } from '~/components';
 
 import { TABLET_MAX_WIDTH, fontSize } from '~/utils';
 
@@ -80,7 +81,7 @@ export const SNavbar = styled.div`
       position: fixed;
       left: 0;
       width: 100%;
-      bottom: 2rem;
+      top: 10rem;
       z-index: 20;
       justify-content: center;
       background-color: transparent;
@@ -98,6 +99,7 @@ export const SNavbar = styled.div`
 
 export const LogoContainer = styled.div`
   margin-right: 10rem;
+  width: 100%;
 `;
 
 export const Logo = styled(Link)`
@@ -107,7 +109,6 @@ export const Logo = styled(Link)`
   color: #ff0420;
   text-decoration: none;
   font-size: 2rem;
-  width: 15rem;
 `;
 
 // ------------------------------- Links Section ------------------------------- //
@@ -165,7 +166,7 @@ export const Icons = styled.div`
   width: 100%;
 `;
 
-export const IconLink = styled(LinkText)`
+export const IconLink = styled(ExternalLink)`
   color: unset;
   background-color: ${({ theme: { iconBackground } }) => iconBackground};
   border-radius: ${({ theme }) => theme.borderRadius};
@@ -175,4 +176,17 @@ export const IconLink = styled(LinkText)`
   align-items: center;
   justify-content: center;
   margin-left: 2rem;
+`;
+
+export const ThemeButton = styled.div`
+  color: unset;
+  background-color: ${({ theme: { iconBackground } }) => iconBackground};
+  border-radius: ${({ theme }) => theme.borderRadius};
+  width: 4.8rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 2rem;
+  cursor: pointer;
 `;
