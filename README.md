@@ -1,6 +1,6 @@
 # Optimistic Oracle App
 
-OpOO App is the official explorer for OpOO, a versatile and fully adaptable optimistic oracle solution that transcends the boundaries of conventional dispute resolution modules. With its emphasis on complete control and modularity across all aspects of the system, OpOO serves as an open-source public good for the Optimism community.
+Prophet App is the official explorer for Prophet, a versatile and fully adaptable optimistic oracle solution that transcends the boundaries of conventional dispute resolution modules. With its emphasis on complete control and modularity across all aspects of the system, Prophet serves as an open-source public good for the Optimism community.
 
 ## Development
 

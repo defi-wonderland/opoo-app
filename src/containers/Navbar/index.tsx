@@ -56,7 +56,7 @@ export const Navbar = () => {
     <SNavbar>
       {/* Logo */}
       <LogoContainer>
-        <Logo to='/'>OpOO</Logo>
+        <Logo to='/'>Prophet</Logo>
       </LogoContainer>
 
       {/* Navbar Links */}

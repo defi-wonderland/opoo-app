@@ -8,7 +8,7 @@ export const Landing = () => {
   return (
     <LandingContainer>
       <Content>
-        <Title data-testid='landing-page-title'>Optimistic Oracles</Title>
+        <Title data-testid='landing-page-title'>Prophet</Title>
         <Text>
           A versatile and fully adaptable optimistic oracle solution that transcends the boundaries of conventional
           dispute resolution modules

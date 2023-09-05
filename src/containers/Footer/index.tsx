@@ -81,7 +81,7 @@ export const Footer = () => {
     <FooterContainer>
       <TopSection>
         <LogoContainer>
-          <Logo to='/'>OpOO</Logo>
+          <Logo to='/'>Prophet</Logo>
         </LogoContainer>
 
         <SLinkContainer>
@@ -102,7 +102,7 @@ export const Footer = () => {
           </IconLink>
         </SIcons>
       </TopSection>
-      <Text>© 2023 OpOO</Text>
+      <Text>© 2023 Prophet</Text>
     </FooterContainer>
   );
 };
