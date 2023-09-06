@@ -56,7 +56,7 @@ export const Navbar = () => {
             <Icon name={theme === 'light' ? 'moon' : 'sun'} size='1.6rem' />
           </ThemeButton>
 
-          <IconLink href='https://github.com/defi-wonderland/prophet-core'>
+          <IconLink href='https://github.com/defi-wonderland/prophet-app'>
             <Icon name='github' size='1.6rem' color={theme === 'light' ? 'black' : 'white'} />
           </IconLink>
 
