@@ -1,0 +1,84 @@
+@font-face {
+  font-family: 'OpooFont';
+  src: url('fonts/OpooFont.eot?tkdxqh');
+  src:
+    url('fonts/OpooFont.eot?tkdxqh#iefix') format('embedded-opentype'),
+    url('fonts/OpooFont.ttf?tkdxqh') format('truetype'),
+    url('fonts/OpooFont.woff?tkdxqh') format('woff'),
+    url('fonts/OpooFont.svg?tkdxqh#OpooFont') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^='icon-'],
+[class*=' icon-'] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'OpooFont' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-copy:before {
+  content: '\e901';
+  color: #99a4b8;
+}
+.icon-copy-success:before {
+  content: '\e90e';
+  color: #99a4b8;
+}
+.icon-close:before {
+  content: '\e900';
+  color: #99a4b8;
+}
+.icon-discord:before {
+  content: '\e902';
+}
+.icon-docs:before {
+  content: '\e903';
+}
+.icon-github:before {
+  content: '\e904';
+}
+.icon-hashtag:before {
+  content: '\e905';
+  color: #ff0420;
+}
+.icon-disputed:before {
+  content: '\e906';
+  color: #ff0420;
+}
+.icon-menu:before {
+  content: '\e907';
+}
+.icon-message:before {
+  content: '\e908';
+  color: #ff0420;
+}
+.icon-moon:before {
+  content: '\e909';
+  color: #f2c94c;
+}
+.icon-unanswered:before {
+  content: '\e90a';
+  color: #ff0420;
+}
+.icon-right-arrow:before {
+  content: '\e90b';
+}
+.icon-sun:before {
+  content: '\e90c';
+  color: #f2c94c;
+}
+.icon-finalized:before {
+  content: '\e90d';
+  color: #ff0420;
+}
