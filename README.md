@@ -9,7 +9,7 @@ To set up the development environment, follow these steps:
 1. Clone the repository:
 
 ```bash
-git clone [this repo link] && cd [opoo-app]
+git clone [this repo link] && cd [prophet-app]
 ```
 
 2. Install dependencies:
@@ -39,7 +39,7 @@ The app should be live at [http://localhost:4173/](http://localhost:4173/)
 
 ## Contributors
 
-Optimistic Oracle App was built with ❤️ by [Wonderland](https://defi.sucks).
+Prophet App was built with ❤️ by [Wonderland](https://defi.sucks).
 
 Wonderland is a team of top Web3 researchers, developers, and operators who believe that the future needs to be open-source, permissionless, and decentralized.
 

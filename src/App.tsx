@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 
 import { RequestsDetails } from './pages/Requests/RequestsDetails';
-import { AppLayout, RequestsLayout } from './containers/Layout';
+import { AppLayout } from './containers/Layout';
 import { Themable } from './components/Theme';
 import { StateProvider } from './providers/StateProvider';
 import { ModalProvider } from './providers';
@@ -16,11 +16,8 @@ import { Requests } from '~/pages';
 const AppRouter = () => {
   return (
     <Routes>
-      <Route element={<RequestsLayout />}>
-        <Route path='/' element={<Requests />} />
-      </Route>
-
       <Route element={<AppLayout />}>
+        <Route path='/' element={<Requests />} />
         <Route path='/requests/:id' element={<RequestsDetails />} />
       </Route>
     </Routes>

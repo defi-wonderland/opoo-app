@@ -1,6 +1,6 @@
 {
-  "name": "opoo-app",
-  "description": "Oppo UI App",
+  "name": "prophet-app",
+  "description": "Prophet UI App",
   "private": true,
   "version": "0.0.1",
   "type": "module",

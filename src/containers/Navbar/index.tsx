@@ -56,11 +56,11 @@ export const Navbar = () => {
             <Icon name={theme === 'light' ? 'moon' : 'sun'} size='1.6rem' />
           </ThemeButton>
 
-          <IconLink href='#'>
+          <IconLink href='https://github.com/defi-wonderland/prophet-core'>
             <Icon name='github' size='1.6rem' color={theme === 'light' ? 'black' : 'white'} />
           </IconLink>
 
-          <IconLink href='#'>
+          <IconLink href='https://discord.gg/hhvA9CuQRR'>
             <Icon name='discord' size='1.6rem' color={theme === 'light' ? 'black' : 'white'} />
           </IconLink>
 
