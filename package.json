@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "ethers": "6.7.0",
-    "opoo-sdk": "0.0.0-235a44d0",
+    "prophet-sdk": "0.0.0-a6edc18d",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-loading-skeleton": "3.3.1",

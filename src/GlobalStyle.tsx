@@ -53,7 +53,7 @@ const GlobalStyle = createGlobalStyle`
     background: ${({ theme }) => theme.backgroundPrimary};
   }  
 
-  #opoo-tooltip {
+  #prophet-tooltip {
     z-index: 100;
   }
 `;

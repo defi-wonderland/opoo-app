@@ -1,6 +1,6 @@
 import { NUMBER_OF_REQUESTS, fullRequestDataMock, moduleDataMock } from '~/tests/__mocks__';
 
-export class OpooSDKMock {
+export class ProphetSDKMock {
   public batching: BatchingMock;
   public helpers: HelpersMock;
   public ipfs: MockIpfs;

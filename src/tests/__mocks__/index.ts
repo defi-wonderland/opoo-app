@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { vi } from 'vitest';
-import { OpooSDKMock } from './opooSdk';
+import { ProphetSDKMock } from './prophetSdk.ts';
 
 // ------------------------------- Library Mocks ------------------------------- //
 // Mock for ethers.JsonRpcProvider()
@@ -25,15 +25,15 @@ vi.mock('~/config', async () => {
   };
 });
 
-// Mock for OpooSDK
-vi.mock('opoo-sdk', async () => {
-  const actual: any = await vi.importActual('opoo-sdk');
+// Mock for ProphetSDK
+vi.mock('prophet-sdk', async () => {
+  const actual: any = await vi.importActual('prophet-sdk');
   return {
     ...actual,
-    OpooSDK: OpooSDKMock,
+    ProphetSDK: ProphetSDKMock,
   };
 });
 
 // ------------------------------- Exports ------------------------------- //
 export * from './data';
-export * from './opooSdk';
+export * from './prophetSdk.ts';

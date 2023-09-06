@@ -1,9 +1,9 @@
-import { OpooSDK } from 'opoo-sdk';
+import { ProphetSDK } from 'prophet-sdk';
 import { fulfillWithTimeLimit } from '~/utils';
 
-export const getTotalRequestCount = async (opooSdk: OpooSDK) => {
+export const getTotalRequestCount = async (prophetSdk: ProphetSDK) => {
   const timeout = 10000; // 10 seconds
-  const task = opooSdk.helpers.totalRequestCount();
+  const task = prophetSdk.helpers.totalRequestCount();
   const data = await fulfillWithTimeLimit(timeout, task, 0);
   return data;
 };

@@ -1,4 +1,4 @@
-import { RequestFullData, OpooSDK } from 'opoo-sdk';
+import { RequestFullData, ProphetSDK } from 'prophet-sdk';
 import { ReturnedTypes } from '~/types';
 
 export interface Metadata {
@@ -7,7 +7,7 @@ export interface Metadata {
   returnedTypes: ReturnedTypes;
 }
 
-export const getMetadatas = async (requests: RequestFullData[], opooSdk: OpooSDK): Promise<Metadata[]> => {
+export const getMetadatas = async (requests: RequestFullData[], prophetSdk: ProphetSDK): Promise<Metadata[]> => {
   const metadatas: Metadata[] = [];
 
   const failureValue = {
@@ -17,7 +17,7 @@ export const getMetadatas = async (requests: RequestFullData[], opooSdk: OpooSDK
   };
 
   for (const request of requests) {
-    const task = opooSdk.ipfs.getMetadata(request.request.ipfsHash);
+    const task = prophetSdk.ipfs.getMetadata(request.request.ipfsHash);
     const timeLimit = 3000; // 3 sec time limit
 
     // if getting the metadata takes longer than 3 seconds, return failureValue

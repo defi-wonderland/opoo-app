@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Details } from './Details';
 import { Responses } from './Responses';
 import { Modules } from './Modules';
-import { useOpooSdk, useStateContext } from '~/hooks';
+import { useProphetSdk, useStateContext } from '~/hooks';
 import { formatRequestsData, getRequestEnsNames, getTheme, getMetadatas, getRawRequests } from '~/utils';
 import { useEffect } from 'react';
 
@@ -14,16 +14,16 @@ const Container = styled.div`
 
 export const RequestsDetails = () => {
   const { id } = useParams();
-  const { opooSdk, client } = useOpooSdk();
+  const { prophetSdk, client } = useProphetSdk();
   const { selectedRequest, setSelectedRequest, loading, setLoading, theme } = useStateContext();
   const currentTheme = getTheme(theme);
 
   const loadSelectedRequest = async () => {
     setLoading(true);
     try {
-      const rawRequests = await getRawRequests(opooSdk, Number(id), 1);
+      const rawRequests = await getRawRequests(prophetSdk, Number(id), 1);
 
-      const metadatasPromise = getMetadatas(rawRequests, opooSdk);
+      const metadatasPromise = getMetadatas(rawRequests, prophetSdk);
       const ensNamePromise = getRequestEnsNames(rawRequests, client);
 
       const [metadatas, ensName] = await Promise.all([metadatasPromise, ensNamePromise]);

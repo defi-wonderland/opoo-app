@@ -1,4 +1,4 @@
-import { RequestFullData } from 'opoo-sdk';
+import { RequestFullData } from 'prophet-sdk';
 import { Address } from 'viem';
 
 import { EnsNames, RequestData } from '~/types';

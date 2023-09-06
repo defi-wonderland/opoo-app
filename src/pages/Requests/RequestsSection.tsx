@@ -108,7 +108,7 @@ export const RequestSection = ({ requests, loading, error }: RequestSectionProps
             {/* Footer section */}
             <CardFooter>
               <DataContainer>
-                <PrimaryText data-tooltip-id='opoo-tooltip' data-tooltip-content={getDate(card.createdAt)}>
+                <PrimaryText data-tooltip-id='prophet-tooltip' data-tooltip-content={getDate(card.createdAt)}>
                   {timeAgo(card.createdAt)}
                 </PrimaryText>
               </DataContainer>

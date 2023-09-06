@@ -30,7 +30,7 @@ function App() {
       <StateProvider>
         <Themable>
           <GlobalStyle />
-          <Tooltip id='opoo-tooltip' />
+          <Tooltip id='prophet-tooltip' />
           <ScrollToTop />
           <Modals />
           <AppRouter />

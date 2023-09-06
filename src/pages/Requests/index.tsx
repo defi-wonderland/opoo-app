@@ -9,7 +9,7 @@ import {
   getRawRequests,
   getTotalRequestCount,
 } from '~/utils';
-import { useOpooSdk, useStateContext, InfiniteScroll } from '~/hooks';
+import { useProphetSdk, useStateContext, InfiniteScroll } from '~/hooks';
 import { RequestSection } from './RequestsSection';
 import { Title } from '~/components';
 
@@ -33,7 +33,7 @@ const Container = styled.div`
 `;
 
 export const Requests = () => {
-  const { opooSdk, client } = useOpooSdk();
+  const { prophetSdk, client } = useProphetSdk();
   const {
     requests,
     setRequests,
@@ -55,10 +55,10 @@ export const Requests = () => {
         return [];
       }
 
-      const rawRequests = await getRawRequests(opooSdk, totalRequestCount, requestAmount);
+      const rawRequests = await getRawRequests(prophetSdk, totalRequestCount, requestAmount);
 
       const ensNamesPromise = getRequestEnsNames(rawRequests, client);
-      const metadatasPromise = getMetadatas(rawRequests, opooSdk);
+      const metadatasPromise = getMetadatas(rawRequests, prophetSdk);
       const [ensNames, metadatas] = await Promise.all([ensNamesPromise, metadatasPromise]);
 
       const formattedRequests = formatRequestsData(rawRequests, ensNames, metadatas);
@@ -86,7 +86,7 @@ export const Requests = () => {
     try {
       if (!totalRequestCount) {
         setLoading(true);
-        const totalRequestCount = await getTotalRequestCount(opooSdk);
+        const totalRequestCount = await getTotalRequestCount(prophetSdk);
 
         // if the request amount is bigger than the total request count, we set the request amount to the total request count
         const newRequestAmount = requestAmount < Number(totalRequestCount) ? requestAmount : Number(totalRequestCount);

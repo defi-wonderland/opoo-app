@@ -31,7 +31,7 @@ export interface FinalizedResponse {
 }
 
 export interface RawResponse {
-  createdAt: string;
+  createdAt: number;
   response: string;
   proposer: string;
   requestId: string;
