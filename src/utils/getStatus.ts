@@ -1,4 +1,4 @@
-import { RequestFullData } from 'prophet-sdk';
+import { RequestFullData } from '@defi-wonderland/prophet-sdk';
 
 import { ID_ZERO, getDate } from '~/utils';
 import { StatusName } from '~/types';
