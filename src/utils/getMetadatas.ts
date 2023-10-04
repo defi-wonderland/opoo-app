@@ -1,4 +1,4 @@
-import { RequestFullData, ProphetSDK } from 'prophet-sdk';
+import { RequestFullData, ProphetSDK } from '@defi-wonderland/prophet-sdk';
 import { ReturnedTypes } from '~/types';
 
 export interface Metadata {

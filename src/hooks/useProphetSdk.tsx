@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { ProphetSDK } from 'prophet-sdk';
+import { ProphetSDK } from '@defi-wonderland/prophet-sdk';
 
 import { getConfig, client } from '~/config';
 

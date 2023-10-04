@@ -26,8 +26,8 @@ vi.mock('~/config', async () => {
 });
 
 // Mock for ProphetSDK
-vi.mock('prophet-sdk', async () => {
-  const actual: any = await vi.importActual('prophet-sdk');
+vi.mock('@defi-wonderland/prophet-sdk', async () => {
+  const actual: any = await vi.importActual('@defi-wonderland/prophet-sdk');
   return {
     ...actual,
     ProphetSDK: ProphetSDKMock,

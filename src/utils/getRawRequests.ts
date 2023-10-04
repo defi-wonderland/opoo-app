@@ -1,4 +1,4 @@
-import { ProphetSDK } from 'prophet-sdk';
+import { ProphetSDK } from '@defi-wonderland/prophet-sdk';
 import { fulfillWithTimeLimit } from '~/utils';
 
 export const getRawRequests = async (prophetSdk: ProphetSDK, startCount: number, requestsAmount: number) => {

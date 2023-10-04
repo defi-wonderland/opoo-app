@@ -1,4 +1,4 @@
-import { RequestFullData } from 'prophet-sdk';
+import { RequestFullData } from '@defi-wonderland/prophet-sdk';
 import { Address } from 'viem';
 
 import { EnsNames, RequestData } from '~/types';

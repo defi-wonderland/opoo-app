@@ -1,5 +1,5 @@
 import { Address } from 'viem';
-import { RequestFullData } from 'prophet-sdk';
+import { RequestFullData } from '@defi-wonderland/prophet-sdk';
 
 import { client as publicClient } from '~/config';
 import { EnsNames } from '~/types';
