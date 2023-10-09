@@ -10,25 +10,29 @@ export interface Metadata {
 export const getMetadatas = async (requests: RequestFullData[], prophetSdk: ProphetSDK): Promise<Metadata[]> => {
   const metadatas: Metadata[] = [];
 
-  const failureValue = {
-    responseType: '',
-    description: '',
-    returnedTypes: {} as ReturnedTypes,
-  };
+  try {
+    const failureValue = {
+      responseType: '',
+      description: '',
+      returnedTypes: {} as ReturnedTypes,
+    };
 
-  for (const request of requests) {
-    const task = prophetSdk.ipfs.getMetadata(request.request.ipfsHash);
-    const timeLimit = 3000; // 3 sec time limit
+    for (const request of requests) {
+      const task = prophetSdk.ipfs.getMetadata(request.request.ipfsHash);
+      const timeLimit = 5000; // 5 sec time limit
 
-    // if getting the metadata takes longer than 3 seconds, return failureValue
-    const data = await fulfillWithTimeLimit(timeLimit, task, failureValue);
+      // if getting the metadata takes longer than 3 seconds, return failureValue
+      const data = await fulfillWithTimeLimit(timeLimit, task, failureValue);
 
-    if (data == null) {
-      //in case longTask doesn't fulfill within the time limit
-      metadatas.push(failureValue);
-    } else {
-      metadatas.push(data);
+      if (data == null) {
+        //in case longTask doesn't fulfill within the time limit
+        metadatas.push(failureValue);
+      } else {
+        metadatas.push(data);
+      }
     }
+  } catch (error) {
+    console.error(error);
   }
 
   return metadatas;

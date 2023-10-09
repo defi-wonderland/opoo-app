@@ -52,6 +52,13 @@ export const BaseModal = ({ setOpen }: BaseModalProps) => {
       </MHeader>
 
       <MBody className='custom-scrollbar'>
+        {selectedModule.data?.[0]?.name === 'Raw data' && (
+          <ErrorContent>
+            <ErrorIcon name='disputed' />
+            <ErrorText>Unexpected error: failed to decode module&apos;s data.</ErrorText>
+          </ErrorContent>
+        )}
+
         <Content className='custom-scrollbar'>
           {selectedModule.data?.map(({ name, value }, index) => (
             <SDataContainer key={'request-data-' + index} className='ellipsis'>
@@ -154,7 +161,7 @@ const MBody = styled.div`
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     background-color: ${({ theme }) => theme.backgroundPrimary};
     padding: 0;
-    overflow-y: scroll;
+    overflow-y: auto;
     max-height: 70vh;
   }
 `;
@@ -171,13 +178,22 @@ const Content = styled.div`
   max-width: 100%;
   width: 100%;
   max-height: 35rem;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   @media (max-width: ${MOBILE_MAX_WIDTH}px) {
     gap: 1rem;
     padding: 2rem 2rem;
     background-color: ${({ theme }) => theme.backgroundPrimary};
   }
+`;
+
+const ErrorContent = styled(Content)`
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 `;
 
 const SDataContainer = styled.div`
@@ -258,3 +274,10 @@ const CloseIcon = styled.div`
 const SText = styled(Text).attrs({ className: 'ellipsis' })`
   width: 100%;
 `;
+
+const ErrorText = styled(SText)`
+  color: ${({ theme }) => theme.textPrimary};
+  font-weight: 400;
+`;
+
+const ErrorIcon = styled(Icon)``;

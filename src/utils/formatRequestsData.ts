@@ -2,7 +2,15 @@ import { RequestFullData } from '@defi-wonderland/prophet-sdk';
 import { Address } from 'viem';
 
 import { EnsNames, RequestData } from '~/types';
-import { Metadata, decodeData, formatModuleName, getDispute, getStatus, isFinalResponse } from '~/utils';
+import {
+  Metadata,
+  decodeData,
+  formatModuleData,
+  formatModuleName,
+  getDispute,
+  getStatus,
+  isFinalResponse,
+} from '~/utils';
 
 export const formatRequestsData = (
   requestsFullData: RequestFullData[],
@@ -34,17 +42,24 @@ export const formatRequestsData = (
       responseModuleName,
       resolutionModuleName,
     } = fullRequest;
-    const { returnedTypes, description, responseType } = metadatas[index];
+    const { returnedTypes, description, responseType } = metadatas[index] || {};
+    let requestData: string[] = [],
+      responseData: string[] = [],
+      disputeData: string[] = [],
+      finalityData: string[] = [],
+      resolutionData: string[] = [];
 
-    const requestData = decodeData(returnedTypes[requestModule], requestModuleData as Address);
-    const responseData = decodeData(returnedTypes[responseModule], responseModuleData as Address);
-    const disputeData = decodeData(returnedTypes[disputeModule], disputeModuleData as Address);
-    const finalityData = decodeData(returnedTypes[finalityModule], finalityModuleData as Address);
-    const resolutionData = decodeData(returnedTypes[resolutionModule], resolutionModuleData as Address);
+    if (returnedTypes) {
+      requestData = decodeData(returnedTypes[requestModule], requestModuleData as Address);
+      responseData = decodeData(returnedTypes[responseModule], responseModuleData as Address);
+      disputeData = decodeData(returnedTypes[disputeModule], disputeModuleData as Address);
+      finalityData = decodeData(returnedTypes[finalityModule], finalityModuleData as Address);
+      resolutionData = decodeData(returnedTypes[resolutionModule], resolutionModuleData as Address);
+    }
 
     return {
       id: requestId,
-      description: description,
+      description: description || 'Not supplied',
       createdAt: createdAt.toString(),
       requester: ensNames[requestId].requester || requester,
       nonce: fullRequest.request.nonce.toString(),
@@ -52,7 +67,9 @@ export const formatRequestsData = (
 
       // Responses section
       responses: responses.map((response, index) => ({
-        response: decodeData([{ name: '', type: responseType }], response.response as Address)[0].toString(), // decoded response
+        response: responseType
+          ? decodeData([{ name: '', type: responseType }], response.response as Address)[0].toString()
+          : response.response, // decoded response if responseType is defined
         proposer: ensNames[requestId].responses[index].proposer || response.proposer,
         responseId: response.responseId,
         dispute: getDispute(response.disputeId, response.createdAt, isFinalResponse(response, finalizedResponse)),
@@ -74,42 +91,27 @@ export const formatRequestsData = (
         {
           name: formatModuleName(requestModuleName),
           address: requestModule,
-          data: returnedTypes[requestModule]?.map((type, index) => ({
-            name: type.name,
-            value: requestData[index]?.toString(),
-          })),
+          data: formatModuleData(returnedTypes, requestModule, requestModuleData, requestData),
         },
         {
           name: formatModuleName(responseModuleName),
           address: responseModule,
-          data: returnedTypes[responseModule]?.map((type, index) => ({
-            name: type.name,
-            value: responseData[index]?.toString(),
-          })),
+          data: formatModuleData(returnedTypes, responseModule, responseModuleData, responseData),
         },
         {
           name: formatModuleName(disputeModuleName),
           address: disputeModule,
-          data: returnedTypes[disputeModule]?.map((type, index) => ({
-            name: type.name,
-            value: disputeData[index]?.toString(),
-          })),
+          data: formatModuleData(returnedTypes, disputeModule, disputeModuleData, disputeData),
         },
         {
           name: formatModuleName(resolutionModuleName),
           address: resolutionModule,
-          data: returnedTypes[resolutionModule]?.map((type, index) => ({
-            name: type.name,
-            value: resolutionData[index]?.toString(),
-          })),
+          data: formatModuleData(returnedTypes, resolutionModule, resolutionModuleData, resolutionData),
         },
         {
           name: formatModuleName(finalityModuleName),
           address: finalityModule,
-          data: returnedTypes[finalityModule]?.map((type, index) => ({
-            name: type.name,
-            value: finalityData[index]?.toString(),
-          })),
+          data: formatModuleData(returnedTypes, finalityModule, finalityModuleData, finalityData),
         },
       ],
     };

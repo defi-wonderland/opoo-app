@@ -149,4 +149,6 @@ const SCardFooter = styled.div`
   color: ${({ theme }) => theme.textSecondary};
 `;
 
-const SDetailsButton = styled(DetailsButton)``;
+const SDetailsButton = styled(DetailsButton)`
+  cursor: inherit;
+`;

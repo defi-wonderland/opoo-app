@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "ethers": "6.7.0",
-    "@defi-wonderland/prophet-sdk": "0.0.0-bfcf3bba",
+    "@defi-wonderland/prophet-sdk": "0.0.0-04f67f9c",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-loading-skeleton": "3.3.1",

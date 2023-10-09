@@ -1,3 +1,4 @@
+export * from './formatModuleData';
 export * from './formatRequestsData';
 export * from './getDate';
 export * from './getMetadatas';
