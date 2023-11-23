@@ -19,21 +19,24 @@ export const formatRequestsData = (
 ): RequestData[] => {
   const requests: RequestData[] = requestsFullData.map((fullRequest, index) => {
     const {
-      request: {
-        requestModuleData,
-        responseModuleData,
-        disputeModuleData,
-        finalityModuleData,
-        resolutionModuleData,
-        requestModule,
-        responseModule,
-        disputeModule,
-        finalityModule,
-        resolutionModule,
-        createdAt,
-        requester,
+      requestWithId: {
+        requestId,
+        blockNumber,
+        request: {
+          nonce,
+          requester,
+          requestModule,
+          responseModule,
+          disputeModule,
+          resolutionModule,
+          finalityModule,
+          requestModuleData,
+          responseModuleData,
+          disputeModuleData,
+          resolutionModuleData,
+          finalityModuleData,
+        },
       },
-      requestId,
       finalizedResponse,
       responses,
       disputeModuleName,
@@ -50,68 +53,93 @@ export const formatRequestsData = (
       resolutionData: string[] = [];
 
     if (returnedTypes) {
-      requestData = decodeData(returnedTypes[requestModule], requestModuleData as Address);
-      responseData = decodeData(returnedTypes[responseModule], responseModuleData as Address);
-      disputeData = decodeData(returnedTypes[disputeModule], disputeModuleData as Address);
-      finalityData = decodeData(returnedTypes[finalityModule], finalityModuleData as Address);
-      resolutionData = decodeData(returnedTypes[resolutionModule], resolutionModuleData as Address);
+      requestData = decodeData(
+        returnedTypes[requestModule.toString().toLocaleLowerCase()],
+        requestModuleData as Address,
+      );
+      responseData = decodeData(
+        returnedTypes[responseModule.toString().toLocaleLowerCase()],
+        responseModuleData as Address,
+      );
+      disputeData = decodeData(
+        returnedTypes[disputeModule.toString().toLocaleLowerCase()],
+        disputeModuleData as Address,
+      );
+      finalityData = decodeData(
+        returnedTypes[finalityModule.toString().toLocaleLowerCase()],
+        finalityModuleData as Address,
+      );
+      resolutionData = decodeData(
+        returnedTypes[resolutionModule.toString().toLocaleLowerCase()],
+        resolutionModuleData as Address,
+      );
     }
 
     return {
-      id: requestId,
+      id: requestId.toString(),
       description: description || 'Not supplied',
-      createdAt: createdAt.toString(),
-      requester: ensNames[requestId].requester || requester,
-      nonce: fullRequest.request.nonce.toString(),
+      createdAt: blockNumber.toString(),
+      requester: ensNames[requestId.toString()].requester || requester.toString(),
+      nonce: nonce.toString(),
       status: getStatus(fullRequest),
 
       // Responses section
       responses: responses.map((response, index) => ({
         response: responseType
-          ? decodeData([{ name: '', type: responseType }], response.response as Address)[0].toString()
-          : response.response, // decoded response if responseType is defined
-        proposer: ensNames[requestId].responses[index].proposer || response.proposer,
-        responseId: response.responseId,
-        dispute: getDispute(response.disputeId, response.createdAt, isFinalResponse(response, finalizedResponse)),
+          ? decodeData([{ name: '', type: responseType }], response.response.response as Address)[0].toString()
+          : response.response.response.toString(), // decoded response if responseType is defined
+        proposer:
+          ensNames[requestId.toString()].responses[index].proposer?.toString() || response.response.proposer.toString(),
+        responseId: response.responseId.toString(),
+        dispute: getDispute(
+          response.disputeId.toString(),
+          response.blockNumber.toString(),
+          isFinalResponse(response, finalizedResponse),
+        ),
         finalized: isFinalResponse(response, finalizedResponse),
       })),
 
       // Finalized response
-      finalizedResponse: {
+      finalizedResponse: finalizedResponse && {
         // Note: this is required to clean up the fetched the data format
-        createdAt: Number(finalizedResponse.createdAt),
-        proposer: finalizedResponse.proposer,
-        disputeId: finalizedResponse.disputeId,
-        response: finalizedResponse.response,
-        requestId: finalizedResponse.requestId,
+        createdAt: Number(finalizedResponse?.blockNumber.toString()),
+        proposer: finalizedResponse.response.proposer.toString(),
+        disputeId: finalizedResponse.disputeId.toString(),
+        response: finalizedResponse.response.response.toString(),
+        requestId: finalizedResponse.requestId.toString(),
       },
 
       // Modules section
       modules: [
         {
           name: formatModuleName(requestModuleName),
-          address: requestModule,
-          data: formatModuleData(returnedTypes, requestModule, requestModuleData, requestData),
+          address: requestModule.toString(),
+          data: formatModuleData(returnedTypes, requestModule.toString(), requestModuleData.toString(), requestData),
         },
         {
           name: formatModuleName(responseModuleName),
-          address: responseModule,
-          data: formatModuleData(returnedTypes, responseModule, responseModuleData, responseData),
+          address: responseModule.toString(),
+          data: formatModuleData(returnedTypes, responseModule.toString(), responseModuleData.toString(), responseData),
         },
         {
           name: formatModuleName(disputeModuleName),
-          address: disputeModule,
-          data: formatModuleData(returnedTypes, disputeModule, disputeModuleData, disputeData),
+          address: disputeModule.toString(),
+          data: formatModuleData(returnedTypes, disputeModule.toString(), disputeModuleData.toString(), disputeData),
         },
         {
           name: formatModuleName(resolutionModuleName),
-          address: resolutionModule,
-          data: formatModuleData(returnedTypes, resolutionModule, resolutionModuleData, resolutionData),
+          address: resolutionModule.toString(),
+          data: formatModuleData(
+            returnedTypes,
+            resolutionModule.toString(),
+            resolutionModuleData.toString(),
+            resolutionData,
+          ),
         },
         {
           name: formatModuleName(finalityModuleName),
-          address: finalityModule,
-          data: formatModuleData(returnedTypes, finalityModule, finalityModuleData, finalityData),
+          address: finalityModule.toString(),
+          data: formatModuleData(returnedTypes, finalityModule.toString(), finalityModuleData.toString(), finalityData),
         },
       ],
     };

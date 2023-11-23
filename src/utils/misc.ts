@@ -1,6 +1,7 @@
+import { ResponseWithId } from '@defi-wonderland/prophet-sdk';
 import { decodeAbiParameters, Address } from 'viem';
 
-import { RawResponse, TypeResults } from '~/types';
+import { TypeResults } from '~/types';
 
 export const copyData = (data: string) => {
   navigator.clipboard.writeText(data);
@@ -49,12 +50,12 @@ export const formatModuleName = (moduleName: string) => {
   return name.join(' ');
 };
 
-export const isFinalResponse = (response: RawResponse, finalResponse: RawResponse) => {
+export const isFinalResponse = (response: ResponseWithId, finalResponse: ResponseWithId) => {
   if (
-    response.createdAt === finalResponse.createdAt &&
-    response.proposer === finalResponse.proposer &&
-    response.requestId === finalResponse.requestId &&
-    response.response === finalResponse.response
+    response?.blockNumber === finalResponse?.blockNumber &&
+    response?.response?.proposer === finalResponse?.response?.proposer &&
+    response?.requestId === finalResponse?.requestId &&
+    response?.response === finalResponse?.response
   )
     return true;
   return false;

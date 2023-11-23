@@ -1,7 +1,7 @@
 import { Constants } from '~/types';
 
 const constants: Constants = {
-  ORACLE: '0x19cEcCd6942ad38562Ee10bAfd44776ceB67e923',
+  ORACLE: '0x66ada61779038adb405b79f77e33d5ad64040691',
   docsLink: 'docs.prophet.tech',
 };
 

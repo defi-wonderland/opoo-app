@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { act, render, screen, waitFor, fireEvent } from '../test-utils';
+import { act, render, screen, fireEvent, waitFor } from '../test-utils';
 
 import App from '~/App';
 
