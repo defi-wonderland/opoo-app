@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -6,7 +7,6 @@ import { Responses } from './Responses';
 import { Modules } from './Modules';
 import { useProphetSdk, useStateContext } from '~/hooks';
 import { formatRequestsData, getRequestEnsNames, getTheme, getMetadatas, getRawRequests } from '~/utils';
-import { useEffect } from 'react';
 
 const Container = styled.div`
   width: 100%;
