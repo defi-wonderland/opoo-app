@@ -6,7 +6,7 @@ import { Details } from './Details';
 import { Responses } from './Responses';
 import { Modules } from './Modules';
 import { useProphetSdk, useStateContext } from '~/hooks';
-import { formatRequestsData, getRequestEnsNames, getTheme, getMetadatas, getRawRequests } from '~/utils';
+import { formatRequestsData, getRequestEnsNames, getTheme, getMetadatas, getRawRequests, getTimeStamps } from '~/utils';
 
 const Container = styled.div`
   width: 100%;
@@ -23,12 +23,13 @@ export const RequestsDetails = () => {
     try {
       const rawRequests = await getRawRequests(prophetSdk, Number(id), 1);
 
+      const timestampPromise = getTimeStamps(rawRequests);
       const metadatasPromise = getMetadatas(rawRequests, prophetSdk);
       const ensNamePromise = getRequestEnsNames(rawRequests, client);
 
-      const [metadatas, ensName] = await Promise.all([metadatasPromise, ensNamePromise]);
+      const [metadatas, ensName, timestamps] = await Promise.all([metadatasPromise, ensNamePromise, timestampPromise]);
 
-      const formattedRequests = formatRequestsData(rawRequests, ensName, metadatas);
+      const formattedRequests = formatRequestsData(rawRequests, ensName, metadatas, timestamps);
 
       setLoading(false);
       setSelectedRequest(formattedRequests[0]);

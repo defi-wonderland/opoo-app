@@ -8,6 +8,7 @@ import {
   getRequestEnsNames,
   getRawRequests,
   getTotalRequestCount,
+  getTimeStamps,
 } from '~/utils';
 import { useProphetSdk, useStateContext, InfiniteScroll } from '~/hooks';
 import { RequestSection } from './RequestsSection';
@@ -57,11 +58,17 @@ export const Requests = () => {
 
       const rawRequests = await getRawRequests(prophetSdk, totalRequestCount, requestAmount);
 
+      const timestampsPromise = getTimeStamps(rawRequests);
       const ensNamesPromise = getRequestEnsNames(rawRequests, client);
       const metadatasPromise = getMetadatas(rawRequests, prophetSdk);
-      const [ensNames, metadatas] = await Promise.all([ensNamesPromise, metadatasPromise]);
 
-      const formattedRequests = formatRequestsData(rawRequests, ensNames, metadatas);
+      const [ensNames, metadatas, timestamps] = await Promise.all([
+        ensNamesPromise,
+        metadatasPromise,
+        timestampsPromise,
+      ]);
+
+      const formattedRequests = formatRequestsData(rawRequests, ensNames, metadatas, timestamps);
 
       const newTotalRequestCount = totalRequestCount - requestAmount;
       if (newTotalRequestCount > 0) setTotalRequestCount(newTotalRequestCount);

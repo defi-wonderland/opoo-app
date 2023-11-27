@@ -1,3 +1,4 @@
+export * from './formatBlockNumbers';
 export * from './formatModuleData';
 export * from './formatRequestsData';
 export * from './getDate';

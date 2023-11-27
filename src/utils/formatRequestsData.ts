@@ -10,18 +10,19 @@ import {
   getDispute,
   getStatus,
   isFinalResponse,
+  TimeStamps,
 } from '~/utils';
 
 export const formatRequestsData = (
   requestsFullData: RequestFullData[],
   ensNames: EnsNames,
   metadatas: Metadata[],
+  timestamps: TimeStamps[],
 ): RequestData[] => {
   const requests: RequestData[] = requestsFullData.map((fullRequest, index) => {
     const {
       requestWithId: {
         requestId,
-        blockNumber,
         request: {
           nonce,
           requester,
@@ -78,22 +79,23 @@ export const formatRequestsData = (
     return {
       id: requestId.toString(),
       description: description || 'Not supplied',
-      createdAt: blockNumber.toString(),
+      createdAt: timestamps[index].request.toString(),
       requester: ensNames[requestId.toString()].requester || requester.toString(),
       nonce: nonce.toString(),
       status: getStatus(fullRequest),
 
       // Responses section
-      responses: responses.map((response, index) => ({
+      responses: responses.map((response, responseIndex) => ({
         response: responseType
           ? decodeData([{ name: '', type: responseType }], response.response.response as Address)[0].toString()
           : response.response.response.toString(), // decoded response if responseType is defined
         proposer:
-          ensNames[requestId.toString()].responses[index].proposer?.toString() || response.response.proposer.toString(),
+          ensNames[requestId.toString()].responses[responseIndex].proposer?.toString() ||
+          response.response.proposer.toString(),
         responseId: response.responseId.toString(),
         dispute: getDispute(
           response.disputeId.toString(),
-          response.blockNumber.toString(),
+          timestamps[index].responses[responseIndex],
           isFinalResponse(response, finalizedResponse),
         ),
         finalized: isFinalResponse(response, finalizedResponse),
@@ -102,7 +104,7 @@ export const formatRequestsData = (
       // Finalized response
       finalizedResponse: finalizedResponse && {
         // Note: this is required to clean up the fetched the data format
-        createdAt: Number(finalizedResponse?.blockNumber.toString()),
+        createdAt: Number(timestamps[index].finalizedResponse),
         proposer: finalizedResponse.response.proposer.toString(),
         disputeId: finalizedResponse.disputeId.toString(),
         response: finalizedResponse.response.response.toString(),

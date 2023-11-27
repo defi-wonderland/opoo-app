@@ -1,5 +1,5 @@
 import { ResponseWithId } from '@defi-wonderland/prophet-sdk';
-import { decodeAbiParameters, Address } from 'viem';
+import { decodeAbiParameters, Address, PublicClient } from 'viem';
 
 import { TypeResults } from '~/types';
 
@@ -59,4 +59,14 @@ export const isFinalResponse = (response: ResponseWithId, finalResponse: Respons
   )
     return true;
   return false;
+};
+
+export const getTimestamp = async (publicClient: PublicClient, blockNumber: string) => {
+  try {
+    const blockData = await publicClient.getBlock({ blockNumber: BigInt(blockNumber) });
+    return blockData.timestamp.toString();
+  } catch (error) {
+    console.error('Error calling "getTimestamp" function:', error);
+    return '';
+  }
 };
