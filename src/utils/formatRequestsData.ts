@@ -10,14 +10,14 @@ import {
   getDispute,
   getStatus,
   isFinalResponse,
-  TimeStamps,
+  Timestamps,
 } from '~/utils';
 
 export const formatRequestsData = (
   requestsFullData: RequestFullData[],
   ensNames: EnsNames,
   metadatas: Metadata[],
-  timestamps: TimeStamps[],
+  timestamps: Timestamps,
 ): RequestData[] => {
   const requests: RequestData[] = requestsFullData.map((fullRequest, index) => {
     const {
@@ -79,7 +79,7 @@ export const formatRequestsData = (
     return {
       id: requestId.toString(),
       description: description || 'Not supplied',
-      createdAt: timestamps[index].request.toString(),
+      createdAt: timestamps[requestId.toString()].request.toString(),
       requester: ensNames[requestId.toString()].requester || requester.toString(),
       nonce: nonce.toString(),
       status: getStatus(fullRequest),
@@ -95,7 +95,7 @@ export const formatRequestsData = (
         responseId: response.responseId.toString(),
         dispute: getDispute(
           response.disputeId.toString(),
-          timestamps[index].responses[responseIndex],
+          timestamps[requestId.toString()].responses[responseIndex],
           isFinalResponse(response, finalizedResponse),
         ),
         finalized: isFinalResponse(response, finalizedResponse),
@@ -104,7 +104,7 @@ export const formatRequestsData = (
       // Finalized response
       finalizedResponse: finalizedResponse && {
         // Note: this is required to clean up the fetched the data format
-        createdAt: Number(timestamps[index].finalizedResponse),
+        createdAt: Number(timestamps[requestId.toString()].finalizedResponse),
         proposer: finalizedResponse.response.proposer.toString(),
         disputeId: finalizedResponse.disputeId.toString(),
         response: finalizedResponse.response.response.toString(),

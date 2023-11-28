@@ -3,13 +3,15 @@ import { RequestFullData } from '@defi-wonderland/prophet-sdk';
 import { getTimestamp } from './misc';
 import { publicClient } from '~/config';
 
-export interface TimeStamps {
-  request: string;
-  responses: string[];
-  finalizedResponse: string;
+export interface Timestamps {
+  [requestId: string]: {
+    request: string;
+    responses: string[];
+    finalizedResponse: string;
+  };
 }
 
-export const getTimeStamps = (requests: RequestFullData[]): Promise<TimeStamps[]> => {
+export const getTimestamps = async (requests: RequestFullData[]): Promise<Timestamps> => {
   const resultPromise = requests.map(async (fullRequest) => {
     const {
       requestWithId: { blockNumber },
@@ -38,7 +40,18 @@ export const getTimeStamps = (requests: RequestFullData[]): Promise<TimeStamps[]
     };
   });
 
-  const result = Promise.all(resultPromise);
+  const result = await Promise.all(resultPromise);
 
-  return result;
+  const timestampsDictionary = Object.fromEntries(
+    requests.map((request, index) => [
+      request.requestWithId.requestId.toString(),
+      {
+        request: result[index].request,
+        responses: result[index].responses,
+        finalizedResponse: result[index].finalizedResponse,
+      },
+    ]),
+  );
+
+  return timestampsDictionary;
 };

@@ -8,7 +8,7 @@ import {
   getRequestEnsNames,
   getRawRequests,
   getTotalRequestCount,
-  getTimeStamps,
+  getTimestamps,
 } from '~/utils';
 import { useProphetSdk, useStateContext, InfiniteScroll } from '~/hooks';
 import { RequestSection } from './RequestsSection';
@@ -58,7 +58,7 @@ export const Requests = () => {
 
       const rawRequests = await getRawRequests(prophetSdk, totalRequestCount, requestAmount);
 
-      const timestampsPromise = getTimeStamps(rawRequests);
+      const timestampsPromise = getTimestamps(rawRequests);
       const ensNamesPromise = getRequestEnsNames(rawRequests, client);
       const metadatasPromise = getMetadatas(rawRequests, prophetSdk);
 
