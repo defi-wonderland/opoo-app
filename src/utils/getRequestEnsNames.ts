@@ -16,14 +16,14 @@ export const getRequestEnsNames = async (
   client: typeof publicClient,
 ): Promise<EnsNames> => {
   const ensNamePromises = requests.map(async (request) => {
-    const requester = await getEnsName(request.request.requester, client);
+    const requester = await getEnsName(request.requestWithId?.request?.requester?.toString(), client);
     const responsePromises = request.responses.map(async (response) => ({
-      proposer: await getEnsName(response.proposer, client),
+      proposer: await getEnsName(response.response.proposer.toString(), client),
     }));
     const responses = await Promise.all(responsePromises);
 
     return [
-      request.requestId,
+      request.requestWithId?.requestId?.toString(),
       {
         requester,
         responses,

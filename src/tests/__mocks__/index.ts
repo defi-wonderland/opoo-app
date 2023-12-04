@@ -22,6 +22,9 @@ vi.mock('~/config', async () => {
     client: {
       getEnsName: vi.fn().mockResolvedValue('test.eth'),
     },
+    publicClient: {
+      getBlock: vi.fn().mockResolvedValue(1700000),
+    },
   };
 });
 

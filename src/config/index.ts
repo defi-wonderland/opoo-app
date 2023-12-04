@@ -11,6 +11,11 @@ export const client = createPublicClient({
   transport: http(getEnv().ENS_RPC_URL, { batch: true }),
 });
 
+export const publicClient = createPublicClient({
+  chain: mainnet,
+  transport: http(getEnv().RPC_URL, { batch: true }),
+});
+
 export const getConfig = (): Config => ({
   ...getEnv(),
   ...getConstants(),

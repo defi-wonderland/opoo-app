@@ -18,7 +18,7 @@ export const getMetadatas = async (requests: RequestFullData[], prophetSdk: Prop
     };
 
     for (const request of requests) {
-      const task = prophetSdk.ipfs.getMetadata(request.request.ipfsHash);
+      const task = prophetSdk.ipfs.getMetadata(request.requestWithId?.ipfsHash);
       const timeLimit = 5000; // 5 sec time limit
 
       // if getting the metadata takes longer than 3 seconds, return failureValue
